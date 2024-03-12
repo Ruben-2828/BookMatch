@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Start WelcomeActivity -->
+    <color name="google_login_button">#eceff1</color>
+    <color name="google_login_text">#616161</color>
+    <color name="grey_separator">#585F65</color>
+    <!-- Emd WelcomeActivity -->
+
 </resources>
