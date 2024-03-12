@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">BookMatch</string>
+
+
+    <!-- Start MainActivity -->
     <string name="notifications">Notifications</string>
     <string name="search">Search</string>
     <string name="explore">Explore</string>
@@ -12,6 +15,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <!-- End MainActivity -->
 
 
     <!-- Start WelcomeActivity -->

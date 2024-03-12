@@ -1,7 +1,8 @@
-package com.example.bookmatch;
+package com.example.bookmatch.ui.main;
 
 import android.os.Bundle;
 
+import com.example.bookmatch.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +12,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.bookmatch.databinding.ActivityMainBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_explore, R.id.navigation_saved, R.id.navigation_collections, R.id.navigation_notifications, R.id.navigation_account)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
