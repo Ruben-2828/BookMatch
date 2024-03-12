@@ -6,4 +6,7 @@
     <string name="saved">Saved</string>
     <string name="collections">Collections</string>
     <string name="account">Account</string>
+    <string name="default_title">Default title</string>
+    <string name="default_author">Default author</string>
+    <string name="by">By:</string>
 </resources>
