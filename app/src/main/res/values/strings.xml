@@ -9,4 +9,34 @@
     <string name="default_title">Default title</string>
     <string name="default_author">Default author</string>
     <string name="by">By:</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+
+    <!-- Start WelcomeActivity -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="login">Login</string>
+    <string name="or">OR</string>
+    <string name="login_with_google">Login with Google</string>
+    <string name="new_to_bookmatch">New to BookMatch?</string>
+    <string name="register">Register</string>
+    <string name="logo_application">Logo Application</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="username">Username</string>
+    <string name="full_name">Full Name</string>
+    <string name="registration">Registration</string>
+    <string name="error_email">Insert a valid email address</string>
+    <string name="error_password">The password must be at least 8 characters long</string>
+    <string name="quit">Are you sure you want to quit?</string>
+    <string name="quit_title">Exit the App</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="error_empty_fields">Fields cannot be empty</string>
+    <string name="error_match_password">Passwords don\'t match</string>
+    <!-- End WelcomeActivity -->
+
 </resources>
