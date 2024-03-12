@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">BookMatch</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="notifications">Notifications</string>
+    <string name="search">Search</string>
+    <string name="explore">Explore</string>
+    <string name="saved">Saved</string>
+    <string name="collections">Collections</string>
+    <string name="account">Account</string>
 </resources>

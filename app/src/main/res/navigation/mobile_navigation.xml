@@ -3,23 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_explore">
+
+
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.bookmatch.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_explore"
+        android:name="com.example.bookmatch.ui.main.explore.ExploreFragment"
+        android:label="@string/explore"
+        tools:layout="@layout/fragment_explore" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.bookmatch.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_saved"
+        android:name="com.example.bookmatch.ui.main.saved.SavedFragment"
+        android:label="@string/saved"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_collections"
+        android:name="com.example.bookmatch.ui.main.collections.CollectionsFragment"
+        android:label="@string/collections"
+        tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.bookmatch.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:name="com.example.bookmatch.ui.main.notifications.NotificationsFragment"
+        android:label="@string/notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="com.example.bookmatch.ui.main.account.AccountFragment"
+        android:label="@string/account"
+        tools:layout="@layout/fragment_account" />
+
 </navigation>
