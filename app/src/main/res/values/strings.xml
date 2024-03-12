@@ -15,6 +15,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="default_content_description">Default content description</string>
+    <string name="default_creator">Default Creator</string>
+    <string name="book_thumbnail">Book Thumbnail</string>
     <!-- End MainActivity -->
 
 
@@ -41,6 +44,8 @@
     <string name="no">No</string>
     <string name="error_empty_fields">Fields cannot be empty</string>
     <string name="error_match_password">Passwords don\'t match</string>
+    <string name="skip">Skip</string>
+    <string name="save">Save</string>
     <!-- End WelcomeActivity -->
 
 </resources>

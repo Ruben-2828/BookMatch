@@ -51,4 +51,8 @@ dependencies {
 
     implementation("commons-validator:commons-validator:1.7")
 
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+
+
 }

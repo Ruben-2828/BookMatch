@@ -51,7 +51,9 @@ public class SavedFragment extends Fragment {
                     "author "+ i,
                     "plot ezez abcd",
                     "fantasy",
-                    "1792"));
+                    "1792",
+                    "",
+                    ""));
         }
 
         SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedList,
