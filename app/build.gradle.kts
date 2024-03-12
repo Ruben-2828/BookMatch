@@ -51,4 +51,7 @@ dependencies {
 
     implementation("commons-validator:commons-validator:1.7")
 
+    //circle imageview
+    implementation("de.hdodenhof:circleimageview:3.0.0" )
+
 }

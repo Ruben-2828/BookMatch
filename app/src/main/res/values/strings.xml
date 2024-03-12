@@ -4,22 +4,15 @@
 
     <!-- Start MainActivity -->
     <string name="notifications">Notifications</string>
-    <string name="search">Search</string>
     <string name="explore">Explore</string>
     <string name="saved">Saved</string>
     <string name="collections">Collections</string>
     <string name="account">Account</string>
-    <string name="default_title">Default title</string>
-    <string name="default_author">Default author</string>
-    <string name="by">By:</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <!-- End MainActivity -->
 
 
     <!-- Start WelcomeActivity -->
-    <string name="email">Email</string>
+    <string name="email_welcome">Email</string>
     <string name="password">Password</string>
     <string name="remember_me">Remember me</string>
     <string name="forgot_password">Forgot password?</string>
@@ -42,5 +35,21 @@
     <string name="error_empty_fields">Fields cannot be empty</string>
     <string name="error_match_password">Passwords don\'t match</string>
     <!-- End WelcomeActivity -->
+
+    <!-- Start SavedFragment -->
+    <string name="default_title">Default title</string>
+    <string name="default_author">Default author</string>
+    <string name="by">By:</string>
+    <!-- End SavedFragment -->
+
+    <!-- Start AccountFragment -->
+    <string name="default_nickname">default nickname</string>
+    <string name="first_name">First name:</string>
+    <string name="last_name">Last name:</string>
+    <string name="default_first_name">Default first name</string>
+    <string name="default_last_name">Default last name</string>
+    <string name="default_email">Default email</string>
+    <string name="statistics">Statistics</string>
+    <!-- End AccountFragment -->
 
 </resources>
