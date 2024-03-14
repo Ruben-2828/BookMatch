@@ -50,10 +50,10 @@ public class CreateCollectionActivity extends AppCompatActivity {
         }
 
         if (description.isEmpty()) {
-            binding.collectionDescriptionInput.setError(getString(R.string.error_collection_description_required));
+            binding.collectionDescription.setError(getString(R.string.error_collection_description_required));
             isValid = false;
         } else {
-            binding.collectionDescriptionInput.setError(null);
+            binding.collectionDescription.setError(null);
         }
 
         return isValid;

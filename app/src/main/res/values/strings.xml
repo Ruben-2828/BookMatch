@@ -99,6 +99,7 @@
     <string name="error_collection_description_required">Collection description is required</string>
     <string name="name_collection_default">Name Collection Default</string>
     <string name="description_collection_default">Description Collection Default</string>
+    <string name="empty_collection">This collection is empty. Try adding a book!</string>
     <!-- End CollectionsFragment -->
 
 </resources>
