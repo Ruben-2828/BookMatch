@@ -56,4 +56,7 @@ dependencies {
 
     implementation("com.jsibbold:zoomage:1.3.1")
 
+    //circle imageview
+    implementation("de.hdodenhof:circleimageview:3.0.0" )
+
 }

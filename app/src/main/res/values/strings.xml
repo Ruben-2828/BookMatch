@@ -9,9 +9,6 @@
     <string name="saved">Saved</string>
     <string name="collections">Collections</string>
     <string name="account">Account</string>
-    <string name="default_title">Default title</string>
-    <string name="default_author">Default author</string>
-    <string name="by">By:</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -56,5 +53,39 @@
     <string name="error_empty_fields">Fields cannot be empty</string>
     <string name="error_match_password">Passwords don\'t match</string>
     <!-- End WelcomeActivity -->
+
+    <!-- Start SavedFragment -->
+    <string name="default_title">Default title</string>
+    <string name="default_author">Default author</string>
+    <string name="by">By:</string>
+    <!-- End SavedFragment -->
+
+    <!-- Start AccountFragment -->
+    <string name="default_nickname">default nickname</string>
+    <string name="first_name">First name:</string>
+    <string name="last_name">Last name:</string>
+    <string name="email_account">Email:</string>
+    <string name="default_first_name">Default first name</string>
+    <string name="default_last_name">Default last name</string>
+    <string name="default_email">Default email</string>
+    <string name="statistics">Statistics</string>
+    <string name="saved_books">Saved books:</string>
+    <string name="books_read">Books read:</string>
+    <string name="favorite_genre">Favorite genre:</string>
+    <string name="default_saved_books">default saved books</string>
+    <string name="default_books_read">default books read</string>
+    <string name="default_favorite_genre">default favorite genre</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="about_us">About us</string>
+    <string name="logout">Logout</string>
+    <!-- End AccountFragment -->
+
+    <!-- Start AccountEditFragment -->
+    <string name="hint_nickname">nickname</string>
+    <string name="first_name_hint">First name</string>
+    <string name="last_name_hint">Last name</string>
+    <string name="edit_account">Edit account</string>
+    <string name="save">Save</string>
+    <!-- End AccountEditFragment -->
 
 </resources>
