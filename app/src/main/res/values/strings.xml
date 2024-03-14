@@ -46,10 +46,20 @@
     <string name="default_nickname">default nickname</string>
     <string name="first_name">First name:</string>
     <string name="last_name">Last name:</string>
+    <string name="email_account">Email:</string>
     <string name="default_first_name">Default first name</string>
     <string name="default_last_name">Default last name</string>
     <string name="default_email">Default email</string>
     <string name="statistics">Statistics</string>
+    <string name="saved_books">Saved books:</string>
+    <string name="books_read">Books read:</string>
+    <string name="favorite_genre">Favorite genre:</string>
+    <string name="default_saved_books">default saved books</string>
+    <string name="default_books_read">default books read</string>
+    <string name="default_favorite_genre">default favorite genre</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="about_us">About us</string>
+    <string name="logout">Logout</string>
     <!-- End AccountFragment -->
 
 </resources>
