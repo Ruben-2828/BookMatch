@@ -40,15 +40,14 @@ public class SavedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView savedRecyclerView = view.findViewById(R.id.recyclerView_saved);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-        savedRecyclerView.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
 
-        // TODO: extract current user saved projects
+        // TODO: extract current user saved books
         List<Book> savedList = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            savedList.add(new Book("title " + i,
-                    "author "+ i,
+            savedList.add(new Book("Title " + i,
+                    "Author "+ i,
                     "plot ezez abcd",
                     "fantasy",
                     "1792"));
@@ -56,9 +55,10 @@ public class SavedFragment extends Fragment {
 
         SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedList,
                 saved -> {
-                    Snackbar.make(view, "Clicked on: "+ saved.getTitle(), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, getString(R.string.clicked_on)+ saved.getTitle(), Snackbar.LENGTH_SHORT).show();
                 });
-        savedRecyclerView.setAdapter(recyclerViewAdapter);
+        binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
+
     }
 
     @Override
