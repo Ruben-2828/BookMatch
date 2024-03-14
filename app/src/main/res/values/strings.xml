@@ -22,6 +22,8 @@
     <string name="default_book_author">Default Book Author</string>
     <string name="genre_book_default">Genre Book Default</string>
     <string name="pubblication_year_default">Pubblication Year Default</string>
+    <string name="clicked_on">"Clicked on: "</string>
+    <string name="added">Added</string>
     <!-- End MainActivity -->
 
 
@@ -48,9 +50,6 @@
     <string name="no">No</string>
     <string name="error_empty_fields">Fields cannot be empty</string>
     <string name="error_match_password">Passwords don\'t match</string>
-    <string name="skip">Skip</string>
-    <string name="save">Save</string>
-
     <!-- End WelcomeActivity -->
 
 </resources>

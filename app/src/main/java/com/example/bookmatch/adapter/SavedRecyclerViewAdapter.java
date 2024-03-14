@@ -3,6 +3,7 @@ package com.example.bookmatch.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,13 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecyclerViewAdapter.SavedViewHolder> {
 
-    private List<Book> savedList;
-    private SavedRecyclerViewAdapter.OnItemClickListener onItemClickListener;
+    private final List<Book> savedList;
+    private final SavedRecyclerViewAdapter.OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
 
@@ -52,14 +54,16 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
     public class SavedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView title;
-        private TextView author;
+        private final TextView title;
+        private final TextView author;
 
         public SavedViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.book_title);
             author = itemView.findViewById(R.id.book_author);
+            ImageButton addImageButton = itemView.findViewById(R.id.imageview_add);
             itemView.setOnClickListener(this);
+            addImageButton.setOnClickListener(this);
         }
 
         public void bind(Book p) {
@@ -68,8 +72,15 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
         }
 
         @Override
-        public void onClick(View v) {
-            onItemClickListener.onItemClick(savedList.get(getAdapterPosition()));
+        public void onClick(View view) {
+            if (view.getId() == R.id.imageview_add) {
+                Snackbar.make(view, (R.string.added), Snackbar.LENGTH_SHORT).show();
+            } else {
+                onItemClickListener.onItemClick(savedList.get(getAdapterPosition()));
+            }
         }
+
+
     }
+
 }
