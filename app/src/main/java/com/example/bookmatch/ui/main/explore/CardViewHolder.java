@@ -135,9 +135,6 @@ public class CardViewHolder implements View.OnTouchListener {
         }
     }
 
-    public void swipeCardUp() {
-        itemView.animate().y(centerY - itemView.getHeight() / 1.5f).alpha(.2f).setDuration(275).start();
-    }
 
     public void swipeCardLeft() {
         itemView.animate().x(centerX - itemView.getWidth() / 1.5f).rotation(-25).alpha(.2f).setDuration(275).start();
@@ -147,7 +144,4 @@ public class CardViewHolder implements View.OnTouchListener {
         itemView.animate().x(centerX + itemView.getWidth() / 1.5f).rotation(25).alpha(.2f).setDuration(275).start();
     }
 
-    public void swipeCardDown() {
-        itemView.animate().y(centerY + itemView.getHeight() / 1.5f).alpha(.2f).setDuration(275).start();
-    }
 }

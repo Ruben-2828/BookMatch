@@ -1,6 +1,5 @@
-package com.example.bookmatch.ui.main.explore;
+package com.example.bookmatch.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,9 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.ui.main.explore.CardSwipeCallback;
+import com.example.bookmatch.ui.main.explore.CardViewHolder;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,10 +46,6 @@ public class CardAdapter {
         }
     }
 
-    public int getItemCount() {
-        return dataList.size();
-    }
-
     public View getCurrentItemView(ViewGroup parent) {
         if (currentPosition < dataList.size()) {
             CardViewHolder holder = onCreateViewHolder(parent);
@@ -57,7 +55,7 @@ public class CardAdapter {
         return null;
     }
 
-    public Book getCurrentItemData(ViewGroup parent) {
+    public Book getCurrentItemData() {
         if (currentPosition < dataList.size()) {
             return dataList.get(currentPosition);
         }
@@ -77,16 +75,11 @@ public class CardAdapter {
         if (currentHolder != null) {
             switch (direction){
                 case 0:
-                    currentHolder.swipeCardUp();
-                    break;
-                case 1:
                     currentHolder.swipeCardLeft();
                     break;
-                case 2:
+                case 1:
                     currentHolder.swipeCardRight();
                     break;
-                case 3:
-                    currentHolder.swipeCardDown();
             }
         }
     }

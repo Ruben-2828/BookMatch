@@ -14,13 +14,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.bookmatch.R;
+import com.example.bookmatch.adapter.CardAdapter;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExploreFragment extends Fragment implements CardSwipeCallback{
+public class ExploreFragment extends Fragment implements CardSwipeCallback {
 
     private FragmentExploreBinding binding;
     private CardAdapter adapter;
@@ -56,8 +57,8 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback{
         adapter = new CardAdapter(sampleData, this);
         addCardToFrameLayout();
 
-        binding.dislikeButton.setOnClickListener(v -> selectionMade(1, true));
-        binding.likeButton.setOnClickListener(v -> selectionMade(2, true));
+        binding.dislikeButton.setOnClickListener(v -> selectionMade(0, true));
+        binding.likeButton.setOnClickListener(v -> selectionMade(1, true));
 
     }
 
@@ -70,17 +71,17 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback{
 
     @Override
     public void onCardSwipedLeft() {
-        selectionMade(1, false);
+        selectionMade(0, false);
     }
 
     @Override
     public void onCardSwipedRight() {
-        selectionMade(2, false);
+        selectionMade(1, false);
     }
 
     @Override
     public void onCardClicked() {
-        Book currentBook = adapter.getCurrentItemData(binding.cardStackView);
+        Book currentBook = adapter.getCurrentItemData();
         if (currentBook != null) {
             Bundle args = new Bundle();
             args.putString("bookId", currentBook.getId());
@@ -133,13 +134,13 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback{
 
     public void selectionMade(int action, boolean animation){
         switch(action) {
+            case 0:
+                adapter.swipeCurrentCard(0);
+                Toast.makeText(getContext(), "Discard!", Toast.LENGTH_SHORT).show();
+                break;
             case 1:
                 adapter.swipeCurrentCard(1);
-                Toast.makeText(getContext(), "Disliked!", Toast.LENGTH_SHORT).show();
-                break;
-            case 2:
-                adapter.swipeCurrentCard(2);
-                Toast.makeText(getContext(), "Liked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
                 break;
         }
 
