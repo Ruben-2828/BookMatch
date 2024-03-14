@@ -34,12 +34,6 @@
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.bookmatch.ui.main.notifications.NotificationsFragment"
-        android:label="@string/notifications"
-        tools:layout="@layout/fragment_notifications" />
-
-    <fragment
         android:id="@+id/navigation_account"
         android:name="com.example.bookmatch.ui.main.account.AccountFragment"
         android:label="@string/account"
