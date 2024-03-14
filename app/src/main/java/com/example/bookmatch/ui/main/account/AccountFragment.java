@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
@@ -47,8 +49,8 @@ public class AccountFragment extends Fragment {
 
                     int id = item.getItemId();
                     if (id == R.id.edit_profile_item) {
-                        //TODO: implement edit profile
-                        Snackbar.make(view, "Edit profile", Snackbar.LENGTH_LONG).show();
+                        NavController navC = Navigation.findNavController(view);
+                        navC.navigate(R.id.action_navigation_account_to_accountEditFragment);
                         return true;
                     }
                     if (id == R.id.about_us_item) {

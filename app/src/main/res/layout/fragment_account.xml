@@ -47,17 +47,6 @@
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-    <Button
-        android:id="@+id/edit_pic_button"
-        style="?attr/materialIconButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/cardview_dark_background"
-        app:icon="@drawable/baseline_edit_24"
-        android:elevation="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_image"
-        app:layout_constraintEnd_toEndOf="@+id/profile_image" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/CardView_accountPage"
         android:layout_width="0dp"

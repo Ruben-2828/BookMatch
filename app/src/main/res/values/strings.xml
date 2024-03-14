@@ -62,4 +62,12 @@
     <string name="logout">Logout</string>
     <!-- End AccountFragment -->
 
+    <!-- Start AccountEditFragment -->
+    <string name="hint_nickname">nickname</string>
+    <string name="first_name_hint">First name</string>
+    <string name="last_name_hint">Last name</string>
+    <string name="edit_account">Edit account</string>
+    <string name="save">Save</string>
+    <!-- End AccountEditFragment -->
+
 </resources>
