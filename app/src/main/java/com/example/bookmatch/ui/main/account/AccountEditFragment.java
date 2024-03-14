@@ -19,9 +19,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
 import com.example.bookmatch.databinding.FragmentAccountEditBinding;
+import com.example.bookmatch.model.AppUser;
 import com.google.android.material.snackbar.Snackbar;
 
 public class AccountEditFragment extends Fragment {
@@ -39,6 +41,17 @@ public class AccountEditFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Bundle args = getArguments();
+        assert args != null;
+        AppUser user = args.getParcelable("user");
+
+        assert user != null;
+        binding.tiNicknameInput.setText(user.getNickname());
+        binding.tiFirstNameInput.setText(user.getFirstName());
+        binding.tiLastNameInput.setText(user.getLastName());
+        binding.tiEmailInput.setText(user.getEmail());
+        Glide.with(this).load(user.getPic()).into(binding.profileImage);
 
         binding.goBackButton.setOnClickListener(v -> {
             NavController navC = Navigation.findNavController(view);
