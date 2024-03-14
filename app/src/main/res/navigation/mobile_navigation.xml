@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_notifications">
+    app:startDestination="@+id/navigation_explore">
 
 
 
@@ -21,7 +21,11 @@
         android:id="@+id/navigation_saved"
         android:name="com.example.bookmatch.ui.main.saved.SavedFragment"
         android:label="@string/saved"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/action_navigation_saved_to_navigation_book"
+            app:destination="@id/navigation_book" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_collections"

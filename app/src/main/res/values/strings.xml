@@ -24,6 +24,11 @@
     <string name="pubblication_year_default">Pubblication Year Default</string>
     <string name="clicked_on">"Clicked on: "</string>
     <string name="added">Added</string>
+    <string name="no_book_selected">No book selected</string>
+    <string name="discard_toast">Discard!</string>
+    <string name="saved_toast">Saved!</string>
+    <string name="book_cover_not_available_toast">Book cover not available</string>
+    <string name="book_details_not_available_toast">Book details not available</string>
     <!-- End MainActivity -->
 
 

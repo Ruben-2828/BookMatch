@@ -52,11 +52,11 @@ public class BookPageFragment extends Fragment {
             if (!coverUrl.isEmpty()) {
                 Glide.with(this).load(coverUrl).into(binding.coverBook);
             } else {
-                Toast.makeText(getContext(), "Book cover not available", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), (R.string.book_cover_not_available_toast), Toast.LENGTH_SHORT).show();
             }
         } else {
             coverUrl = "";
-            Toast.makeText(getContext(), "Book details not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), (R.string.book_details_not_available_toast), Toast.LENGTH_SHORT).show();
         }
 
         binding.goBackButton.setOnClickListener(v -> {

@@ -1,10 +1,12 @@
 package com.example.bookmatch.ui.main;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.example.bookmatch.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -32,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        binding.navView.setOnItemSelectedListener(item -> {
+            NavigationUI.onNavDestinationSelected(item, navController);
+            return true;
+        });
     }
 
 }

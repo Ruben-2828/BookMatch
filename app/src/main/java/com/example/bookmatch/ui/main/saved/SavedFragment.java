@@ -40,24 +40,37 @@ public class SavedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
 
         // TODO: extract current user saved books
         List<Book> savedList = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            savedList.add(new Book("Title " + i,
-                    "Author "+ i,
-                    "plot ezez abcd",
-                    "fantasy",
+            savedList.add(new Book(String.valueOf(i),
+                    "Il grande Ruben Tenderini e la spada infuocata " + i,
+                    "Quack Paco",
+                    "Un giovane soldato dai monti della valsassina deve sconfiggere i suoi peggiori nemici: i Milanesi che salgono su per la valle. ",
+                    "Fantasy",
                     "1792",
-                    "",
-                    ""));
+                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
         }
 
         SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedList,
                 saved -> {
-                    Snackbar.make(view, getString(R.string.clicked_on)+ saved.getTitle(), Snackbar.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", saved.getTitle());
+                    bundle.putString("author", saved.getAuthor());
+                    bundle.putString("plot", saved.getPlot());
+                    bundle.putString("genre", saved.getGenre());
+                    bundle.putString("year", saved.getPublicationYear());
+                    bundle.putString("cover", saved.getCover());
+
+                    NavController navController = Navigation.findNavController(requireView());
+                    navController.navigate(R.id.action_navigation_saved_to_navigation_book, bundle);
+
+
                 });
         binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
 

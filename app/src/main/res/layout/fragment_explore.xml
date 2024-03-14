@@ -46,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:clickable="true"
-            android:contentDescription="@string/skip"
             android:focusable="true"
             android:src="@drawable/baseline_cross_24"
             app:layout_constraintBottom_toBottomOf="parent"

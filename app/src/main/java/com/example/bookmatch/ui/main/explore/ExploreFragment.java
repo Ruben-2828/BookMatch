@@ -44,14 +44,14 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         super.onViewCreated(view, savedInstanceState);
 
         List<Book> sampleData = new ArrayList<>();
-        for (int i = 0; i < 100; i++){
+        for (int i = 1; i < 100; i++){
             sampleData.add(new Book(
                     "i",
-                    "Amogus" + i,
-                    "Sussy",
-                    "Among us game amog amogus",
-                    "Fantasy",
-                    "2019",
+                    "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
+                    "Paco Quack",
+                    "Jouness Amsaet, un genio della programmazione con occhi ipnotici, si trova coinvolto in un enigma matematico durante i suoi studi. Con l'aiuto di amici, affronta sfide culturali e misteri informatici, dimostrando che la sua intelligenza va oltre i numeri.",
+                    "Avventura",
+                    "2024",
                     "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
         }
         adapter = new CardAdapter(sampleData, this);
@@ -95,7 +95,7 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
             NavController navController = Navigation.findNavController(getView());
             navController.navigate(R.id.action_navigation_explore_to_navigation_book, args);
         } else {
-            Toast.makeText(getContext(), "No book selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), (R.string.no_book_selected), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -136,11 +136,11 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         switch(action) {
             case 0:
                 adapter.swipeCurrentCard(0);
-                Toast.makeText(getContext(), "Discard!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), (R.string.discard_toast), Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 adapter.swipeCurrentCard(1);
-                Toast.makeText(getContext(), "Saved!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), (R.string.saved_toast), Toast.LENGTH_SHORT).show();
                 break;
         }
 
