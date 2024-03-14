@@ -11,13 +11,21 @@
         android:id="@+id/navigation_explore"
         android:name="com.example.bookmatch.ui.main.explore.ExploreFragment"
         android:label="@string/explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_navigation_explore_to_navigation_book"
+            app:destination="@id/navigation_book" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_saved"
         android:name="com.example.bookmatch.ui.main.saved.SavedFragment"
         android:label="@string/saved"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/action_navigation_saved_to_navigation_book"
+            app:destination="@id/navigation_book" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_collections"
@@ -43,7 +51,7 @@
     <fragment
         android:id="@+id/accountEditFragment"
         android:name="com.example.bookmatch.ui.main.account.AccountEditFragment"
-        android:label="AccountEditFragment" />
+        android:label="AccountEditFragment"
         tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/navigation_book"
