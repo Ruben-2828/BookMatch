@@ -117,6 +117,7 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback{
         binding.likeButton.setAlpha(1f);
     }
 
+
     public void selectionMade(int action, boolean animation){
         switch(action) {
             case 1:
@@ -141,7 +142,10 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback{
     }
 
     private void updateCards(){
+        // Remove the current card
         binding.cardStackView.removeAllViews();
+
+        // Advance to the next card
         adapter.advanceToNextItem();
         addCardToFrameLayout();
     }

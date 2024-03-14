@@ -16,7 +16,6 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="default_content_description">Default content description</string>
-    <string name="default_creator">Default Creator</string>
     <string name="book_thumbnail">Book Thumbnail</string>
     <!-- End MainActivity -->
 

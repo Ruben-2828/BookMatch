@@ -1,6 +1,5 @@
 package com.example.bookmatch.ui.main.explore;
 
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -16,7 +15,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.example.bookmatch.R;
-
 
 public class CustomBorderView extends View {
     private Paint paint;

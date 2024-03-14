@@ -28,52 +28,60 @@
         android:layout_weight="0.45"
         android:orientation="horizontal">
 
+
         <com.example.bookmatch.ui.main.explore.CustomBorderView
             android:id="@+id/dislike_fab_border_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/dislike_button"
             app:layout_constraintStart_toStartOf="@+id/dislike_button"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="?attr/colorPrimaryVariant" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/dislike_button"
             style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:clickable="true"
             android:contentDescription="@string/skip"
             android:focusable="true"
             android:src="@drawable/baseline_cross_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/like_button"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <com.example.bookmatch.ui.main.explore.CustomBorderView
             android:id="@+id/like_fab_border_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:elevation="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/like_button"
             app:layout_constraintStart_toStartOf="@+id/like_button"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="?attr/colorPrimaryVariant" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/like_button"
             style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
             android:clickable="true"
-            android:contentDescription="@string/save"
             android:focusable="true"
             android:src="@drawable/baseline_check_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/dislike_button"
             app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
