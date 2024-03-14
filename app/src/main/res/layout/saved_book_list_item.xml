@@ -8,7 +8,9 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
-    card_view:cardCornerRadius="16dp">
+    card_view:cardCornerRadius="16dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="?attr/colorSecondaryContainer">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
