@@ -53,6 +53,11 @@
             android:label="fullscreen project">
         </activity>
 
+        <activity
+            android:name=".ui.main.collections.CreateCollectionActivity"
+            android:label="create collection">
+        </activity>
+
     </application>
 
 </manifest>

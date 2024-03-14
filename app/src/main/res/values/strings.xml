@@ -88,4 +88,18 @@
     <string name="save">Save</string>
     <!-- End AccountEditFragment -->
 
+    <!-- Start CollectionsFragment -->
+    <string name="create_button">Create</string>
+    <string name="create_a_new_collection">Create a New Collection</string>
+    <string name="description_create_collection">Enter the name of your collection and provide a short description!</string>
+    <string name="collection_name">Collection Name</string>
+    <string name="collection_description">Collection Description</string>
+    <string name="collection_created_toast">Collection Created</string>
+    <string name="error_collection_name_required">Collection name is required</string>
+    <string name="error_collection_description_required">Collection description is required</string>
+    <string name="name_collection_default">Name Collection Default</string>
+    <string name="description_collection_default">Description Collection Default</string>
+    <string name="empty_collection">This collection is empty. Try adding a book!</string>
+    <!-- End CollectionsFragment -->
+
 </resources>
