@@ -10,7 +10,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
 
@@ -77,14 +80,24 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback{
 
     @Override
     public void onCardClicked() {
-        //Book currentBook = adapter.getCurrentItemData(binding.cardStackView);
+        Book currentBook = adapter.getCurrentItemData(binding.cardStackView);
+        if (currentBook != null) {
+            Bundle args = new Bundle();
+            args.putString("bookId", currentBook.getId());
+            args.putString("title", currentBook.getTitle());
+            args.putString("author", currentBook.getAuthor());
+            args.putString("plot", currentBook.getPlot());
+            args.putString("genre", currentBook.getGenre());
+            args.putString("year", currentBook.getPublicationYear());
+            args.putString("cover", currentBook.getCover());
 
-        //Bundle args = new Bundle();
-        //args.putString("project id", currentBook.getId());
-
-        //NavController navC = Navigation.findNavController(getView());
-        //navC.navigate(R.id.action_navigation_explore_projects_to_projectPageFragment, args);
+            NavController navController = Navigation.findNavController(getView());
+            navController.navigate(R.id.action_navigation_explore_to_navigation_book, args);
+        } else {
+            Toast.makeText(getContext(), "No book selected", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     @Override
     public void onCardSwiping(int direction, float scale, float alpha, float borderProgress){

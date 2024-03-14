@@ -17,6 +17,11 @@
     <string name="title_notifications">Notifications</string>
     <string name="default_content_description">Default content description</string>
     <string name="book_thumbnail">Book Thumbnail</string>
+    <string name="book_title_default">Book Title Default</string>
+    <string name="default_book_plot">Default Book Plot</string>
+    <string name="default_book_author">Default Book Author</string>
+    <string name="genre_book_default">Genre Book Default</string>
+    <string name="pubblication_year_default">Pubblication Year Default</string>
     <!-- End MainActivity -->
 
 
@@ -45,6 +50,7 @@
     <string name="error_match_password">Passwords don\'t match</string>
     <string name="skip">Skip</string>
     <string name="save">Save</string>
+
     <!-- End WelcomeActivity -->
 
 </resources>
