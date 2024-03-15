@@ -49,11 +49,11 @@ public class SavedFragment extends Fragment {
         List<Book> savedList = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             savedList.add(new Book(String.valueOf(i),
-                    "Il grande Ruben Tenderini e la spada infuocata " + i,
-                    "Quack Paco",
-                    "Un giovane soldato dai monti della valsassina deve sconfiggere i suoi peggiori nemici: i Milanesi che salgono su per la valle. ",
-                    "Fantasy",
-                    "1792",
+                    "Nusy eepy" + i,
+                    "Rubini",
+                    "La nusy fa eepy",
+                    "Eepy",
+                    "2023",
                     "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
         }
 

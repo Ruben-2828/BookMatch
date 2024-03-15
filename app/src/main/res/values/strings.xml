@@ -80,6 +80,7 @@
     <string name="edit_profile">Edit profile</string>
     <string name="about_us">About us</string>
     <string name="logout">Logout</string>
+    <string name="undo">Undo</string>
     <!-- End AccountFragment -->
 
     <!-- Start AccountEditFragment -->
@@ -107,6 +108,7 @@
     <string name="description_collection_default">Description Collection Default</string>
     <string name="empty_collection">This collection is empty! To add book, tap here!</string>
     <string name="add_book_to_collection">Add Book to Collection</string>
+    <string name="add_books_button">Add Books</string>
     <!-- End CollectionsFragment -->
 
 </resources>
