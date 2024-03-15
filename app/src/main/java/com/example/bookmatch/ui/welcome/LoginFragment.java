@@ -2,6 +2,7 @@ package com.example.bookmatch.ui.welcome;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentLoginBinding;
 
 import org.apache.commons.validator.routines.EmailValidator;
+
+import java.util.Objects;
 
 public class LoginFragment extends Fragment {
 
@@ -35,6 +38,12 @@ public class LoginFragment extends Fragment {
 
         binding.buttonRegistration.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registrationFragment);
+            String email = Objects.requireNonNull(binding.textInputLayoutEmail.
+                    getEditText()).getText().toString();
+            String password = Objects.requireNonNull(binding.textInputLayoutPassword.
+                    getEditText()).getText().toString();
+
+            Log.d("WELCOME", email + password);
         });
     }
 
