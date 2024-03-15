@@ -84,5 +84,4 @@ public class AppUser implements Parcelable {
     }
 
 
-
 }
