@@ -24,7 +24,7 @@
             android:textSize="24sp"
             android:layout_marginEnd="12sp"
             android:text="@string/default_title"
-            app:layout_constraintEnd_toStartOf="@id/imageview_add"
+            app:layout_constraintEnd_toStartOf="@id/imageview_edit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textStyle="bold"/>
@@ -38,18 +38,18 @@
             android:layout_marginEnd="12sp"
             android:text="@string/default_author"
             android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@id/imageview_add"
+            app:layout_constraintEnd_toStartOf="@id/imageview_edit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/book_title" />
 
         <ImageButton
-            android:id="@+id/imageview_add"
+            android:id="@+id/imageview_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:focusable="true"
             android:padding="12dp"
-            android:src="@drawable/baseline_add_24"
+            android:src="@drawable/baseline_more_vert_24"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

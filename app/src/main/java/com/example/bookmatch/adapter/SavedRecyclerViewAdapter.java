@@ -1,12 +1,18 @@
 package com.example.bookmatch.adapter;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
@@ -61,7 +67,7 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
             super(itemView);
             title = itemView.findViewById(R.id.book_title);
             author = itemView.findViewById(R.id.book_author);
-            ImageButton addImageButton = itemView.findViewById(R.id.imageview_add);
+            ImageButton addImageButton = itemView.findViewById(R.id.imageview_edit);
             itemView.setOnClickListener(this);
             addImageButton.setOnClickListener(this);
         }
@@ -73,13 +79,32 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
         @Override
         public void onClick(View view) {
-            if (view.getId() == R.id.imageview_add) {
-                Snackbar.make(view, (R.string.added), Snackbar.LENGTH_SHORT).show();
+            if (view.getId() == R.id.imageview_edit) {
+                PopupMenu popupMenu = new PopupMenu(itemView.getContext(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.saved_option_menu, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    int id = item.getItemId();
+                    if (id == R.id.remove_book) {
+                        Snackbar.make(view, "Book Removed", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                    } else if (id == R.id.collection_option_1) {
+                        Snackbar.make(view, "Added to Collection 1", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                    } else if (id == R.id.collection_option_2) {
+                        Snackbar.make(view, "Added to Collection 2", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                    } else if (id == R.id.collection_option_3) {
+                        Snackbar.make(view, "Added to Collection 3", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+                popupMenu.show();
             } else {
                 onItemClickListener.onItemClick(savedList.get(getAdapterPosition()));
             }
         }
-
 
     }
 
