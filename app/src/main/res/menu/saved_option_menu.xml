@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.main.saved.SavedFragment">
+
+    <item android:id="@+id/remove_book"
+        android:title="@string/remove_from_saved_book" />
+
+    <item android:id="@+id/add_to_collection"
+        android:title="@string/add_to_collection">
+
+        <menu>
+            <item
+                android:id="@+id/collection_option_1"
+                android:title="Collection 1" />
+            <item
+                android:id="@+id/collection_option_2"
+                android:title="Collection 2" />
+            <item
+                android:id="@+id/collection_option_3"
+                android:title="Collection 3" />
+        </menu>
+
+    </item>
+
+
+
+</menu>
