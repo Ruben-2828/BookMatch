@@ -62,6 +62,10 @@
             android:label="edit account">
         </activity>
 
+        <activity android:name=".ui.main.collections.AddBookToCollectionActivity"
+            android:label="add book to collection">
+        </activity>
+
     </application>
 
 

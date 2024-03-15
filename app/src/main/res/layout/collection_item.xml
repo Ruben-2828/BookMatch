@@ -50,14 +50,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty_collection"
+            android:textColor="@color/grey_separator"
+            android:textSize="22sp"
+            android:textStyle="italic"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/view_pager"
             app:layout_constraintEnd_toEndOf="@+id/view_pager"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/collection_item_description"
-            android:textSize="16sp"
-            android:textStyle="italic"
-            android:textColor="@color/grey_separator"/>
+            app:layout_constraintTop_toTopOf="@+id/view_pager" />
 
 
 

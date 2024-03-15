@@ -21,12 +21,14 @@ import com.example.bookmatch.model.Collection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CollectionsFragment extends Fragment {
 
     private FragmentCollectionsBinding binding;
     private final List<Collection> collectionsList = new ArrayList<>();
     private CollectionsRecyclerViewAdapter adapter;
+    private List<String> addedBookNames = new ArrayList<>();
 
     @SuppressLint("NotifyDataSetChanged")
     private final ActivityResultLauncher<Intent> createCollectionLauncher = registerForActivityResult(
@@ -34,7 +36,7 @@ public class CollectionsFragment extends Fragment {
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                     Intent data = result.getData();
-                    String id = "1"; //TODO: generate unique id
+                    String id = UUID.randomUUID().toString();
                     String name = data.getStringExtra("collectionName");
                     String description = data.getStringExtra("collectionDescription");
                     collectionsList.add(new Collection(id, name, description));
@@ -42,6 +44,8 @@ public class CollectionsFragment extends Fragment {
                 }
             }
     );
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,10 +56,15 @@ public class CollectionsFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        adapter = new CollectionsRecyclerViewAdapter(collectionsList);
+        adapter = new CollectionsRecyclerViewAdapter(collectionsList, collection -> {
+            Intent intent = new Intent(getActivity(), AddBookToCollectionActivity.class);
+            intent.putExtra("collectionId", collection.getId());
+            startActivity(intent);
+        });
         binding.collectionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.collectionsRecyclerView.setAdapter(adapter);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
