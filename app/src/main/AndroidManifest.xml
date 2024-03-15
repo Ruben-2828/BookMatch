@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.PICK_IMAGE_REQUEST" />
 
     <application
         android:allowBackup="true"
@@ -20,8 +21,7 @@
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,6 +58,11 @@
             android:label="create collection">
         </activity>
 
+        <activity android:name=".ui.main.account.AccountEditActivity"
+            android:label="edit account">
+        </activity>
+
     </application>
+
 
 </manifest>

@@ -82,4 +82,7 @@ public class AppUser implements Parcelable {
         dest.writeString(email);
         dest.writeString(pic);
     }
+
+
+
 }
