@@ -58,6 +58,12 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
         return 0;
     }
 
+    public void removeItem(int position) {
+        savedList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, savedList.size());
+    }
+
     public class SavedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView title;
@@ -79,13 +85,17 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
         @Override
         public void onClick(View view) {
+            final int position = getAdapterPosition();
             if (view.getId() == R.id.imageview_edit) {
                 PopupMenu popupMenu = new PopupMenu(itemView.getContext(), view);
                 popupMenu.getMenuInflater().inflate(R.menu.saved_option_menu, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(item -> {
                     int id = item.getItemId();
                     if (id == R.id.remove_book) {
-                        Snackbar.make(view, "Book Removed", Snackbar.LENGTH_SHORT).show();
+                        if (position != RecyclerView.NO_POSITION) {
+                            removeItem(position);
+                            Snackbar.make(view, "Book Removed", Snackbar.LENGTH_SHORT).show();
+                        }
                         return true;
                     } else if (id == R.id.collection_option_1) {
                         Snackbar.make(view, "Added to Collection 1", Snackbar.LENGTH_SHORT).show();
@@ -96,16 +106,15 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
                     } else if (id == R.id.collection_option_3) {
                         Snackbar.make(view, "Added to Collection 3", Snackbar.LENGTH_SHORT).show();
                         return true;
-                    } else {
-                        return false;
                     }
+                    return false;
                 });
                 popupMenu.show();
             } else {
-                onItemClickListener.onItemClick(savedList.get(getAdapterPosition()));
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClickListener.onItemClick(savedList.get(position));
+                }
             }
         }
-
     }
-
 }
