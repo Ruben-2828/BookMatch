@@ -58,6 +58,8 @@
     <string name="default_title">Default title</string>
     <string name="default_author">Default author</string>
     <string name="by">By:</string>
+    <string name="add_to_collection">Add to Collection</string>
+    <string name="remove_from_saved_book">Remove from saved book</string>
     <!-- End SavedFragment -->
 
     <!-- Start AccountFragment -->
