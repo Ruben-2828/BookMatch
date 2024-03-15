@@ -24,7 +24,6 @@ import java.util.List;
 public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecyclerViewAdapter.SavedViewHolder> {
 
     private final List<Book> savedList;
-    private final SavedRecyclerViewAdapter.OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
 
@@ -33,7 +32,6 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
     public SavedRecyclerViewAdapter(List<Book> savedList, OnItemClickListener onItemClickListener) {
         this.savedList = savedList;
-        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -58,12 +56,6 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
         return 0;
     }
 
-    public void removeItem(int position) {
-        savedList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, savedList.size());
-    }
-
     public class SavedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView title;
@@ -85,36 +77,28 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
         @Override
         public void onClick(View view) {
-            final int position = getAdapterPosition();
-            if (view.getId() == R.id.imageview_edit) {
-                PopupMenu popupMenu = new PopupMenu(itemView.getContext(), view);
-                popupMenu.getMenuInflater().inflate(R.menu.saved_option_menu, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(item -> {
-                    int id = item.getItemId();
-                    if (id == R.id.remove_book) {
-                        if (position != RecyclerView.NO_POSITION) {
-                            removeItem(position);
-                            Snackbar.make(view, "Book Removed", Snackbar.LENGTH_SHORT).show();
-                        }
-                        return true;
-                    } else if (id == R.id.collection_option_1) {
-                        Snackbar.make(view, "Added to Collection 1", Snackbar.LENGTH_SHORT).show();
-                        return true;
-                    } else if (id == R.id.collection_option_2) {
-                        Snackbar.make(view, "Added to Collection 2", Snackbar.LENGTH_SHORT).show();
-                        return true;
-                    } else if (id == R.id.collection_option_3) {
-                        Snackbar.make(view, "Added to Collection 3", Snackbar.LENGTH_SHORT).show();
-                        return true;
-                    }
-                    return false;
-                });
-                popupMenu.show();
-            } else {
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemClickListener.onItemClick(savedList.get(position));
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Book book = savedList.get(position);
+                if (view.getId() == R.id.imageview_edit) {
+                    removeItem(position);
+                } else {
+                    Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
                 }
             }
         }
+
+        private void removeItem(final int position) {
+            final Book removedBook = savedList.remove(position);
+            notifyItemRemoved(position);
+            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_LONG);
+            snackbar.setAction(R.string.undo, v -> {
+                savedList.add(position, removedBook);
+                notifyItemInserted(position);
+            });
+            snackbar.show();
+        }
+
     }
+
 }
