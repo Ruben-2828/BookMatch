@@ -37,7 +37,10 @@ public class CreateCollectionActivity extends AppCompatActivity {
             }
 
         });
+
+        binding.goBackButton.setOnClickListener(view -> finish());
     }
+
 
     private boolean validateInput(String name, String description) {
         boolean isValid = true;
