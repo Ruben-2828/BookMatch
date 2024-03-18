@@ -59,7 +59,7 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
                     new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
                     new ArrayList<String>(Arrays.asList("Avventura ezezez")),
                     "2024",
-                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
+                    "921610"));
         }
         adapter = new CardAdapter(sampleData, this);
         addCardToFrameLayout();
@@ -116,7 +116,6 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         }
     }
 
-
     @Override
     public void onCardSwiping(int direction, float scale, float alpha, float borderProgress){
         disableButtons();
@@ -147,7 +146,6 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         binding.likeButton.setScaleY(1);
         binding.likeButton.setAlpha(1f);
     }
-
 
     public void selectionMade(int action, boolean animation){
         switch(action) {

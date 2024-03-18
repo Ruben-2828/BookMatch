@@ -50,7 +50,7 @@ public class SavedFragment extends Fragment {
                     new ArrayList<String>(Arrays.asList("Paco Quackez")),
                     new ArrayList<String>(Arrays.asList("Avventura ezezez")),
                     "1792",
-                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
+                    "921610"));
         }
 
         SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedList,
