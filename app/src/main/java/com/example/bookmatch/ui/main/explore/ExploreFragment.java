@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -20,6 +21,7 @@ import com.example.bookmatch.adapter.CardAdapter;
 import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.ui.main.saved.SharedViewModel;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ import java.util.List;
 public class ExploreFragment extends Fragment implements CardSwipeCallback {
 
     private FragmentExploreBinding binding;
+    private SharedViewModel sharedViewModel;
+
     private CardAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,13 +55,16 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         BookRepository bookRepository = new BookRepository();
 
 
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
         List<Book> sampleData = new ArrayList<>();
         for (int i = 1; i < 100; i++){
             sampleData.add(new Book(
                     "i",
                     "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
-                    new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
-                    new ArrayList<String>(Arrays.asList("Avventura ezezez")),
+                    "Paco Quack",
+                    "Jouness Amsaet, un genio della programmazione con occhi ipnotici, si trova coinvolto in un enigma matematico durante i suoi studi. Con l'aiuto di amici, affronta sfide culturali e misteri informatici, dimostrando che la sua intelligenza va oltre i numeri.",
+                    "Avventura",
                     "2024",
                     "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
         }
@@ -65,7 +72,13 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         addCardToFrameLayout();
 
         binding.dislikeButton.setOnClickListener(v -> selectionMade(0, true));
-        binding.likeButton.setOnClickListener(v -> selectionMade(1, true));
+        binding.likeButton.setOnClickListener(v -> {
+            selectionMade(1, true);
+            Book currentBook = adapter.getCurrentItemData();
+            if (currentBook != null) {
+                sharedViewModel.saveBook(currentBook);
+            }
+        });
 
         binding.genre.addTextChangedListener(new TextWatcher() {
             @Override

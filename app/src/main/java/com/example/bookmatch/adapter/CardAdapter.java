@@ -58,6 +58,7 @@ public class CardAdapter {
         return null;
     }
 
+
     public Book getCurrentItemData() {
         if (currentPosition < dataList.size()) {
             return dataList.get(currentPosition);
@@ -66,11 +67,12 @@ public class CardAdapter {
     }
 
     public void advanceToNextItem() {
-        if (!dataList.isEmpty() && currentPosition < dataList.size()) {
-            currentPosition = (currentPosition + 1) % dataList.size();
+        if (!dataList.isEmpty() && currentPosition < dataList.size() - 1) {
+            currentPosition++;
             holderMap.remove(currentPosition - 1);
         }
     }
+
 
     public void swipeCurrentCard(int direction) {
         CardViewHolder currentHolder = holderMap.get(currentPosition);
@@ -86,4 +88,6 @@ public class CardAdapter {
             }
         }
     }
+
+
 }
