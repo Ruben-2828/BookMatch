@@ -58,15 +58,15 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         List<Book> sampleData = new ArrayList<>();
-        for (int i = 1; i < 100; i++){
+        for (int i = 0; i < 10; i++) {
             sampleData.add(new Book(
-                    "i",
                     "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
-                    "Paco Quack",
-                    "Jouness Amsaet, un genio della programmazione con occhi ipnotici, si trova coinvolto in un enigma matematico durante i suoi studi. Con l'aiuto di amici, affronta sfide culturali e misteri informatici, dimostrando che la sua intelligenza va oltre i numeri.",
-                    "Avventura",
+                    new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
+                    new ArrayList<String>(Arrays.asList("Avventura ezezez")),
                     "2024",
-                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
+                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg",
+                    false
+            ));
         }
         adapter = new CardAdapter(sampleData, this);
         addCardToFrameLayout();

@@ -7,36 +7,49 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+@Entity
 public class Book implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("key")
-    private final String id;
-    private final String title;
+    private long id;
+    private String title;
+    @ColumnInfo(name = "author_name")
     @SerializedName("author_name")
-    private final ArrayList<String> authors;
+    private ArrayList<String> authors;
+    @ColumnInfo(name = "first_sentence")
     @SerializedName("first_sentence")
-    private final ArrayList<String> firstSentence;
+    private ArrayList<String> firstSentence;
+    @ColumnInfo(name = "first_publication_year")
     @SerializedName("first_publish_year")
-    private final String publicationYear;
+    private String publicationYear;
+    @ColumnInfo(name = "cover_i")
     @SerializedName("cover_i")
-    private final String coverID;
+    private String coverID;
 
-    public Book(String id, String title, ArrayList<String> authors, ArrayList<String> firstSentence, String publicationYear, String coverID) {
-        this.id = id;
+    @ColumnInfo(name = "is_saved")
+    private boolean isSaved;
+
+
+    public Book(String title, ArrayList<String> authors, ArrayList<String> firstSentence, String publicationYear, String coverID, boolean isSaved){
         this.title = title;
         this.authors = authors;
         this.firstSentence = firstSentence;
         this.publicationYear = publicationYear;
         this.coverID = coverID;
+        this.isSaved = isSaved;
     }
 
     protected Book(Parcel in) {
-        id = in.readString();
+        id = in.readLong();
         title = in.readString();
         authors = in.createStringArrayList();
         firstSentence = in.createStringArrayList();
@@ -56,7 +69,7 @@ public class Book implements Parcelable {
         }
     };
 
-    public String getId() { return id; }
+    public long getId() { return id; }
 
     public String getTitle() {
         return title;
@@ -75,6 +88,38 @@ public class Book implements Parcelable {
     }
 
     public String getCoverID() { return coverID; }
+
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthors(ArrayList<String> authors) {
+        this.authors = authors;
+    }
+
+    public void setFirstSentence(ArrayList<String> firstSentence) {
+        this.firstSentence = firstSentence;
+    }
+
+    public void setPublicationYear(String publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
+    public void setCoverID(String coverID) {
+        this.coverID = coverID;
+    }
+
+    public void setSaved(boolean saved) {
+        isSaved = saved;
+    }
 
     public String getCoverURI() {
         return String.format(BASE_API_URL + API_RETRIEVE_BOOK_COVER_BY_ID_ENDPOINT, this.coverID);
@@ -99,7 +144,7 @@ public class Book implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeString(id);
+        dest.writeLong(id);
         dest.writeString(title);
         dest.writeStringList(authors);
         dest.writeStringList(firstSentence);
