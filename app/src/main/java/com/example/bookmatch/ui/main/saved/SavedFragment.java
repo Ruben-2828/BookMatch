@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,26 +12,23 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.SavedRecyclerViewAdapter;
 import com.example.bookmatch.databinding.FragmentSavedBinding;
 import com.example.bookmatch.model.Book;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SavedFragment extends Fragment {
 
     private FragmentSavedBinding binding;
+    private SharedViewModel sharedViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         binding = FragmentSavedBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
@@ -40,24 +36,16 @@ public class SavedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
 
-        // TODO: extract current user saved books
-        List<Book> savedList = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            savedList.add(new Book(String.valueOf(i),
-                    "Nusy eepy" + i,
-                    "Rubini",
-                    "La nusy fa eepy",
-                    "Eepy",
-                    "2023",
-                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
-        }
+        sharedViewModel.getSavedBooks().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
+    }
 
-        SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedList,
+    private void updateSavedBooksList(List<Book> savedBooks) {
+        SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedBooks,
                 saved -> {
                     Bundle bundle = new Bundle();
                     bundle.putString("title", saved.getTitle());
@@ -69,11 +57,8 @@ public class SavedFragment extends Fragment {
 
                     NavController navController = Navigation.findNavController(requireView());
                     navController.navigate(R.id.action_navigation_saved_to_navigation_book, bundle);
-
-
                 });
         binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
-
     }
 
     @Override

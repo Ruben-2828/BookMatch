@@ -1,5 +1,7 @@
 package com.example.bookmatch.ui.main.explore;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -17,6 +20,7 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.CardAdapter;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.ui.main.saved.SharedViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +28,10 @@ import java.util.List;
 public class ExploreFragment extends Fragment implements CardSwipeCallback {
 
     private FragmentExploreBinding binding;
+    private SharedViewModel sharedViewModel;
     private CardAdapter adapter;
+    private int currentCardIndex = 0;
+    private SharedPreferences sharedPreferences;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,12 +43,19 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("currentCardIndex", getCurrentCardIndex());
+        editor.apply();
         binding = null;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+
 
         List<Book> sampleData = new ArrayList<>();
         for (int i = 1; i < 100; i++){
@@ -58,8 +72,15 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         addCardToFrameLayout();
 
         binding.dislikeButton.setOnClickListener(v -> selectionMade(0, true));
-        binding.likeButton.setOnClickListener(v -> selectionMade(1, true));
+        binding.likeButton.setOnClickListener(v -> {
+            selectionMade(1, true);
+            Book currentBook = adapter.getCurrentItemData();
+            if (currentBook != null) {
+                sharedViewModel.saveBook(currentBook);
+            }
+        });
 
+        currentCardIndex = sharedPreferences.getInt("currentCardIndex", 0);
     }
 
     private void addCardToFrameLayout() {
@@ -72,11 +93,13 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     @Override
     public void onCardSwipedLeft() {
         selectionMade(0, false);
+        currentCardIndex++;
     }
 
     @Override
     public void onCardSwipedRight() {
         selectionMade(1, false);
+        currentCardIndex++;
     }
 
     @Override
@@ -156,10 +179,8 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     }
 
     private void updateCards(){
-        // Remove the current card
         binding.cardStackView.removeAllViews();
 
-        // Advance to the next card
         adapter.advanceToNextItem();
         addCardToFrameLayout();
     }
@@ -172,5 +193,9 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     private void enableButtons() {
         binding.dislikeButton.setEnabled(true);
         binding.likeButton.setEnabled(true);
+    }
+
+    private int getCurrentCardIndex() {
+        return currentCardIndex;
     }
 }
