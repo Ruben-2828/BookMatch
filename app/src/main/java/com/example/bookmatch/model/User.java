@@ -29,4 +29,5 @@ public class User {
     public void setTokenId(String tokenId) {
         this.tokenId = tokenId;
     }
+
 }

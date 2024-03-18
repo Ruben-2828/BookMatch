@@ -12,15 +12,15 @@ public class AppUser implements Parcelable {
     private String firstName;
     private String lastName;
     private String email;
-    private String pic;
+    private String cover;
 
-    public AppUser(String id, String nickname, String firstName, String lastName, String email, String pic) {
+    public AppUser(String id, String nickname, String firstName, String lastName, String email, String cover) {
         this.id = id;
         this.nickname = nickname;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.pic = pic;
+        this.cover = cover;
     }
 
     protected AppUser(Parcel in) {
@@ -29,7 +29,7 @@ public class AppUser implements Parcelable {
         firstName = in.readString();
         lastName = in.readString();
         email = in.readString();
-        pic = in.readString();
+        cover = in.readString();
     }
 
     public static final Creator<AppUser> CREATOR = new Creator<AppUser>() {
@@ -64,8 +64,32 @@ public class AppUser implements Parcelable {
         return email;
     }
 
-    public String getPic() {
-        return pic;
+    public String getCover() {
+        return cover;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     @Override
@@ -80,7 +104,7 @@ public class AppUser implements Parcelable {
         dest.writeString(firstName);
         dest.writeString(lastName);
         dest.writeString(email);
-        dest.writeString(pic);
+        dest.writeString(cover);
     }
 
 

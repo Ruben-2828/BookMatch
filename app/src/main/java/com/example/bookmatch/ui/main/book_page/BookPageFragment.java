@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentBookPageBinding;
+import com.example.bookmatch.model.Book;
 
 public class BookPageFragment extends Fragment {
 
@@ -32,30 +33,35 @@ public class BookPageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String coverUrl;
-
         Bundle arguments = getArguments();
         if (arguments != null) {
-            String title = arguments.getString("title", getString(R.string.book_title_default));
-            String author = arguments.getString("author", getString(R.string.default_book_author));
-            String plot = arguments.getString("plot", getString(R.string.default_book_plot));
-            String genre = arguments.getString("genre", getString(R.string.genre_book_default));
-            String year = arguments.getString("year", getString(R.string.pubblication_year_default));
-            coverUrl = arguments.getString("cover", "");
+            Book book = arguments.getParcelable("book");
 
-            binding.projectTitle.setText(title);
-            binding.authorTextView.setText(author);
-            binding.plotTextView.setText(plot);
-            binding.genreTextView.setText(genre);
-            binding.pubblicationYearTextView.setText(year);
+            binding.projectTitle.setText(book.getTitle());
+            binding.authorTextView.setText(book.getAuthors().toString());
+            binding.pubblicationYearTextView.setText(book.getPublicationYear());
 
-            if (!coverUrl.isEmpty()) {
-                Glide.with(this).load(coverUrl).into(binding.coverBook);
+            if(book.getFirstSentence() != null)
+                binding.plotTextView.setText(book.getFirstSentence().get(0));
+
+            String authors = "";
+            for(String a: book.getAuthors())
+                authors += a + ", ";
+            authors = authors.substring(0, authors.length() - 2);
+            binding.authorTextView.setText(authors);
+
+            if (!book.getCoverID().isEmpty()) {
+                Glide.with(this).load(book.getCoverID()).into(binding.coverBook);
             } else {
                 Toast.makeText(getContext(), (R.string.book_cover_not_available_toast), Toast.LENGTH_SHORT).show();
             }
+            binding.coverBook.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), FullScreenImageActivity.class);
+                intent.putExtra("image uri", book.getCoverID());
+                startActivity(intent);
+            });
+
         } else {
-            coverUrl = "";
             Toast.makeText(getContext(), (R.string.book_details_not_available_toast), Toast.LENGTH_SHORT).show();
         }
 
@@ -64,10 +70,6 @@ public class BookPageFragment extends Fragment {
             navController.navigateUp();
         });
 
-        binding.coverBook.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), FullScreenImageActivity.class);
-            intent.putExtra("image uri", coverUrl);
-            startActivity(intent);
-        });
+
     }
 }

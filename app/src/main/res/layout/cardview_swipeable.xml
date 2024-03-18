@@ -41,17 +41,18 @@
             android:text="@string/default_title"
             android:textSize="24sp"
             android:textStyle="bold"
-            card_view:layout_constraintBottom_toTopOf="@+id/description_scrollview"
+            card_view:layout_constraintBottom_toTopOf="@+id/book_author_by"
             card_view:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/book_author_by"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/by"
-            card_view:layout_constraintBottom_toBottomOf="@+id/book_title"
-            card_view:layout_constraintStart_toEndOf="@+id/book_title" />
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/book_author"
@@ -59,39 +60,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/default_author"
             android:textStyle="bold"
-            card_view:layout_constraintBottom_toBottomOf="@+id/book_title"
+            card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="1.0"
             card_view:layout_constraintStart_toEndOf="@+id/book_author_by" />
 
-        <ScrollView
-            android:id="@+id/description_scrollview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            card_view:layout_constraintHeight_max="200dp"
-            card_view:layout_constrainedHeight="true"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/book_plot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/default_content_description" />
-
-            </LinearLayout>
-
-        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
