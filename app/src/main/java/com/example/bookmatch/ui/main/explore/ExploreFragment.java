@@ -18,6 +18,8 @@ import androidx.navigation.Navigation;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.CardAdapter;
+import com.example.bookmatch.data.database.BookDao;
+import com.example.bookmatch.data.database.BookRoomDatabase;
 import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
@@ -34,6 +36,8 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     private SharedViewModel sharedViewModel;
 
     private CardAdapter adapter;
+    private BookDao bookDao;
+    private final List<Book> bookList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,22 +58,11 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
 
         BookRepository bookRepository = new BookRepository(requireActivity().getApplication());
 
-
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        List<Book> sampleData = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            sampleData.add(new Book(
-                    i + "",
-                    "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
-                    new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
-                    new ArrayList<String>(Arrays.asList("Avventura ezezez")),
-                    "2024",
-                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg",
-                    false
-            ));
-        }
-        adapter = new CardAdapter(sampleData, this);
+
+        loadDataFromDatabase();
+        adapter = new CardAdapter(bookList, this);
         addCardToFrameLayout();
 
         binding.dislikeButton.setOnClickListener(v -> selectionMade(0, true));
@@ -203,5 +196,12 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     private void enableButtons() {
         binding.dislikeButton.setEnabled(true);
         binding.likeButton.setEnabled(true);
+    }
+
+    private void loadDataFromDatabase() {
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao = BookRoomDatabase.getDatabase(requireContext()).bookDao();
+            bookList.addAll(bookDao.getAllBooks());
+        });
     }
 }
