@@ -28,7 +28,6 @@ public class CollectionsFragment extends Fragment {
     private FragmentCollectionsBinding binding;
     private final List<Collection> collectionsList = new ArrayList<>();
     private CollectionsRecyclerViewAdapter adapter;
-    private List<String> addedBookNames = new ArrayList<>();
 
     @SuppressLint("NotifyDataSetChanged")
     private final ActivityResultLauncher<Intent> createCollectionLauncher = registerForActivityResult(
@@ -53,6 +52,7 @@ public class CollectionsFragment extends Fragment {
         binding = FragmentCollectionsBinding.inflate(inflater, container, false);
         setupRecyclerView();
         return binding.getRoot();
+
     }
 
     private void setupRecyclerView() {
@@ -74,6 +74,7 @@ public class CollectionsFragment extends Fragment {
             Intent intent = new Intent(getActivity(), CreateCollectionActivity.class);
             createCollectionLauncher.launch(intent);
         });
+
     }
 
     @Override

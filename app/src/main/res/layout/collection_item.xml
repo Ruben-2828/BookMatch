@@ -36,30 +36,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/description_collection_default" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/books_carousel"
             android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/collection_item_description"
             app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/empty_collection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty_collection"
-            android:textColor="@color/grey_separator"
-            android:textSize="22sp"
-            android:textStyle="italic"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/view_pager"
-            app:layout_constraintEnd_toEndOf="@+id/view_pager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view_pager" />
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
