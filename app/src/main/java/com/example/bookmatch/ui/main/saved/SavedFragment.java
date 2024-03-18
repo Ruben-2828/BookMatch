@@ -18,11 +18,14 @@ import com.example.bookmatch.adapter.SavedRecyclerViewAdapter;
 import com.example.bookmatch.databinding.FragmentSavedBinding;
 import com.example.bookmatch.model.Book;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SavedFragment extends Fragment {
 
     private FragmentSavedBinding binding;
+    private SharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -35,18 +38,21 @@ public class SavedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
 
         sharedViewModel.getSavedBooks().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
+
+        //TODO: Implement with Dao not with SharedViewModel
+
     }
 
     private void updateSavedBooksList(List<Book> savedBooks) {
         SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedBooks,
                 saved -> {
-                    Bundle bundle = new Bundle();
+                    Bundle bundle = new Bundle();;
                     bundle.putParcelable("book", saved);
 
                     NavController navController = Navigation.findNavController(requireView());

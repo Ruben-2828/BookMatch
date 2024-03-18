@@ -9,6 +9,6 @@ public class Constants {
     public static final String API_RETRIEVE_BOOK_COVER_BY_ID_ENDPOINT = "b/id/%s-L.jpg";
 
     public static final String BOOK_DATABASE_NAME = "book_db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
 }

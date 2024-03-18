@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
+import com.example.bookmatch.data.database.BookRoomDatabase;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
 import com.example.bookmatch.model.AppUser;
 import com.google.android.material.snackbar.Snackbar;
@@ -117,7 +118,7 @@ public class AccountFragment extends Fragment {
             Glide.with(this).load(user.getCover()).into(binding.profileImage);
         }
 
-        binding.userSavedBooks.setText("10");
+
         binding.userBooksRead.setText("5");
         binding.userFavoriteGenre.setText("ezezez");
     }

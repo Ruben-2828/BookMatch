@@ -52,7 +52,7 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        BookRepository bookRepository = new BookRepository();
+        BookRepository bookRepository = new BookRepository(requireActivity().getApplication());
 
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
@@ -60,6 +60,7 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         List<Book> sampleData = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             sampleData.add(new Book(
+                    i + "",
                     "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
                     new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
                     new ArrayList<String>(Arrays.asList("Avventura ezezez")),

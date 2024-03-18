@@ -5,6 +5,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.bookmatch.data.database.BookDao;
+import com.example.bookmatch.data.database.BookRoomDatabase;
 import com.example.bookmatch.data.service.BookAPIService;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.BooksListApiResponse;
@@ -19,12 +21,16 @@ import retrofit2.Response;
 
 public class BookRepository implements IBookRepository{
 
+    private final Application application;
     private static final String TAG = BookRepository.class.getSimpleName();
-
     private final BookAPIService bookAPIService;
+    private final BookDao bookDao;
 
-    public BookRepository() {
+    public BookRepository(Application application) {
+        this.application = application;
         this.bookAPIService = ServiceLocator.getInstance().getBooksApiService();
+        BookRoomDatabase bookRoomDatabase = ServiceLocator.getInstance().getBookDao(application);
+        this.bookDao = bookRoomDatabase.bookDao();
     }
 
     @Override
@@ -43,6 +49,8 @@ public class BookRepository implements IBookRepository{
 
                 if (response.body() != null && response.isSuccessful()) {
                     Log.d(TAG, ""+ response.body().getBooksList());
+                    List<Book> bookList = response.body().getBooksList();
+                    saveDataInDatabase(bookList);
                 } else {
                     Log.d(TAG, "eerroraccio");
                 }
@@ -55,4 +63,11 @@ public class BookRepository implements IBookRepository{
             }
         });
     }
+
+    private void saveDataInDatabase(List<Book> bookList) {
+      BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+          bookDao.insertBookList(bookList);
+      });
+    }
+
 }

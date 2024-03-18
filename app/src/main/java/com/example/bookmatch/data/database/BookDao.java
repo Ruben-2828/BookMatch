@@ -3,6 +3,7 @@ package com.example.bookmatch.data.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.bookmatch.model.Book;
@@ -28,6 +29,9 @@ public interface BookDao {
     @Delete
     void deleteBook(Book book);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    List<Long> insertBookList(List<Book> bookList);
+
     // get the number of books in the database
     @Query("SELECT COUNT(*) FROM Book")
     int getNumberOfBooks();
@@ -36,6 +40,9 @@ public interface BookDao {
     @Query("SELECT * FROM Book WHERE is_saved = 1")
     List<Book> getSavedBooks();
 
+    // get the number of saved books
+    @Query("SELECT COUNT(*) FROM Book WHERE is_saved = 1")
+    int getNumberOfSavedBooks();
 
 }
 

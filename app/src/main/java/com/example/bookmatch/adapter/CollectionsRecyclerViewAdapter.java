@@ -50,6 +50,7 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
         List<Book> books = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             books.add(new Book(
+                    i + "",
                     "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
                     new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
                     new ArrayList<String>(Arrays.asList("Avventura ezezez")),

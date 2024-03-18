@@ -19,8 +19,9 @@ import java.util.ArrayList;
 public class Book implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    @SerializedName("key")
     private long id;
+
+    private String key;
     private String title;
     @ColumnInfo(name = "author_name")
     @SerializedName("author_name")
@@ -39,7 +40,8 @@ public class Book implements Parcelable {
     private boolean isSaved;
 
 
-    public Book(String title, ArrayList<String> authors, ArrayList<String> firstSentence, String publicationYear, String coverID, boolean isSaved){
+    public Book(String key, String title, ArrayList<String> authors, ArrayList<String> firstSentence, String publicationYear, String coverID, boolean isSaved){
+        this.key = key;
         this.title = title;
         this.authors = authors;
         this.firstSentence = firstSentence;
@@ -71,6 +73,10 @@ public class Book implements Parcelable {
 
     public long getId() { return id; }
 
+    public String getKey() {
+        return key;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -95,6 +101,10 @@ public class Book implements Parcelable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public void setTitle(String title) {
