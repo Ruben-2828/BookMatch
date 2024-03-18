@@ -15,6 +15,7 @@ import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.Collection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,13 +50,12 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
         List<Book> books = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             books.add(new Book(
-                    UUID.randomUUID().toString(),
-                    "Titolo " + (i + 1),
-                    "Autore " + (i + 1),
-                    "amog " + (i + 1),
-                    "Genere " + (i + 1),
-                    "Anno " + (2000 + i),
-                    "https://i.pinimg.com/736x/c6/25/90/c62590c1756680060e7c38011cd704b5.jpg"
+                    "i"+i,
+                    "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
+                    new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
+                    new ArrayList<String>(Arrays.asList("Avventura ezezez")),
+                    "2024",
+                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"
             ));
         }
 

@@ -11,6 +11,7 @@ import com.example.bookmatch.databinding.ActivityAddBookToCollectionBinding;
 import com.example.bookmatch.model.Book;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AddBookToCollectionActivity extends AppCompatActivity {
@@ -28,12 +29,12 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
 
         List<Book> savedList = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            savedList.add(new Book(String.valueOf(i),
-                    "Nagini" + i,
-                    "Rubini",
-                    "Nagi il serpentello",
-                    "Eepy anche lui",
-                    "2023",
+            savedList.add(new Book(
+                    "i",
+                    "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
+                    new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
+                    new ArrayList<String>(Arrays.asList("Avventura ezezez")),
+                    "2024",
                     "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
         }
 

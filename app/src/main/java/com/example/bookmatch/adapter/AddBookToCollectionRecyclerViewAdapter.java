@@ -60,7 +60,12 @@ public class AddBookToCollectionRecyclerViewAdapter extends RecyclerView.Adapter
 
         public void bind(Book book) {
             title.setText(book.getTitle());
-            author.setText(book.getAuthor());
+
+            String authors = "";
+            for(String a: book.getAuthors())
+                authors += a + ", ";
+            authors = authors.substring(0, authors.length() - 2);
+            author.setText(authors);
         }
 
         @Override

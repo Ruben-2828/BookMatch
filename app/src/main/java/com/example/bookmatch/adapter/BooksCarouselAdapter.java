@@ -38,7 +38,7 @@ public class BooksCarouselAdapter extends RecyclerView.Adapter<BooksCarouselAdap
         holder.bookTitle.setText(book.getTitle());
 
         Glide.with(context)
-                .load(book.getCover())
+                .load(book.getCoverID())
                 .into(holder.bookImage);
 
     }
