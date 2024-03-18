@@ -2,6 +2,8 @@ package com.example.bookmatch.ui.main.explore;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +17,13 @@ import androidx.navigation.Navigation;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.CardAdapter;
+import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ExploreFragment extends Fragment implements CardSwipeCallback {
@@ -43,14 +48,16 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        BookRepository bookRepository = new BookRepository();
+
+
         List<Book> sampleData = new ArrayList<>();
         for (int i = 1; i < 100; i++){
             sampleData.add(new Book(
                     "i",
                     "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
-                    "Paco Quack",
-                    "Jouness Amsaet, un genio della programmazione con occhi ipnotici, si trova coinvolto in un enigma matematico durante i suoi studi. Con l'aiuto di amici, affronta sfide culturali e misteri informatici, dimostrando che la sua intelligenza va oltre i numeri.",
-                    "Avventura",
+                    new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
+                    new ArrayList<String>(Arrays.asList("Avventura ezezez")),
                     "2024",
                     "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg"));
         }
@@ -60,6 +67,22 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         binding.dislikeButton.setOnClickListener(v -> selectionMade(0, true));
         binding.likeButton.setOnClickListener(v -> selectionMade(1, true));
 
+        binding.genre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                bookRepository.fetchBooks(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void addCardToFrameLayout() {
@@ -84,13 +107,7 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         Book currentBook = adapter.getCurrentItemData();
         if (currentBook != null) {
             Bundle args = new Bundle();
-            args.putString("bookId", currentBook.getId());
-            args.putString("title", currentBook.getTitle());
-            args.putString("author", currentBook.getAuthor());
-            args.putString("plot", currentBook.getPlot());
-            args.putString("genre", currentBook.getGenre());
-            args.putString("year", currentBook.getPublicationYear());
-            args.putString("cover", currentBook.getCover());
+            args.putParcelable("book", currentBook);
 
             NavController navController = Navigation.findNavController(getView());
             navController.navigate(R.id.action_navigation_explore_to_navigation_book, args);

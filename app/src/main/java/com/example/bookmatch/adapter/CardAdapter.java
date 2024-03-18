@@ -39,10 +39,13 @@ public class CardAdapter {
         if (!dataList.isEmpty() && position < dataList.size()) {
             Book dataItem = dataList.get(position);
 
-            holder.plot.setText(dataItem.getPlot());
-            holder.author.setText(dataItem.getAuthor());
+            String authors = "";
+            for(String a: dataItem.getAuthors())
+                authors += a + ", ";
+            authors = authors.substring(0, authors.length() - 2);
+            holder.author.setText(authors);
             holder.title.setText(dataItem.getTitle());
-            Glide.with(holder.itemView).load(dataItem.getCover()).into(holder.cover);
+            Glide.with(holder.itemView).load(dataItem.getCoverID()).into(holder.cover);
         }
     }
 

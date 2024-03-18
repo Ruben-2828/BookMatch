@@ -30,7 +30,6 @@ public class CardViewHolder implements View.OnTouchListener {
         this.itemView = view;
         this.title = view.findViewById(R.id.book_title);
         this.author = view.findViewById(R.id.book_author);
-        this.plot = view.findViewById(R.id.book_plot);
         this.cover = view.findViewById(R.id.book_cover);
 
         this.swipeCallback = passedSwipeCallback;

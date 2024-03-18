@@ -114,7 +114,7 @@ public class AccountFragment extends Fragment {
             binding.userFirstName.setText(user.getFirstName());
             binding.userLastName.setText(user.getLastName());
             binding.userEmail.setText(user.getEmail());
-            Glide.with(this).load(user.getPic()).into(binding.profileImage);
+            Glide.with(this).load(user.getCover()).into(binding.profileImage);
         }
 
         binding.userSavedBooks.setText("10");
