@@ -123,7 +123,6 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         }
     }
 
-
     @Override
     public void onCardSwiping(int direction, float scale, float alpha, float borderProgress){
         disableButtons();
@@ -154,7 +153,6 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         binding.likeButton.setScaleY(1);
         binding.likeButton.setAlpha(1f);
     }
-
 
     public void selectionMade(int action, boolean animation){
         switch(action) {
