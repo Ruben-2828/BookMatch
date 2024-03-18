@@ -28,7 +28,7 @@ public class AddBookToCollectionRecyclerViewAdapter extends RecyclerView.Adapter
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.add_book_to_collecxtion_list_item, parent, false);
+                R.layout.add_book_to_collection_list_item, parent, false);
 
         return new BookViewHolder(view);
     }
