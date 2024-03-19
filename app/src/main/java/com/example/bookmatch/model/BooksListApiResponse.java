@@ -6,16 +6,14 @@ import java.util.List;
 
 public class BooksListApiResponse {
 
-    @SerializedName("numFound")
+    @SerializedName("totalItems")
     private int totResults;
 
-    private int start;
-    @SerializedName("docs")
+    @SerializedName("items")
     private List<Book> booksList;
 
     public BooksListApiResponse(int totResults, int start, List<Book> booksList) {
         this.totResults = totResults;
-        this.start = start;
         this.booksList = booksList;
     }
 
@@ -23,9 +21,6 @@ public class BooksListApiResponse {
         return totResults;
     }
 
-    public int getStart() {
-        return start;
-    }
 
     public List<Book> getBooksList() {
         return booksList;
@@ -35,9 +30,6 @@ public class BooksListApiResponse {
         this.totResults = totResults;
     }
 
-    public void setStart(int start) {
-        this.start = start;
-    }
 
     public void setBooksList(List<Book> booksList) {
         this.booksList = booksList;

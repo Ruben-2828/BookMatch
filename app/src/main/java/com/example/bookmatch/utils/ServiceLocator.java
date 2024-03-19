@@ -37,8 +37,9 @@ public class ServiceLocator {
     }
 
     public BookAPIService getBooksApiService() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.API_BASE_URL).
-                addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         return retrofit.create(BookAPIService.class);
     }
 

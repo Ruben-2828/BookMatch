@@ -1,7 +1,6 @@
 package com.example.bookmatch.model;
 
 import static com.example.bookmatch.utils.Constants.API_RETRIEVE_BOOK_COVER_BY_ID_ENDPOINT;
-import static com.example.bookmatch.utils.Constants.API_BASE_URL;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -19,9 +18,13 @@ import java.util.ArrayList;
 public class Book implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    @ColumnInfo(name = "id")
+    private long book_id;
 
+    @SerializedName("id")
     private String key;
+
+    @SerializedName("title")
     private String title;
     @ColumnInfo(name = "author_name")
     @SerializedName("author_name")
@@ -32,6 +35,8 @@ public class Book implements Parcelable {
     @ColumnInfo(name = "first_publication_year")
     @SerializedName("first_publish_year")
     private String publicationYear;
+
+    private ArrayList<String> subject;
     @ColumnInfo(name = "cover_i")
     @SerializedName("cover_i")
     private String coverID;
@@ -40,18 +45,20 @@ public class Book implements Parcelable {
     private boolean isSaved;
 
 
-    public Book(String key, String title, ArrayList<String> authors, ArrayList<String> firstSentence, String publicationYear, String coverID, boolean isSaved){
+    public Book(String key, String title, ArrayList<String> authors, ArrayList<String> firstSentence,
+                String publicationYear, ArrayList<String> subject, String coverID, boolean isSaved){
         this.key = key;
         this.title = title;
         this.authors = authors;
         this.firstSentence = firstSentence;
         this.publicationYear = publicationYear;
+        this.subject = subject;
         this.coverID = coverID;
         this.isSaved = isSaved;
     }
 
     protected Book(Parcel in) {
-        id = in.readLong();
+        book_id = in.readLong();
         title = in.readString();
         authors = in.createStringArrayList();
         firstSentence = in.createStringArrayList();
@@ -71,7 +78,7 @@ public class Book implements Parcelable {
         }
     };
 
-    public long getId() { return id; }
+    public long getBook_id() { return book_id; }
 
     public String getKey() {
         return key;
@@ -89,6 +96,10 @@ public class Book implements Parcelable {
         return firstSentence;
     }
 
+    public ArrayList<String> getSubject() {
+        return subject;
+    }
+
     public String getPublicationYear() {
         return publicationYear;
     }
@@ -99,8 +110,8 @@ public class Book implements Parcelable {
         return isSaved;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setBook_id(long book_id) {
+        this.book_id = book_id;
     }
 
     public void setKey(String key) {
@@ -123,6 +134,10 @@ public class Book implements Parcelable {
         this.publicationYear = publicationYear;
     }
 
+    public void setSubject(ArrayList<String> subject) {
+        this.subject = subject;
+    }
+
     public void setCoverID(String coverID) {
         this.coverID = coverID;
     }
@@ -138,7 +153,7 @@ public class Book implements Parcelable {
     @Override
     public String toString() {
         return "Book{" +
-                "id='" + id + '\'' +
+                "id='" + book_id + '\'' +
                 ", title='" + title + '\'' +
                 ", author='" + authors + '\'' +
                 ", plot='" + firstSentence + '\'' +
@@ -154,7 +169,7 @@ public class Book implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeLong(id);
+        dest.writeLong(book_id);
         dest.writeString(title);
         dest.writeStringList(authors);
         dest.writeStringList(firstSentence);

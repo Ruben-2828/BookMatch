@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.bookmatch.R;
 import com.example.bookmatch.data.database.BookDao;
 import com.example.bookmatch.data.database.BookRoomDatabase;
 import com.example.bookmatch.data.service.BookAPIService;
@@ -36,7 +37,8 @@ public class BookRepository implements IBookRepository{
     @Override
     public void fetchBooks(String genre) {
 
-        Call<BooksListApiResponse> booksResponseCall = bookAPIService.getBooks(genre);
+        Call<BooksListApiResponse> booksResponseCall = bookAPIService.getBooks("subject:" + genre);
+        Log.d(TAG, "genre: " + genre);
 
         booksResponseCall.enqueue(new Callback<BooksListApiResponse>() {
 
@@ -44,13 +46,12 @@ public class BookRepository implements IBookRepository{
             public void onResponse(Call<BooksListApiResponse> call,
                                    Response<BooksListApiResponse> response) {
 
-                Log.d(TAG, ""+ response.body());
-                Log.d(TAG, genre);
+                Log.d(TAG, "Response: "+ response);
 
                 if (response.body() != null && response.isSuccessful()) {
                     Log.d(TAG, ""+ response.body().getBooksList());
                     List<Book> bookList = response.body().getBooksList();
-                    saveDataInDatabase(bookList);
+                    //saveDataInDatabase(bookList);
                 } else {
                     Log.d(TAG, "eerroraccio");
                 }
@@ -59,7 +60,7 @@ public class BookRepository implements IBookRepository{
             @Override
             public void onFailure(Call<BooksListApiResponse> call,
                                   Throwable t) {
-                Log.d(TAG, t.getMessage());
+                Log.d(TAG, "Failure: "+ t.getMessage());
             }
         });
     }

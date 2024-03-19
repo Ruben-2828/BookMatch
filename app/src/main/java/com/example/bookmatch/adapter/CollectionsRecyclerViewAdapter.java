@@ -55,6 +55,7 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
                     new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
                     new ArrayList<String>(Arrays.asList("Avventura ezezez")),
                     "2024",
+                    new ArrayList<String>(Arrays.asList("horror", "fiction")),
                     "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg",
                     false
             ));

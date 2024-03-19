@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ExploreFragment extends Fragment implements CardSwipeCallback {
+
+    private static final String TAG = ExploreFragment.class.getSimpleName();
 
     private FragmentExploreBinding binding;
     private SharedViewModel sharedViewModel;
@@ -61,7 +64,6 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
 
-        loadDataFromDatabase();
         adapter = new CardAdapter(bookList, this);
         addCardToFrameLayout();
 
@@ -83,6 +85,10 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 bookRepository.fetchBooks(s.toString());
+                String formattedGenre = "%" + s.toString() + "%";
+                Log.d(TAG, formattedGenre);
+                loadDataFromDatabase(formattedGenre);
+                addCardToFrameLayout();
             }
 
             @Override
@@ -196,10 +202,11 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         binding.likeButton.setEnabled(true);
     }
 
-    private void loadDataFromDatabase() {
+    private void loadDataFromDatabase(String genre) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
             bookDao = BookRoomDatabase.getDatabase(requireContext()).bookDao();
-            bookList.addAll(bookDao.getAllBooks());
+            bookList.clear();
+            bookList.addAll(bookDao.getBooksByGenre(genre));
         });
     }
 }

@@ -17,6 +17,10 @@ public interface BookDao {
     @Query("SELECT * FROM Book")
     List<Book> getAllBooks();
 
+    // get books from the database filtered by genre
+    @Query("SELECT * FROM Book WHERE subject LIKE :genre")
+    List<Book> getBooksByGenre(String genre);
+
     // get a book by its id
     @Query("SELECT * FROM Book WHERE id = :bookId")
     Book getBookById(String bookId);
