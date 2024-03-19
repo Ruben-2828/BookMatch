@@ -9,9 +9,12 @@ import com.example.bookmatch.model.Book;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: I don't think this is the right way to do this, so when we will have the db we will have to change this (I think)
 public class SharedViewModel extends ViewModel {
     private MutableLiveData<List<Book>> savedBooks = new MutableLiveData<>();
+
+    public SharedViewModel() {
+        savedBooks.setValue(new ArrayList<>());
+    }
 
     public void saveBook(Book book) {
         List<Book> currentList = savedBooks.getValue();

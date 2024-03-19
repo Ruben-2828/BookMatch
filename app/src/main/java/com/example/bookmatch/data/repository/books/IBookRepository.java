@@ -15,5 +15,7 @@ public interface IBookRepository {
 
     public LiveData<List<Book>> getSavedBooks();
 
+    public void removeBookFromSaved(Book book);
+
 
 }

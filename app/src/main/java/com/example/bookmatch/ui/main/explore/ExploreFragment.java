@@ -20,14 +20,11 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.CardAdapter;
 import com.example.bookmatch.data.database.BookDao;
 import com.example.bookmatch.data.database.BookRoomDatabase;
-import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.saved.SharedViewModel;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ExploreFragment extends Fragment implements CardSwipeCallback {
@@ -56,8 +53,6 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        BookRepository bookRepository = new BookRepository(requireActivity().getApplication());
-
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
 
@@ -70,7 +65,6 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
             Book currentBook = adapter.getCurrentItemData();
             if (currentBook != null) {
                 saveBookAsNotSaved(currentBook);
-                sharedViewModel.saveBook(currentBook);
             }
                 });
         binding.likeButton.setOnClickListener(v -> {
@@ -92,7 +86,7 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                bookRepository.fetchBooks(s.toString());
+
             }
 
             @Override

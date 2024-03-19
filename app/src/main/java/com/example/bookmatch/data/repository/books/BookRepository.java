@@ -74,18 +74,16 @@ public class BookRepository implements IBookRepository{
         return bookDao.getSavedBooks();
     }
 
-    private void saveDataInDatabase(List<Book> bookList) {
-      BookRoomDatabase.databaseWriteExecutor.execute(() -> {
-          bookDao.insertBookList(bookList);
-      });
-    }
-
     public void removeBookFromSaved(Book book) {
         book.setSaved(false);
         updateBook(book);
     }
 
 
-
+    private void saveDataInDatabase(List<Book> bookList) {
+      BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+          bookDao.insertBookList(bookList);
+      });
+    }
 
 }
