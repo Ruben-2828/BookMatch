@@ -80,6 +80,12 @@ public class BookRepository implements IBookRepository{
       });
     }
 
+    public void removeBookFromSaved(Book book) {
+        book.setSaved(false);
+        updateBook(book);
+    }
+
+
 
 
 }
