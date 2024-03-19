@@ -58,4 +58,5 @@ public class BooksCarouselAdapter extends RecyclerView.Adapter<BooksCarouselAdap
             bookTitle = itemView.findViewById(R.id.book_title);
         }
     }
+
 }

@@ -1,7 +1,6 @@
 package com.example.bookmatch.model;
 
 import static com.example.bookmatch.utils.Constants.API_RETRIEVE_BOOK_COVER_BY_ID_ENDPOINT;
-import static com.example.bookmatch.utils.Constants.API_BASE_URL;
 
 import android.os.Parcel;
 import android.os.Parcelable;

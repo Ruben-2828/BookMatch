@@ -65,14 +65,24 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         adapter = new CardAdapter(bookList, this);
         addCardToFrameLayout();
 
-        binding.dislikeButton.setOnClickListener(v -> selectionMade(0, true));
+        binding.dislikeButton.setOnClickListener(v -> {
+            selectionMade(0, true);
+            Book currentBook = adapter.getCurrentItemData();
+            if (currentBook != null) {
+                saveBookAsNotSaved(currentBook);
+                sharedViewModel.saveBook(currentBook);
+            }
+                });
         binding.likeButton.setOnClickListener(v -> {
             selectionMade(1, true);
             Book currentBook = adapter.getCurrentItemData();
             if (currentBook != null) {
+                saveBookAsSaved(currentBook);
                 sharedViewModel.saveBook(currentBook);
             }
         });
+
+
 
         binding.genre.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,6 +99,18 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
             public void afterTextChanged(Editable s) {
 
             }
+        });
+    }
+
+    private void saveBookAsSaved(Book book) {
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao.updateBookSavedStatus(book.getId(), true);
+        });
+    }
+
+    private void saveBookAsNotSaved(Book book) {
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao.updateBookSavedStatus(book.getId(), false);
         });
     }
 
@@ -202,4 +224,6 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
             bookList.addAll(bookDao.getAllBooks());
         });
     }
+
+
 }

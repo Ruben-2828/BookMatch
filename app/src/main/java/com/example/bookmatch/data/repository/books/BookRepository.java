@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 
 import com.example.bookmatch.data.database.BookDao;
 import com.example.bookmatch.data.database.BookRoomDatabase;
@@ -21,13 +22,11 @@ import retrofit2.Response;
 
 public class BookRepository implements IBookRepository{
 
-    private final Application application;
     private static final String TAG = BookRepository.class.getSimpleName();
     private final BookAPIService bookAPIService;
     private final BookDao bookDao;
 
     public BookRepository(Application application) {
-        this.application = application;
         this.bookAPIService = ServiceLocator.getInstance().getBooksApiService();
         BookRoomDatabase bookRoomDatabase = ServiceLocator.getInstance().getBookDao(application);
         this.bookDao = bookRoomDatabase.bookDao();
@@ -64,10 +63,23 @@ public class BookRepository implements IBookRepository{
         });
     }
 
+
+    public void updateBook(Book book) {
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao.updateSingleSavedBook(book);
+        });
+    }
+
+    public LiveData<List<Book>> getSavedBooks() {
+        return bookDao.getSavedBooks();
+    }
+
     private void saveDataInDatabase(List<Book> bookList) {
       BookRoomDatabase.databaseWriteExecutor.execute(() -> {
           bookDao.insertBookList(bookList);
       });
     }
+
+
 
 }
