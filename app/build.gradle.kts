@@ -18,7 +18,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        resValue("string", "api_key", gradleLocalProperties(rootDir).getProperty("api_key"))
 
     }
 
