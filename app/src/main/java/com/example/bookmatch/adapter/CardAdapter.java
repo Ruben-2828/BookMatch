@@ -86,9 +86,18 @@ public class CardAdapter {
                 case 1:
                     currentHolder.swipeCardRight();
                     break;
+                case 2:
+                    currentHolder.swipeCardDown();
             }
         }
     }
+
+    public void notifyDataSetChanged() {
+        for (CardViewHolder holder : holderMap.values()) {
+            holder.itemView.invalidate();
+        }
+    }
+
 
 
 }

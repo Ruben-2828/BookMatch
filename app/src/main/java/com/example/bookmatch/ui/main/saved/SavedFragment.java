@@ -9,27 +9,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.bookmatch.R;
+
 import com.example.bookmatch.adapter.SavedRecyclerViewAdapter;
 import com.example.bookmatch.databinding.FragmentSavedBinding;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.ui.main.BookViewModel;
+import com.example.bookmatch.ui.main.BookViewModelFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
 
 public class SavedFragment extends Fragment {
 
     private FragmentSavedBinding binding;
-    private SharedViewModel sharedViewModel;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSavedBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -38,28 +41,25 @@ public class SavedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
+        BookViewModel bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
 
-        sharedViewModel.getSavedBooks().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
-
-        //TODO: Implement with Dao not with SharedViewModel
-
+        bookViewModel.getSavedBooks().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
     }
 
     private void updateSavedBooksList(List<Book> savedBooks) {
-        SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedBooks,
-                saved -> {
-                    Bundle bundle = new Bundle();;
-                    bundle.putParcelable("book", saved);
+        SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedBooks, saved -> {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("book", saved);
 
-                    NavController navController = Navigation.findNavController(requireView());
-                    navController.navigate(R.id.action_navigation_saved_to_navigation_book, bundle);
-                });
+
+        });
         binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
     }
+
 
     @Override
     public void onDestroyView() {
@@ -67,3 +67,5 @@ public class SavedFragment extends Fragment {
         binding = null;
     }
 }
+
+

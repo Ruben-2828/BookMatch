@@ -1,6 +1,7 @@
 package com.example.bookmatch.adapter;
 
 import android.os.Bundle;
+import android.app.Application;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
+import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.model.Book;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,6 +24,8 @@ import java.util.List;
 public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecyclerViewAdapter.SavedViewHolder> {
 
     private final List<Book> savedList;
+
+
 
     public interface OnItemClickListener {
 
@@ -101,6 +105,17 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
             snackbar.setAction(R.string.undo, v -> {
                 savedList.add(position, removedBook);
                 notifyItemInserted(position);
+            });
+            snackbar.addCallback(new Snackbar.Callback() {
+                @Override
+                public void onDismissed(Snackbar transientBottomBar, int event) {
+                    super.onDismissed(transientBottomBar, event);
+                    if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                        Application application = (Application) itemView.getContext().getApplicationContext();
+                        BookRepository bookRepository = new BookRepository(application);
+                        bookRepository.removeBookFromSaved(removedBook);
+                    }
+                }
             });
             snackbar.show();
         }

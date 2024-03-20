@@ -50,8 +50,9 @@
     <!-- End WelcomeActivity -->
 
     <!-- Start ExploreFragment -->
-    <string name="discard_toast">Discard!</string>
+    <string name="skip_toast">Skip!</string>
     <string name="saved_toast">Saved!</string>
+    <string name="delete_toast">Delete!</string>
     <string name="book_cover_not_available_toast">Book cover not available</string>
     <string name="book_details_not_available_toast">Book details not available</string>
     <string-array name="search_genre">
