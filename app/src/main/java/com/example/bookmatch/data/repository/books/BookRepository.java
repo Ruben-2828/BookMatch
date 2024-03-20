@@ -79,11 +79,22 @@ public class BookRepository implements IBookRepository{
         updateBook(book);
     }
 
+    public void deleteBook(Book book) {
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> bookDao.deleteBook(book));
+    }
+
+    public LiveData<List<Book>> getAllBooks() {
+        return bookDao.getAllBooksLiveData();
+    }
+
 
     private void saveDataInDatabase(List<Book> bookList) {
-      BookRoomDatabase.databaseWriteExecutor.execute(() -> {
-          bookDao.insertBookList(bookList);
-      });
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao.insertBookList(bookList);
+        });
     }
+
+
+
 
 }

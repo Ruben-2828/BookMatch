@@ -44,15 +44,15 @@ public class CustomBorderView extends View {
     private void init(int strokeColor) {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(strokeThickness); // Border width
-        paint.setColor(strokeColor); // Use custom color
+        paint.setStrokeWidth(strokeThickness);
+        paint.setColor(strokeColor);
         rect = new RectF();
         sweepAngle = 0;
     }
 
     public void updateBorderProgress(float progress) {
-        sweepAngle = 360 * progress; // Full circle for 1.0 progress
-        invalidate(); // Trigger a redraw
+        sweepAngle = 360 * progress;
+        invalidate();
     }
 
     @Override
@@ -62,25 +62,21 @@ public class CustomBorderView extends View {
 
         rect.set(strokeThickness, strokeThickness, size - strokeThickness, size - strokeThickness);
 
-        float cornerRadius = 75; // This is the corner radius of the rounded square
+        float cornerRadius = 75;
 
-        // Create a rounded rectangle path
         Path path = new Path();
         path.addRoundRect(rect, cornerRadius, cornerRadius, Path.Direction.CW);
 
-        // Measure the path and calculate the segment to draw
+
         PathMeasure pathMeasure = new PathMeasure(path, false);
         float length = pathMeasure.getLength();
-        float start = length * 5 / 16; // Start at the top center (quarter way through the path)
+        float start = length * 5 / 16;
         float end =  start + (length * (sweepAngle / 360f));
         Path destination = new Path();
 
-        // Extract the segment from the path
         if (sweepAngle <= 90) {
-            // If the angle is small, use a simple segment
             pathMeasure.getSegment(start, end, destination, true);
         } else {
-            // For larger angles, use a loop to handle wrapping around the path
             while (end > length) {
                 pathMeasure.getSegment(start, length, destination, true);
                 end -= length;
@@ -89,7 +85,6 @@ public class CustomBorderView extends View {
             pathMeasure.getSegment(start, end, destination, true);
         }
 
-        // Draw the path segment
         canvas.drawPath(destination, paint);
     }
 }

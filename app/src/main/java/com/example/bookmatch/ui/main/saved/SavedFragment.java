@@ -1,6 +1,5 @@
 package com.example.bookmatch.ui.main.saved;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.bookmatch.adapter.SavedRecyclerViewAdapter;
 import com.example.bookmatch.databinding.FragmentSavedBinding;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.ui.main.BookViewModel;
+import com.example.bookmatch.ui.main.BookViewModelFactory;
 
 import java.util.List;
 
@@ -23,14 +24,10 @@ import java.util.List;
 public class SavedFragment extends Fragment {
 
     private FragmentSavedBinding binding;
-    private SharedViewModel sharedViewModel;
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
     }
 
 
@@ -44,12 +41,13 @@ public class SavedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
+        BookViewModel bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
 
-        sharedViewModel.getSavedBooks().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
+        bookViewModel.getSavedBooks().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
     }
 
     private void updateSavedBooksList(List<Book> savedBooks) {

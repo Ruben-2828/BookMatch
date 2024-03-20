@@ -9,13 +9,16 @@ import java.util.List;
 
 public interface IBookRepository {
 
-    public void fetchBooks(String genre);
+    void fetchBooks(String genre);
 
-    public void updateBook(Book book);
+    LiveData<List<Book>> getAllBooks();
 
-    public LiveData<List<Book>> getSavedBooks();
+    void updateBook(Book book);
 
-    public void removeBookFromSaved(Book book);
+    LiveData<List<Book>> getSavedBooks();
 
+    void removeBookFromSaved(Book book);
+
+    void deleteBook(Book book);
 
 }
