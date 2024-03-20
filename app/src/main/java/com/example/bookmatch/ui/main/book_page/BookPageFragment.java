@@ -14,9 +14,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentBookPageBinding;
 import com.example.bookmatch.model.Book;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class BookPageFragment extends Fragment {
 
@@ -37,7 +40,7 @@ public class BookPageFragment extends Fragment {
         if (arguments != null) {
             Book book = arguments.getParcelable("book");
 
-            binding.projectTitle.setText(book.getTitle());
+            binding.bookTitle.setText(book.getTitle());
             binding.authorTextView.setText(book.getAuthors().toString());
             binding.pubblicationYearTextView.setText(book.getPublicationYear());
 
@@ -51,15 +54,13 @@ public class BookPageFragment extends Fragment {
             binding.authorTextView.setText(authors);
 
             if (!book.getCoverURI().isEmpty()) {
-                Glide.with(this).load(book.getCoverURI()).into(binding.coverBook);
+                Glide.with(this)
+                        .load(book.getCoverURI())
+                        .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 1)))
+                        .into(binding.coverBook);
             } else {
                 Toast.makeText(getContext(), (R.string.book_cover_not_available_toast), Toast.LENGTH_SHORT).show();
             }
-            binding.coverBook.setOnClickListener(v -> {
-                Intent intent = new Intent(getContext(), FullScreenImageActivity.class);
-                intent.putExtra("image uri", book.getCoverURI());
-                startActivity(intent);
-            });
 
         } else {
             Toast.makeText(getContext(), (R.string.book_details_not_available_toast), Toast.LENGTH_SHORT).show();

@@ -127,4 +127,11 @@
     <string name="add_books_button">Add Books</string>
     <!-- End CollectionsFragment -->
 
+    <!-- Start BookPageFragment -->
+    <string name="book_title_not_found">Book title not found</string>
+    <string name="author_not_found">Author not found</string>
+    <string name="plot_not_found">Plot not found</string>
+    <string name="publication_year_not_found">Publication year not found</string>
+    <!-- End BookPageFragment -->
+
 </resources>
