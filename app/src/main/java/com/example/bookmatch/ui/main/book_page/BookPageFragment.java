@@ -62,6 +62,14 @@ public class BookPageFragment extends Fragment {
                 Toast.makeText(getContext(), (R.string.book_cover_not_available_toast), Toast.LENGTH_SHORT).show();
             }
 
+            if(!book.isSaved()){
+                binding.savedButton.setVisibility(View.VISIBLE);
+                binding.notSavedButton.setVisibility(View.INVISIBLE);
+            } else {
+                binding.savedButton.setVisibility(View.INVISIBLE);
+                binding.notSavedButton.setVisibility(View.VISIBLE);
+            }
+
         } else {
             Toast.makeText(getContext(), (R.string.book_details_not_available_toast), Toast.LENGTH_SHORT).show();
         }
@@ -70,7 +78,6 @@ public class BookPageFragment extends Fragment {
             NavController navController = Navigation.findNavController(v);
             navController.navigateUp();
         });
-
 
     }
 }

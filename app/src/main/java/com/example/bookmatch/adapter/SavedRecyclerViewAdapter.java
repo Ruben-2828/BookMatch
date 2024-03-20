@@ -1,5 +1,6 @@
 package com.example.bookmatch.adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
@@ -42,6 +45,14 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
     @Override
     public void onBindViewHolder(@NonNull SavedRecyclerViewAdapter.SavedViewHolder holder, int position) {
         holder.bind(savedList.get(position));
+        holder.itemView.setOnClickListener(v -> {
+            Book currentBook = savedList.get(position);
+            Bundle args = new Bundle();
+            args.putParcelable("book", currentBook);
+
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.action_navigation_saved_to_navigation_book, args);
+        });
     }
 
     @Override
