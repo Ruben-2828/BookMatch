@@ -45,7 +45,8 @@ public class CardAdapter {
             authors = authors.substring(0, authors.length() - 2);
             holder.author.setText(authors);
             holder.title.setText(dataItem.getTitle());
-            Glide.with(holder.itemView).load(dataItem.getCoverURI()).into(holder.cover);
+            if (dataItem.getCoverURI() != null)
+                Glide.with(holder.itemView).load(dataItem.getCoverURI()).into(holder.cover);
         }
     }
 

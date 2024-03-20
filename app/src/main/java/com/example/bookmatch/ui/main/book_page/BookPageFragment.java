@@ -1,7 +1,5 @@
 package com.example.bookmatch.ui.main.book_page;
 
-import static com.bumptech.glide.request.target.Target.SIZE_ORIGINAL;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,8 +17,6 @@ import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentBookPageBinding;
 import com.example.bookmatch.model.Book;
-
-import java.lang.annotation.Target;
 
 public class BookPageFragment extends Fragment {
 
@@ -45,8 +41,8 @@ public class BookPageFragment extends Fragment {
             binding.authorTextView.setText(book.getAuthors().toString());
             binding.pubblicationYearTextView.setText(book.getPublicationYear());
 
-            if(book.getFirstSentence() != null)
-                binding.plotTextView.setText(book.getFirstSentence().get(0));
+            if(book.getDescription() != null)
+                binding.plotTextView.setText(book.getDescription());
 
             String authors = "";
             for(String a: book.getAuthors())
@@ -54,7 +50,7 @@ public class BookPageFragment extends Fragment {
             authors = authors.substring(0, authors.length() - 2);
             binding.authorTextView.setText(authors);
 
-            if (!book.getCoverID().isEmpty()) {
+            if (!book.getCoverURI().isEmpty()) {
                 Glide.with(this).load(book.getCoverURI()).into(binding.coverBook);
             } else {
                 Toast.makeText(getContext(), (R.string.book_cover_not_available_toast), Toast.LENGTH_SHORT).show();

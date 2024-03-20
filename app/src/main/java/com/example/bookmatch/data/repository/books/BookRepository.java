@@ -3,9 +3,6 @@ package com.example.bookmatch.data.repository.books;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.example.bookmatch.R;
 import com.example.bookmatch.data.database.BookDao;
 import com.example.bookmatch.data.database.BookRoomDatabase;
 import com.example.bookmatch.data.service.BookAPIService;
@@ -13,7 +10,6 @@ import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.BooksListApiResponse;
 import com.example.bookmatch.utils.ServiceLocator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -51,7 +47,7 @@ public class BookRepository implements IBookRepository{
                 if (response.body() != null && response.isSuccessful()) {
                     Log.d(TAG, ""+ response.body().getBooksList());
                     List<Book> bookList = response.body().getBooksList();
-                    //saveDataInDatabase(bookList);
+                    saveDataInDatabase(bookList);
                 } else {
                     Log.d(TAG, "eerroraccio");
                 }

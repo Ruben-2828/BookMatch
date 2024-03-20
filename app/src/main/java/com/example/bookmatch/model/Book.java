@@ -10,50 +10,42 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 
 @Entity
 public class Book implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
     private long book_id;
 
-    @SerializedName("id")
     private String key;
 
-    @SerializedName("title")
     private String title;
+
     @ColumnInfo(name = "author_name")
-    @SerializedName("author_name")
     private ArrayList<String> authors;
-    @ColumnInfo(name = "first_sentence")
-    @SerializedName("first_sentence")
-    private ArrayList<String> firstSentence;
+
+    @ColumnInfo(name = "description")
+    private String description;
+
     @ColumnInfo(name = "first_publication_year")
-    @SerializedName("first_publish_year")
     private String publicationYear;
 
-    private ArrayList<String> subject;
-    @ColumnInfo(name = "cover_i")
-    @SerializedName("cover_i")
-    private String coverID;
+    @ColumnInfo(name = "cover_uri")
+    private String coverURI;
 
     @ColumnInfo(name = "is_saved")
     private boolean isSaved;
 
 
-    public Book(String key, String title, ArrayList<String> authors, ArrayList<String> firstSentence,
-                String publicationYear, ArrayList<String> subject, String coverID, boolean isSaved){
+    public Book(String key, String title, ArrayList<String> authors, String description,
+                String publicationYear, String coverURI, boolean isSaved){
         this.key = key;
         this.title = title;
         this.authors = authors;
-        this.firstSentence = firstSentence;
+        this.description = description;
         this.publicationYear = publicationYear;
-        this.subject = subject;
-        this.coverID = coverID;
+        this.coverURI = coverURI;
         this.isSaved = isSaved;
     }
 
@@ -61,9 +53,9 @@ public class Book implements Parcelable {
         book_id = in.readLong();
         title = in.readString();
         authors = in.createStringArrayList();
-        firstSentence = in.createStringArrayList();
+        description = in.readString();
         publicationYear = in.readString();
-        coverID = in.readString();
+        coverURI = in.readString();
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -92,19 +84,15 @@ public class Book implements Parcelable {
         return authors;
     }
 
-    public ArrayList<String> getFirstSentence() {
-        return firstSentence;
-    }
-
-    public ArrayList<String> getSubject() {
-        return subject;
+    public String getDescription() {
+        return description;
     }
 
     public String getPublicationYear() {
         return publicationYear;
     }
 
-    public String getCoverID() { return coverID; }
+    public String getCoverURI() { return coverURI; }
 
     public boolean isSaved() {
         return isSaved;
@@ -126,39 +114,33 @@ public class Book implements Parcelable {
         this.authors = authors;
     }
 
-    public void setFirstSentence(ArrayList<String> firstSentence) {
-        this.firstSentence = firstSentence;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setPublicationYear(String publicationYear) {
         this.publicationYear = publicationYear;
     }
 
-    public void setSubject(ArrayList<String> subject) {
-        this.subject = subject;
-    }
-
-    public void setCoverID(String coverID) {
-        this.coverID = coverID;
+    public void setCoverURI(String coverURI) {
+        this.coverURI = coverURI;
     }
 
     public void setSaved(boolean saved) {
         isSaved = saved;
     }
 
-    public String getCoverURI() {
-        return String.format(API_RETRIEVE_BOOK_COVER_BY_ID_ENDPOINT, this.coverID);
-    }
-
     @Override
     public String toString() {
         return "Book{" +
-                "id='" + book_id + '\'' +
+                "book_id=" + book_id +
+                ", key='" + key + '\'' +
                 ", title='" + title + '\'' +
-                ", author='" + authors + '\'' +
-                ", plot='" + firstSentence + '\'' +
+                ", authors=" + authors +
+                ", description='" + description + '\'' +
                 ", publicationYear='" + publicationYear + '\'' +
-                ", coverID='" + coverID + '\'' +
+                ", coverURI='" + coverURI + '\'' +
+                ", isSaved=" + isSaved +
                 '}';
     }
 
@@ -172,8 +154,8 @@ public class Book implements Parcelable {
         dest.writeLong(book_id);
         dest.writeString(title);
         dest.writeStringList(authors);
-        dest.writeStringList(firstSentence);
+        dest.writeString(description);
         dest.writeString(publicationYear);
-        dest.writeString(coverID);
+        dest.writeString(coverURI);
     }
 }

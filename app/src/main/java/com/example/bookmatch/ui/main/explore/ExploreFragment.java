@@ -85,10 +85,7 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 bookRepository.fetchBooks(s.toString());
-                String formattedGenre = "%" + s.toString() + "%";
-                Log.d(TAG, formattedGenre);
-                loadDataFromDatabase(formattedGenre);
-                addCardToFrameLayout();
+                loadDataFromDatabase();
             }
 
             @Override
@@ -202,11 +199,19 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
         binding.likeButton.setEnabled(true);
     }
 
-    private void loadDataFromDatabase(String genre) {
+    private void loadDataFromDatabase() {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
             bookDao = BookRoomDatabase.getDatabase(requireContext()).bookDao();
             bookList.clear();
-            bookList.addAll(bookDao.getBooksByGenre(genre));
+            bookList.addAll(bookDao.getAllBooks());
+
+            requireActivity().runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    addCardToFrameLayout();
+                }
+            });
         });
     }
 }

@@ -49,13 +49,11 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
         //TODO: Replace with actual books
         List<Book> books = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            books.add(new Book(
-                    i + "",
+            books.add(new Book(i + "",
                     "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
                     new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
-                    new ArrayList<String>(Arrays.asList("Avventura ezezez")),
+                    "Avventura ezezez",
                     "2024",
-                    new ArrayList<String>(Arrays.asList("horror", "fiction")),
                     "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg",
                     false
             ));
