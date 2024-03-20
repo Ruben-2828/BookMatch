@@ -21,4 +21,6 @@ public interface IBookRepository {
 
     void deleteBook(Book book);
 
+    LiveData<Integer> getSavedBooksCount();
+
 }

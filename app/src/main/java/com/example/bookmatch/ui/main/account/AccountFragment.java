@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -14,17 +15,18 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
-import com.example.bookmatch.data.database.BookRoomDatabase;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
-import com.example.bookmatch.model.AppUser;
+import com.example.bookmatch.ui.main.BookViewModel;
+import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 public class AccountFragment extends Fragment {
 
     private FragmentAccountBinding binding;
+    private BookViewModel bookViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,43 +37,65 @@ public class AccountFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        initializeViewModel();
         updateUserData();
+        setButtonClickListeners();
+    }
 
-        PopupMenu.OnMenuItemClickListener menuItemListener = item -> {
-            int id = item.getItemId();
-            if (id == R.id.edit_profile_item) {
-                Bundle args = new Bundle();
-                args.putString("userNickname", binding.userNickname.getText().toString());
-                args.putString("userFirstName", binding.userFirstName.getText().toString());
-                args.putString("userLastName", binding.userLastName.getText().toString());
-                args.putString("userEmail", binding.userEmail.getText().toString());
-                args.putString("userPic", "https://i.pinimg.com/736x/c6/25/90/c62590c1756680060e7c38011cd704b5.jpg");
+    private void initializeViewModel() {
+        BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
+        bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
+    }
 
-                Intent intent = new Intent(getContext(), AccountEditActivity.class);
-                intent.putExtras(args);
-                editProfileLauncher.launch(intent);
-                return true;
+    private void updateUserData() {
+        bookViewModel.getSavedBooksCount().observe(getViewLifecycleOwner(), count -> {
+            if (count != null) {
+                binding.userSavedBooks.setText(String.valueOf(count));
             }
-            if (id == R.id.about_us_item) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Ruben-2828/BookMatch/tree/main"));
-                startActivity(browserIntent);
-                return true;
-            }
-            if (id == R.id.logout_item) {
-                //TODO: implement logout
-                Snackbar.make(view, "Logout", Snackbar.LENGTH_LONG).show();
-                return true;
-            }
-            return false;
-        };
-
-        binding.editAccountButton.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(getContext(), v);
-            popup.getMenuInflater().inflate(R.menu.account_option_menu, popup.getMenu());
-            popup.setOnMenuItemClickListener(menuItemListener);
-            popup.show();
         });
+
+        binding.userFavoriteGenre.setText("ezezez");
+    }
+
+    private void setButtonClickListeners() {
+        binding.editAccountButton.setOnClickListener(this::showPopupMenu);
+    }
+
+    private void showPopupMenu(View v) {
+        PopupMenu popup = new PopupMenu(getContext(), v);
+        popup.getMenuInflater().inflate(R.menu.account_option_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(this::onMenuItemClicked);
+        popup.show();
+    }
+
+    private boolean onMenuItemClicked(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.edit_profile_item) {
+            launchEditProfileActivity();
+            return true;
+        }
+        if (id == R.id.about_us_item) {
+            openAboutUsPage();
+            return true;
+        }
+        if (id == R.id.logout_item) {
+            showLogoutSnackbar();
+            return true;
+        }
+        return false;
+    }
+
+    private void launchEditProfileActivity() {
+        Bundle args = new Bundle();
+        args.putString("userNickname", binding.userNickname.getText().toString());
+        args.putString("userFirstName", binding.userFirstName.getText().toString());
+        args.putString("userLastName", binding.userLastName.getText().toString());
+        args.putString("userEmail", binding.userEmail.getText().toString());
+        args.putString("userPic", "https://i.pinimg.com/736x/c6/25/90/c62590c1756680060e7c38011cd704b5.jpg");
+
+        Intent intent = new Intent(getContext(), AccountEditActivity.class);
+        intent.putExtras(args);
+        editProfileLauncher.launch(intent);
     }
 
     private final ActivityResultLauncher<Intent> editProfileLauncher = registerForActivityResult(
@@ -92,35 +116,13 @@ public class AccountFragment extends Fragment {
             }
     );
 
-    private void updateUserData() {
-        if (getArguments() != null) {
-            String userNickname = getArguments().getString("userNickname");
-            String userFirstName = getArguments().getString("userFirstName");
-            String userLastName = getArguments().getString("userLastName");
+    private void openAboutUsPage() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Ruben-2828/BookMatch/tree/main"));
+        startActivity(browserIntent);
+    }
 
-            binding.userNickname.setText(userNickname);
-            binding.userFirstName.setText(userFirstName);
-            binding.userLastName.setText(userLastName);
-
-            getArguments().clear();
-        } else {
-            AppUser user = new AppUser("id",
-                    "nicknamez",
-                    "Quackez",
-                    "Pakez",
-                    "quackez@pakez.ez",
-                    "https://i.pinimg.com/736x/c6/25/90/c62590c1756680060e7c38011cd704b5.jpg");
-
-            binding.userNickname.setText(user.getNickname());
-            binding.userFirstName.setText(user.getFirstName());
-            binding.userLastName.setText(user.getLastName());
-            binding.userEmail.setText(user.getEmail());
-            Glide.with(this).load(user.getCover()).into(binding.profileImage);
-        }
-
-
-        binding.userBooksRead.setText("5");
-        binding.userFavoriteGenre.setText("ezezez");
+    private void showLogoutSnackbar() {
+        Snackbar.make(requireView(), "Logout", Snackbar.LENGTH_LONG).show();
     }
 
     @Override

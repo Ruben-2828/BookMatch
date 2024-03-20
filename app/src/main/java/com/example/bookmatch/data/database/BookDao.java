@@ -30,6 +30,9 @@ public interface BookDao {
     @Query("SELECT * FROM Book WHERE is_saved = 1")
     LiveData<List<Book>> getSavedBooks();
 
+    @Query("SELECT COUNT(*) FROM Book WHERE is_saved = 1")
+    LiveData<Integer> getSavedBooksCount();
+
     @Query("UPDATE Book SET is_saved = :isSaved WHERE book_id = :bookId")
     void updateBookSavedStatus(Long bookId, boolean isSaved);
 

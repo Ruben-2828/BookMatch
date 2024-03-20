@@ -42,6 +42,11 @@ public class BookViewModel extends ViewModel {
         return bookRepository.getAllBooks();
     }
 
+    public LiveData<Integer> getSavedBooksCount() {
+        return bookRepository.getSavedBooksCount();
+    }
+
+
 
 
 }

@@ -86,6 +86,10 @@ public class BookRepository implements IBookRepository{
         return bookDao.getAllBooksLiveData();
     }
 
+    public LiveData<Integer> getSavedBooksCount() {
+        return bookDao.getSavedBooksCount();
+    }
+
 
     private void saveDataInDatabase(List<Book> bookList) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
