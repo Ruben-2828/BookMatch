@@ -110,13 +110,13 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
 
     private void saveBookAsSaved(Book book) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
-            bookDao.updateBookSavedStatus(book.getId(), true);
+            bookDao.updateBookSavedStatus(book.getBook_id(), true);
         });
     }
 
     private void saveBookAsNotSaved(Book book) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
-            bookDao.updateBookSavedStatus(book.getId(), false);
+            bookDao.updateBookSavedStatus(book.getBook_id(), false);
         });
     }
 
