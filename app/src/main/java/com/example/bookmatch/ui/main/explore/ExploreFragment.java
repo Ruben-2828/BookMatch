@@ -232,7 +232,13 @@ public class ExploreFragment extends Fragment implements CardSwipeCallback {
     private void loadDataFromDatabase() {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
             bookDao = BookRoomDatabase.getDatabase(requireContext()).bookDao();
-            bookList.addAll(bookDao.getAllBooks());
+            List<Book> allBooks = bookDao.getAllBooks();
+
+            for (Book book : allBooks) {
+                if (!book.isSaved()) {
+                    bookList.add(book);
+                }
+            }
         });
     }
 
