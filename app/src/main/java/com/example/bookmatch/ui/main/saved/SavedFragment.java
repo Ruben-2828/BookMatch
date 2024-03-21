@@ -47,15 +47,13 @@ public class SavedFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
         binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
 
-        bookViewModel.getSavedBooks().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
+        bookViewModel.getSavedBooksLiveData().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
     }
 
     private void updateSavedBooksList(List<Book> savedBooks) {
         SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedBooks, saved -> {
             Bundle bundle = new Bundle();
             bundle.putParcelable("book", saved);
-
-
         });
         binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
     }

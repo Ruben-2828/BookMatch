@@ -3,7 +3,6 @@ package com.example.bookmatch.data.repository.books;
 import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.example.bookmatch.data.database.BookDao;
@@ -62,15 +61,26 @@ public class BookRepository implements IBookRepository{
         });
     }
 
+    //LiveData
+
+    public LiveData<List<Book>> getSavedBooksLiveData() {
+        return bookDao.getSavedBooksLiveData();
+    }
+
+    public LiveData<List<Book>> getAllBooksLiveData() {
+        return bookDao.getAllBooksLiveData();
+    }
+
+    public LiveData<Integer> getSavedBooksCountLiveData() {
+        return bookDao.getSavedBooksCountLiveData();
+    }
+
+    //Database operations
 
     public void updateBook(Book book) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
             bookDao.updateSingleSavedBook(book);
         });
-    }
-
-    public LiveData<List<Book>> getSavedBooks() {
-        return bookDao.getSavedBooks();
     }
 
     public void removeBookFromSaved(Book book) {
@@ -81,15 +91,6 @@ public class BookRepository implements IBookRepository{
     public void deleteBook(Book book) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> bookDao.deleteBook(book));
     }
-
-    public LiveData<List<Book>> getAllBooks() {
-        return bookDao.getAllBooksLiveData();
-    }
-
-    public LiveData<Integer> getSavedBooksCount() {
-        return bookDao.getSavedBooksCount();
-    }
-
 
     private void saveDataInDatabase(List<Book> bookList) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {

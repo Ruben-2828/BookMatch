@@ -48,7 +48,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void updateUserData() {
-        bookViewModel.getSavedBooksCount().observe(getViewLifecycleOwner(), count -> {
+        bookViewModel.getSavedBooksCountLiveData().observe(getViewLifecycleOwner(), count -> {
             if (count != null) {
                 binding.userSavedBooks.setText(String.valueOf(count));
             }

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bookmatch.adapter.CollectionsRecyclerViewAdapter;
 import com.example.bookmatch.databinding.FragmentCollectionsBinding;
+import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.Collection;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class CollectionsFragment extends Fragment {
     private FragmentCollectionsBinding binding;
     private final List<Collection> collectionsList = new ArrayList<>();
     private CollectionsRecyclerViewAdapter adapter;
+    private final List<Book> selectedBooks = new ArrayList<>();
 
     @SuppressLint("NotifyDataSetChanged")
     private final ActivityResultLauncher<Intent> createCollectionLauncher = registerForActivityResult(
@@ -44,6 +46,19 @@ public class CollectionsFragment extends Fragment {
             }
     );
 
+    private void setupRecyclerView() {
+
+        adapter = new CollectionsRecyclerViewAdapter(collectionsList, collection -> {
+            Intent intent = new Intent(getActivity(), AddBookToCollectionActivity.class);
+            intent.putExtra("collectionId", collection.getId());
+            startActivity(intent);
+        }, selectedBooks);
+
+        binding.collectionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.collectionsRecyclerView.setAdapter(adapter);
+    }
+
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,20 +70,10 @@ public class CollectionsFragment extends Fragment {
 
     }
 
-    private void setupRecyclerView() {
-        adapter = new CollectionsRecyclerViewAdapter(collectionsList, collection -> {
-            Intent intent = new Intent(getActivity(), AddBookToCollectionActivity.class);
-            intent.putExtra("collectionId", collection.getId());
-            startActivity(intent);
-        });
-        binding.collectionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.collectionsRecyclerView.setAdapter(adapter);
-    }
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         binding.fabCreateCollection.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), CreateCollectionActivity.class);

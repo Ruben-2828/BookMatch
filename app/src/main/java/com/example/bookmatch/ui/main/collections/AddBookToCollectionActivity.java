@@ -4,19 +4,23 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bookmatch.adapter.AddBookToCollectionRecyclerViewAdapter;
+import com.example.bookmatch.adapter.CollectionsRecyclerViewAdapter;
 import com.example.bookmatch.databinding.ActivityAddBookToCollectionBinding;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.ui.main.BookViewModel;
+import com.example.bookmatch.ui.main.BookViewModelFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AddBookToCollectionActivity extends AppCompatActivity {
 
     private ActivityAddBookToCollectionBinding binding;
+    private BookViewModel bookViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,28 +28,49 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
         binding = ActivityAddBookToCollectionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setupViewModel();
+        setupRecyclerView();
+        setupClickListeners();
+    }
+
+    private void setupViewModel() {
+        BookViewModelFactory factory = new BookViewModelFactory(getApplication());
+        bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
+    }
+
+    private void setupRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.recyclerViewAddBookToCollection.setLayoutManager(linearLayoutManager);
 
-        List<Book> savedList = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            savedList.add(new Book(i + "",
-                    "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
-                    new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
-                    "Avventura ezezez",
-                    "2024",
-                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg",
-                    false
-            ));
-        }
+        observeSavedBooks();
+    }
 
-        AddBookToCollectionRecyclerViewAdapter recyclerViewAdapter = new AddBookToCollectionRecyclerViewAdapter(savedList
-        );
+    private void observeSavedBooks() {
+        LiveData<List<Book>> savedBooksLiveData = bookViewModel.getSavedBooksLiveData();
+        savedBooksLiveData.observe(this, savedBooks -> {
+            savedBooksLiveData.removeObservers(this);
 
-        binding.recyclerViewAddBookToCollection.setAdapter(recyclerViewAdapter);
+            AddBookToCollectionRecyclerViewAdapter recyclerViewAdapter = new AddBookToCollectionRecyclerViewAdapter(savedBooks, new AddBookToCollectionRecyclerViewAdapter.OnBookSelectedListener() {
+                @Override
+                public void onBookSelected(List<Book> selectedBooks) {
+                    selectedBooks.clear();
+                    selectedBooks.addAll(selectedBooks);
+                }
+            });
+            binding.recyclerViewAddBookToCollection.setAdapter(recyclerViewAdapter);
+        });
+    }
 
+
+
+
+    private void setupClickListeners() {
         binding.goBackButton.setOnClickListener(v -> finish());
+        binding.addBooks.setOnClickListener(v -> addBooksToCollection());
+    }
 
-        binding.addBooks.setOnClickListener(v -> finish());
+
+    private void addBooksToCollection() {
+        finish();
     }
 }

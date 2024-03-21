@@ -6,6 +6,7 @@ public class Collection {
     private String name;
     private String description;
 
+
     public Collection(String id, String name, String description) {
         this.id = id;
         this.name = name;
@@ -34,5 +35,7 @@ public class Collection {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }
 

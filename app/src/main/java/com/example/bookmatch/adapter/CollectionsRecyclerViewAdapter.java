@@ -22,15 +22,18 @@ import java.util.UUID;
 public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<CollectionsRecyclerViewAdapter.ViewHolder> {
 
     private final List<Collection> collectionItems;
+    private final List<Book> selectedBooks;
     private OnCollectionClickListener listener;
 
     public interface OnCollectionClickListener {
         void onCollectionClick(Collection collection);
     }
 
-    public CollectionsRecyclerViewAdapter(List<Collection> collectionItems, OnCollectionClickListener listener) {
+
+    public CollectionsRecyclerViewAdapter(List<Collection> collectionItems, OnCollectionClickListener listener, List<Book> selectedBooks) {
         this.collectionItems = collectionItems;
         this.listener = listener;
+        this.selectedBooks = selectedBooks;
     }
 
     @NonNull
@@ -46,24 +49,11 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
         holder.textViewName.setText(item.getName());
         holder.textViewDescription.setText(item.getDescription());
 
-        //TODO: Replace with actual books
-        List<Book> books = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            books.add(new Book(i + "",
-                    "Occhi nel Codice: Il Genio di Jouness Amsaet. Parte  " + i,
-                    new ArrayList<String>(Arrays.asList("Paco Quackez", "acacaca")),
-                    "Avventura ezezez",
-                    "2024",
-                    "https://heymondo.it/blog/wp-content/uploads/2023/07/Maldive-2.jpg",
-                    false
-            ));
-        }
 
-        BooksCarouselAdapter booksAdapter = new BooksCarouselAdapter(holder.itemView.getContext(), books);
+        BooksCarouselAdapter booksAdapter = new BooksCarouselAdapter(holder.itemView.getContext(), selectedBooks);
         holder.booksCarousel.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         holder.booksCarousel.setAdapter(booksAdapter);
     }
-
 
     @Override
     public int getItemCount() {

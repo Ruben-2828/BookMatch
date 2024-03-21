@@ -17,22 +17,6 @@ public interface BookDao {
     @Query("SELECT * FROM Book")
     List<Book> getAllBooks();
 
-    @Query("SELECT * FROM Book")
-    LiveData<List<Book>> getAllBooksLiveData();
-
-    @Query("SELECT * FROM Book WHERE book_id = :bookId")
-    Book getBookById(String bookId);
-
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insertBookList(List<Book> bookList);
-
-    @Query("SELECT * FROM Book WHERE is_saved = 1")
-    LiveData<List<Book>> getSavedBooks();
-
-    @Query("SELECT COUNT(*) FROM Book WHERE is_saved = 1")
-    LiveData<Integer> getSavedBooksCount();
-
     @Query("UPDATE Book SET is_saved = :isSaved WHERE book_id = :bookId")
     void updateBookSavedStatus(Long bookId, boolean isSaved);
 
@@ -41,6 +25,25 @@ public interface BookDao {
 
     @Delete
     void deleteBook(Book book);
+
+    @Query("SELECT * FROM Book WHERE book_id = :bookId")
+    Book getBookById(String bookId);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    List<Long> insertBookList(List<Book> bookList);
+
+
+    //LiveData queries
+
+    @Query("SELECT * FROM Book")
+    LiveData<List<Book>> getAllBooksLiveData();
+
+    @Query("SELECT * FROM Book WHERE is_saved = 1")
+    LiveData<List<Book>> getSavedBooksLiveData();
+
+    @Query("SELECT COUNT(*) FROM Book WHERE is_saved = 1")
+    LiveData<Integer> getSavedBooksCountLiveData();
+
 
 }
 
