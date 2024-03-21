@@ -3,6 +3,7 @@ package com.example.bookmatch.data.repository.books;
 import androidx.lifecycle.LiveData;
 
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.utils.ResponseCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,4 +24,5 @@ public interface IBookRepository {
 
     LiveData<Integer> getSavedBooksCount();
 
+    void setCallback(ResponseCallback callback);
 }

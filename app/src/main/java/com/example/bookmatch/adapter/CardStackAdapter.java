@@ -35,6 +35,12 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.Card
 
     public void setBooks(ArrayList<Book> books) {
         this.books = books;
+        notifyDataSetChanged();;
+    }
+
+    public void addBooks(ArrayList<Book> books) {
+        this.books.addAll(books);
+        notifyDataSetChanged();;
     }
 
     @NonNull

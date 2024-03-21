@@ -56,17 +56,29 @@
     <string name="book_cover_not_available_toast">Book cover not available</string>
     <string name="book_details_not_available_toast">Book details not available</string>
     <string-array name="search_genre">
-        <item>Arts</item>
-        <item>Animals</item>
-        <item>Fiction</item>
-        <item>Sciencemathematics</item>
-        <item>Business</item>
-        <item>Juvenile_fiction</item>
-        <item>History</item>
-        <item>Cookbooks</item>
-        <item>Exercise</item>
+        <item>Art</item>
+        <item>Architecture</item>
         <item>Biography</item>
-        <item>Textbooks</item>
+        <item>Computers</item>
+        <item>Cooking</item>
+        <item>Design</item>
+        <item>Drama</item>
+        <item>Education</item>
+        <item>Fiction</item>
+        <item>Games</item>
+        <item>History</item>
+        <item>Juvenile fiction</item>
+        <item>Law</item>
+        <item>Mathematics</item>
+        <item>Music</item>
+        <item>Nature</item>
+        <item>Pets</item>
+        <item>Philosophy</item>
+        <item>Religion</item>
+        <item>Science</item>
+        <item>Sports</item>
+        <item>Technology</item>
+        <item>Travel</item>
     </string-array>
     <string name="genre">Genre</string>
     <!-- End ExploreFragment -->

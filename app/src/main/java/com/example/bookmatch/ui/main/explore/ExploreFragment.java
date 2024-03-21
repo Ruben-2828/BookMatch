@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -24,6 +25,7 @@ import com.example.bookmatch.data.database.BookRoomDatabase;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
+import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -45,13 +47,14 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     private CardStackAdapter cardStackAdapter;
     private BookViewModel bookViewModel;
     private BookDao bookDao;
-    private final List<Book> bookList = new ArrayList<>();
+    private final ArrayList<Book> bookList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentExploreBinding.inflate(inflater, container, false);
 
-        bookViewModel = new BookViewModel(requireActivity().getApplication());
+        BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
+        bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
         bookDao = BookRoomDatabase.getDatabase(requireContext()).bookDao();
 
         return binding.getRoot();
@@ -93,7 +96,6 @@ public class ExploreFragment extends Fragment implements CardStackListener {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 bookViewModel.fetchBooks(s.toString());
-                loadDataFromDatabase();
             }
 
             @Override
@@ -101,6 +103,15 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
             }
         });
+
+        bookViewModel.getAllBooks().observe(getViewLifecycleOwner(), books -> {
+            Log.d(TAG, "QUa:" +books);
+            if (books != null) {
+                cardStackAdapter.setBooks(books);
+            }
+        });
+
+        binding.genre.setText(getResources().getStringArray(R.array.search_genre)[0]);
     }
 
     @Override
@@ -111,8 +122,9 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     @Override
     public void onCardSwiped(@NonNull Direction direction) {
         Log.d("CardStackView", "onCardSwiped: p = " + cardStackManager.getTopPosition() + ", d = " + direction);
-        if (cardStackManager.getTopPosition() == cardStackAdapter.getItemCount() - 5) {
-            //paginate();
+
+        if (direction == Direction.Right) {
+
         }
     }
 
@@ -160,6 +172,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
         });*/
 
         binding.likeButton.setOnClickListener(v -> {
+
             SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
                     .setDirection(Direction.Right)
                     .setDuration(Duration.Normal.duration)
@@ -179,16 +192,14 @@ public class ExploreFragment extends Fragment implements CardStackListener {
                     bookList.add(book);
                 }
             }
-            //bookList.clear();
-            //bookList.addAll(bookDao.getAllBooks());
 
-            //requireActivity().runOnUiThread(new Runnable() {
+            requireActivity().runOnUiThread(new Runnable() {
 
-              //  @Override
-                //public void run() {
-                  //  addCardToFrameLayout();
-                //}
-            //});
+                @Override
+                public void run() {
+                    cardStackAdapter.setBooks(bookList);
+                }
+            });
         });
     }
 }
