@@ -21,12 +21,15 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.example.bookmatch.ui.main.CollectionViewModel;
+import com.example.bookmatch.ui.main.CollectionViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 public class AccountFragment extends Fragment {
 
     private FragmentAccountBinding binding;
     private BookViewModel bookViewModel;
+    private CollectionViewModel collectionViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,14 +46,22 @@ public class AccountFragment extends Fragment {
     }
 
     private void initializeViewModel() {
-        BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
-        bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
+        BookViewModelFactory factoryBook = new BookViewModelFactory(requireActivity().getApplication());
+        bookViewModel = new ViewModelProvider(this, factoryBook).get(BookViewModel.class);
+        CollectionViewModelFactory factoryCollection = new CollectionViewModelFactory(requireActivity().getApplication());
+        collectionViewModel = new ViewModelProvider(this, factoryCollection).get(CollectionViewModel.class);
     }
 
     private void updateUserData() {
         bookViewModel.getSavedBooksCountLiveData().observe(getViewLifecycleOwner(), count -> {
             if (count != null) {
                 binding.userSavedBooks.setText(String.valueOf(count));
+            }
+        });
+
+        collectionViewModel.getCountCollectionLiveData().observe(getViewLifecycleOwner(), count -> {
+            if (count != null) {
+                binding.userCollectionNumber.setText(String.valueOf(count));
             }
         });
 

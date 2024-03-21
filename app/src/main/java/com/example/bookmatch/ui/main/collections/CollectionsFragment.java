@@ -37,7 +37,7 @@ public class CollectionsFragment extends Fragment {
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                     Intent data = result.getData();
-                    String id = UUID.randomUUID().toString();
+                    Integer id = UUID.randomUUID().hashCode();
                     String name = data.getStringExtra("collectionName");
                     String description = data.getStringExtra("collectionDescription");
                     collectionsList.add(new Collection(id, name, description));

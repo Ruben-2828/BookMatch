@@ -5,8 +5,8 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.bookmatch.data.database.BookDao;
-import com.example.bookmatch.data.database.BookRoomDatabase;
+import com.example.bookmatch.data.database.books.BookDao;
+import com.example.bookmatch.data.database.books.BookRoomDatabase;
 import com.example.bookmatch.data.service.BookAPIService;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.BooksListApiResponse;

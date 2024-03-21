@@ -1,4 +1,4 @@
-package com.example.bookmatch.data.database;
+package com.example.bookmatch.data.database.books;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

@@ -229,6 +229,16 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                     <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/collection_created"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+                    <TextView
                         android:id="@+id/user_saved_books"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -262,6 +272,18 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/textView8"
                         app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+                    <TextView
+                        android:id="@+id/user_collection_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/default_collection_created"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/textView9"
+                        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

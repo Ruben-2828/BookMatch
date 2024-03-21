@@ -9,6 +9,8 @@ public class Constants {
     public static final String API_RETRIEVE_BOOK_COVER_BY_ID_ENDPOINT = "https://covers.openlibrary.org/b/id/%s-L.jpg";
 
     public static final String BOOK_DATABASE_NAME = "book_db";
+
+    public static final String COLLECTION_DATABASE_NAME = "collection_db";
     public static final int DATABASE_VERSION = 6;
 
 }

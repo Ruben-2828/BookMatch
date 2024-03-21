@@ -2,7 +2,7 @@ package com.example.bookmatch.utils;
 
 import android.app.Application;
 
-import com.example.bookmatch.data.database.BookRoomDatabase;
+import com.example.bookmatch.data.database.books.BookRoomDatabase;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.data.repository.user.UserRepository;
 import com.example.bookmatch.data.service.BookAPIService;

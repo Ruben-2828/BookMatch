@@ -14,10 +14,7 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.Collection;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<CollectionsRecyclerViewAdapter.ViewHolder> {
 
@@ -42,6 +39,8 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.collection_item, parent, false);
         return new ViewHolder(view, listener);
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {

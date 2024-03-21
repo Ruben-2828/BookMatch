@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,8 @@ import androidx.navigation.Navigation;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.CardAdapter;
-import com.example.bookmatch.data.database.BookDao;
-import com.example.bookmatch.data.database.BookRoomDatabase;
+import com.example.bookmatch.data.database.books.BookDao;
+import com.example.bookmatch.data.database.books.BookRoomDatabase;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
