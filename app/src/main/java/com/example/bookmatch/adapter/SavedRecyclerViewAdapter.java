@@ -25,8 +25,6 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
     private final List<Book> savedList;
 
-
-
     public interface OnItemClickListener {
 
         void onItemClick(Book book);

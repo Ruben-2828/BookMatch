@@ -1,22 +1,21 @@
 package com.example.bookmatch.ui.main;
 
 import android.app.Application;
-
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
+import com.example.bookmatch.data.database.collections.CollectionRoomDatabase;
 import com.example.bookmatch.data.repository.collections.CollectionRepository;
 import com.example.bookmatch.data.repository.collections.ICollectionRepository;
 import com.example.bookmatch.model.Collection;
-
 import java.util.List;
 
-
-public class CollectionViewModel extends ViewModel {
+public class CollectionViewModel extends AndroidViewModel {
 
     private final ICollectionRepository collectionRepository;
 
     public CollectionViewModel(Application application) {
+        super(application);
         this.collectionRepository = new CollectionRepository(application);
     }
 
@@ -31,5 +30,8 @@ public class CollectionViewModel extends ViewModel {
     public void insertCollection(Collection collection) {
         collectionRepository.insertCollection(collection);
     }
-}
 
+    public void deleteCollection(Collection collection) {
+        collectionRepository.deleteCollection(collection);
+    }
+}

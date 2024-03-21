@@ -9,7 +9,8 @@ import java.util.List;
 public interface ICollectionRepository {
 
     void insertCollection(Collection collection);
-    LiveData<Integer> getCountCollectionLiveData();
 
+    void deleteCollection(Collection collection);
+    LiveData<Integer> getCountCollectionLiveData();
     LiveData<List<Collection>> getAllCollectionsLiveData();
 }

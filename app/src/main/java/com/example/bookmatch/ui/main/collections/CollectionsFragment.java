@@ -7,18 +7,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.bookmatch.adapter.CollectionsRecyclerViewAdapter;
 import com.example.bookmatch.databinding.FragmentCollectionsBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.Collection;
+import com.example.bookmatch.ui.main.CollectionViewModel;
+import com.example.bookmatch.ui.main.CollectionViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,32 +35,46 @@ public class CollectionsFragment extends Fragment {
     private CollectionsRecyclerViewAdapter adapter;
     private final List<Book> selectedBooks = new ArrayList<>();
 
-    @SuppressLint("NotifyDataSetChanged")
+    private CollectionViewModel collectionViewModel;
+
+
     private final ActivityResultLauncher<Intent> createCollectionLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                     Intent data = result.getData();
-                    Integer id = UUID.randomUUID().hashCode();
                     String name = data.getStringExtra("collectionName");
                     String description = data.getStringExtra("collectionDescription");
-                    collectionsList.add(new Collection(id, name, description));
-                    adapter.notifyDataSetChanged();
+
+                    Collection newCollection = new Collection(UUID.randomUUID().hashCode(), name, description);
+                    collectionViewModel.insertCollection(newCollection);
+
+                    Toast.makeText(getActivity(), "Collection added successfully", Toast.LENGTH_SHORT).show();
                 }
             }
     );
 
     private void setupRecyclerView() {
+        adapter = new CollectionsRecyclerViewAdapter(
+                collectionsList,
+                collection -> {
+                    Intent intent = new Intent(getActivity(), AddBookToCollectionActivity.class);
+                    intent.putExtra("collectionId", collection.getId());
+                    startActivity(intent);
+                },
+                selectedBooks,
+                collection -> {
 
-        adapter = new CollectionsRecyclerViewAdapter(collectionsList, collection -> {
-            Intent intent = new Intent(getActivity(), AddBookToCollectionActivity.class);
-            intent.putExtra("collectionId", collection.getId());
-            startActivity(intent);
-        }, selectedBooks);
+                    collectionViewModel.deleteCollection(collection);
+                    collectionsList.remove(collection);
+                    adapter.notifyDataSetChanged();
+                }
+        );
 
         binding.collectionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.collectionsRecyclerView.setAdapter(adapter);
     }
+
 
 
 
@@ -74,13 +92,21 @@ public class CollectionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        CollectionViewModelFactory factoryCollection = new CollectionViewModelFactory(requireActivity().getApplication());
+        collectionViewModel = new ViewModelProvider(this, factoryCollection).get(CollectionViewModel.class);
+
+        collectionViewModel.getAllCollectionsLiveData().observe(getViewLifecycleOwner(), collections -> {
+            collectionsList.clear();
+            collectionsList.addAll(collections);
+            adapter.notifyDataSetChanged();
+        });
 
         binding.fabCreateCollection.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), CreateCollectionActivity.class);
             createCollectionLauncher.launch(intent);
         });
-
     }
+
 
     @Override
     public void onDestroyView() {

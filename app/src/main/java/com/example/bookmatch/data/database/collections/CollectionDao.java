@@ -2,6 +2,7 @@ package com.example.bookmatch.data.database.collections;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -19,7 +20,11 @@ public interface CollectionDao {
     @Query("SELECT * FROM Collection")
     LiveData<List<Collection>> getAllCollectionsLiveData();
 
-
     @Query("SELECT COUNT(*) FROM Collection")
     LiveData<Integer> getCountCollectionLiveData();
+
+    @Delete
+    void deleteCollection(Collection collection);
+
+
 }

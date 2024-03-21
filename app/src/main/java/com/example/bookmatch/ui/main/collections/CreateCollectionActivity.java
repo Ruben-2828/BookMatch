@@ -1,23 +1,14 @@
 package com.example.bookmatch.ui.main.collections;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.bookmatch.R;
-import com.example.bookmatch.adapter.CollectionsRecyclerViewAdapter;
 import com.example.bookmatch.databinding.ActivityCreateCollectionBinding;
 import com.example.bookmatch.model.Collection;
-import com.example.bookmatch.ui.main.BookViewModel;
-import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionViewModel;
 import com.example.bookmatch.ui.main.CollectionViewModelFactory;
-
-
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class CreateCollectionActivity extends AppCompatActivity {
@@ -42,12 +33,7 @@ public class CreateCollectionActivity extends AppCompatActivity {
             if (validateInput(collectionName, collectionDescription)) {
                 Collection collection = new Collection(null, collectionName, collectionDescription);
                 collectionViewModel.insertCollection(collection);
-                collectionViewModel.getCountCollectionLiveData().observe(this, count -> {
-                    if (count != null && count > 0) {
-                        finish();
-
-                    }
-                });
+                finish();
             }
 
         });
@@ -74,5 +60,4 @@ public class CreateCollectionActivity extends AppCompatActivity {
 
         return isValid;
     }
-
 }

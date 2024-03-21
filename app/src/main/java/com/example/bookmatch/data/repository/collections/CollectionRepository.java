@@ -25,6 +25,12 @@ public class CollectionRepository implements ICollectionRepository {
         });
     }
 
+    public void deleteCollection(Collection collection) {
+        CollectionRoomDatabase.databaseWriteExecutor.execute(() -> {
+            collectionDao.deleteCollection(collection);
+        });
+    }
+
     public LiveData<Integer> getCountCollectionLiveData() {
         return collectionDao.getCountCollectionLiveData();
     }
@@ -32,6 +38,8 @@ public class CollectionRepository implements ICollectionRepository {
     public LiveData<List<Collection>> getAllCollectionsLiveData() {
         return collectionDao.getAllCollectionsLiveData();
     }
+
+
 
 }
 
