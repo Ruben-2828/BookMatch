@@ -61,7 +61,7 @@ public class AccountFragment extends Fragment {
 
         collectionViewModel.getCountCollectionLiveData().observe(getViewLifecycleOwner(), count -> {
             if (count != null) {
-                binding.userCollectionNumber.setText(String.valueOf(count));
+                binding.userCollectionCreated.setText(String.valueOf(count));
             }
         });
 

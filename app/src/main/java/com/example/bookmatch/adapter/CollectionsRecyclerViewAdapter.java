@@ -96,6 +96,7 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
             booksCarousel.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
             booksCarousel.setAdapter(booksAdapter);
         }
+
     }
 }
 
