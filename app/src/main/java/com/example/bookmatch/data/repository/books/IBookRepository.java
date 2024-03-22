@@ -5,14 +5,17 @@ import androidx.lifecycle.LiveData;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.utils.ResponseCallback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface IBookRepository {
 
-    void fetchBooks(String genre);
+    void fetchBooks(String genre, int startIndex);
 
-    LiveData<List<Book>> getAllBooks();
+    LiveData<List<Book>> getAllBooksLiveData();
+
+    List<Book> getAllBooks();
+
+    void insertBook(Book book);
 
     void updateBook(Book book);
 

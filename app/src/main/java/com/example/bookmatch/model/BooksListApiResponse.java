@@ -86,6 +86,9 @@ public class BooksListApiResponse {
     public ArrayList<Book> getBooksList() {
         ArrayList<Book> books = new ArrayList<>();
 
+        if (itemsList == null)
+            return null;
+
         for(Item i: itemsList) {
             String imageURI = null;
             if (i.getBookInfos().getImageLinks() != null)

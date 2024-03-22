@@ -9,10 +9,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Entity
 public class Book implements Parcelable {
-
     @PrimaryKey()
     @NonNull
     private String id;
@@ -148,5 +148,18 @@ public class Book implements Parcelable {
         dest.writeString(description);
         dest.writeString(publicationYear);
         dest.writeString(coverURI);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return Objects.equals(getId(), book.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

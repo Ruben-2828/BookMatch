@@ -25,6 +25,8 @@ public interface BookDao {
     @Query("SELECT * FROM Book WHERE id = :bookId")
     Book getBookById(String bookId);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Long insertBook(Book book);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     List<Long> insertBookList(List<Book> bookList);

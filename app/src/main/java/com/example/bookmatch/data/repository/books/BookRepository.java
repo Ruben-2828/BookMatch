@@ -1,9 +1,9 @@
 package com.example.bookmatch.data.repository.books;
 
-import android.app.Application;
-import android.util.Log;
+import static com.example.bookmatch.utils.Constants.API_SEARCH_BOOK_MAX_RESULTS_VALUE;
 
-import androidx.annotation.NonNull;
+import android.app.Application;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -15,6 +15,7 @@ import com.example.bookmatch.model.BooksListApiResponse;
 import com.example.bookmatch.utils.ResponseCallback;
 import com.example.bookmatch.utils.ServiceLocator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,12 +41,14 @@ public class BookRepository implements IBookRepository{
     }
 
     @Override
-    public void fetchBooks(String genre) {
+    public void fetchBooks(String genre, int startIndex) {
 
         assert callback != null;
 
-        Call<BooksListApiResponse> booksResponseCall = bookAPIService.getBooks("subject:" + genre);
-        Log.d(TAG, "genre: " + genre);
+        Call<BooksListApiResponse> booksResponseCall = bookAPIService.getBooks("subject:" + genre,
+                API_SEARCH_BOOK_MAX_RESULTS_VALUE,
+                startIndex);
+        //Log.d(TAG, "genre: " + genre);
 
         booksResponseCall.enqueue(new Callback<BooksListApiResponse>() {
 
@@ -53,11 +56,14 @@ public class BookRepository implements IBookRepository{
             public void onResponse(Call<BooksListApiResponse> call,
                                    Response<BooksListApiResponse> response) {
 
-                Log.d(TAG, "Response: "+ response);
+                //Log.d(TAG, "Response: "+ response);
 
                 if (response.body() != null && response.isSuccessful()) {
-                    Log.d(TAG, ""+ response.body().getBooksList());
-                    callback.onSuccess(response.body().getBooksList());
+                    // Remove books already seen by user
+                    ArrayList<Book> finalBooks = response.body().getBooksList();
+                    if (finalBooks != null)
+                        finalBooks.removeAll(getAllBooks());
+                    callback.onSuccess(finalBooks);
                 } else {
                     callback.onFailure("Error generating response");
                 }
@@ -77,6 +83,12 @@ public class BookRepository implements IBookRepository{
         });
     }
 
+    public void insertBook(Book book) {
+        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
+            bookDao.insertBook(book);
+        });
+    }
+
     public LiveData<List<Book>> getSavedBooks() {
         return bookDao.getSavedBooks();
     }
@@ -90,8 +102,13 @@ public class BookRepository implements IBookRepository{
         BookRoomDatabase.databaseWriteExecutor.execute(() -> bookDao.deleteBook(book));
     }
 
-    public MutableLiveData<List<Book>> getAllBooks() {
+    public MutableLiveData<List<Book>> getAllBooksLiveData() {
         return new MutableLiveData<>(bookDao.getAllBooksLiveData());
+    }
+
+    @Override
+    public List<Book> getAllBooks() {
+        return bookDao.getAllBooks();
     }
 
     public LiveData<Integer> getSavedBooksCount() {

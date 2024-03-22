@@ -33,14 +33,25 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.Card
         return books;
     }
 
+    public Book getBook(int position) {
+        return books.get(position);
+    }
+
     public void setBooks(ArrayList<Book> books) {
         this.books = books;
-        notifyDataSetChanged();;
+        notifyDataSetChanged();
     }
 
     public void addBooks(ArrayList<Book> books) {
+        int startPos = getItemCount();
+        int itemCount = books.size();
+
         this.books.addAll(books);
-        notifyDataSetChanged();;
+        notifyItemRangeChanged(startPos, itemCount);
+    }
+
+    public void removeBook(int position) {
+        this.books.remove(position);
     }
 
     @NonNull
@@ -87,10 +98,15 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.Card
         public void bind(Book b) {
             title.setText(b.getTitle());
 
-            String authors = "";
-            for(String a: b.getAuthors())
-                authors += a + ", ";
-            authors = authors.substring(0, authors.length() - 2);
+            String authors;
+            if (b.getAuthors() != null) {
+                authors = "";
+                for (String a : b.getAuthors())
+                    authors += a + ", ";
+                authors = authors.substring(0, authors.length() - 2);
+            } else {
+                authors = "No author found";
+            }
             author.setText(authors);
 
             Glide.with(this.itemView)

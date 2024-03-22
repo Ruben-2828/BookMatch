@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,8 +19,6 @@ import androidx.navigation.Navigation;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.CardStackAdapter;
-import com.example.bookmatch.data.database.BookDao;
-import com.example.bookmatch.data.database.BookRoomDatabase;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
@@ -34,8 +31,6 @@ import com.yuyakaido.android.cardstackview.Duration;
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ExploreFragment extends Fragment implements CardStackListener {
 
@@ -46,8 +41,6 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     private CardStackLayoutManager cardStackManager;
     private CardStackAdapter cardStackAdapter;
     private BookViewModel bookViewModel;
-    private BookDao bookDao;
-    private final ArrayList<Book> bookList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +48,6 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
         BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
         bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
-        bookDao = BookRoomDatabase.getDatabase(requireContext()).bookDao();
 
         return binding.getRoot();
     }
@@ -69,6 +61,8 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.noMoreBooks.setVisibility(View.INVISIBLE);
 
         cardStackView = binding.cardStackView;
         cardStackManager = new CardStackLayoutManager(getContext(), this);
@@ -95,6 +89,14 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (binding.explorePlaceholder.getVisibility() == View.VISIBLE) {
+                    binding.explorePlaceholder.setVisibility(View.INVISIBLE);
+                    binding.noMoreBooks.setVisibility(View.VISIBLE);
+                }
+
+
+                cardStackAdapter.setBooks(new ArrayList<>());
                 bookViewModel.fetchBooks(s.toString());
             }
 
@@ -104,50 +106,66 @@ public class ExploreFragment extends Fragment implements CardStackListener {
             }
         });
 
-        bookViewModel.getAllBooks().observe(getViewLifecycleOwner(), books -> {
-            Log.d(TAG, "QUa:" +books);
+        bookViewModel.getExtractedBooksLiveData().observe(getViewLifecycleOwner(), books -> {
             if (books != null) {
-                cardStackAdapter.setBooks(books);
+                cardStackAdapter.addBooks(books);
             }
         });
 
-        binding.genre.setText(getResources().getStringArray(R.array.search_genre)[0]);
+        //binding.genre.setListSelection(0);
     }
 
     @Override
     public void onCardDragging(@NonNull Direction direction, float ratio) {
-        Log.d("CardStackView", "onCardDragging: d = " + direction.name() + ", r = " + ratio);
     }
 
     @Override
     public void onCardSwiped(@NonNull Direction direction) {
-        Log.d("CardStackView", "onCardSwiped: p = " + cardStackManager.getTopPosition() + ", d = " + direction);
+
+        int position = cardStackManager.getTopPosition() - 1;
+        Book currentBook = cardStackAdapter.getBook(position);
 
         if (direction == Direction.Right) {
-
+            Log.d(TAG, "saved book as favorite: " + cardStackAdapter.getBook(position).getTitle());
+            bookViewModel.saveBook(currentBook, true);
+        }
+        if (direction == Direction.Left) {
+            Log.d(TAG, "skipped book: " + cardStackAdapter.getBook(position).getTitle());
+        }
+        if (direction == Direction.Bottom) {
+            Log.d(TAG, "saved book as deleted: " + cardStackAdapter.getBook(position).getTitle());
+            bookViewModel.saveBook(currentBook, false);
         }
     }
 
     @Override
     public void onCardRewound() {
-        Log.d("CardStackView", "onCardRewound: " + cardStackManager.getTopPosition());
+        Log.d(TAG, "onCardRewound: " + cardStackManager.getTopPosition());
     }
 
     @Override
     public void onCardCanceled() {
-        Log.d("CardStackView", "onCardCanceled: " + cardStackManager.getTopPosition());
+        Log.d(TAG, "onCardCanceled: " + cardStackManager.getTopPosition());
     }
 
     @Override
     public void onCardAppeared(@NonNull View view, int position) {
-        TextView textView = view.findViewById(R.id.book_title);
-        Log.d("CardStackView", "onCardAppeared: (" + position + ") " + textView.getText());
+        TextView titleView = view.findViewById(R.id.book_title);
+        Log.d(TAG, "onCardAppeared: (" + position + ") " + titleView.getText());
     }
 
     @Override
     public void onCardDisappeared(@NonNull View view, int position) {
-        TextView textView = view.findViewById(R.id.book_title);
-        Log.d("CardStackView", "onCardDisappeared: (" + position + ") " + textView.getText());
+        TextView titleView = view.findViewById(R.id.book_title);
+        Log.d(TAG, "onCardDisappeared: (" + position + ") " + titleView.getText());
+
+        if(cardStackManager.getTopPosition() == cardStackAdapter.getItemCount() - 5) {
+            String genre = String.valueOf(binding.genre.getText());
+            bookViewModel.fetchBooks(genre);
+        }
+        if(cardStackManager.getTopPosition() == cardStackAdapter.getItemCount() - 1) {
+            binding.noMoreBooks.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupButtons() {
@@ -161,15 +179,15 @@ public class ExploreFragment extends Fragment implements CardStackListener {
             cardStackView.swipe();
         });
 
-        /*binding.rewindButton.setOnClickListener(v -> {
+        binding.deleteButton.setOnClickListener(v -> {
             SwipeAnimationSetting setting = new SwipeAnimationSetting.Builder()
                     .setDirection(Direction.Bottom)
                     .setDuration(Duration.Normal.duration)
-                    .setInterpolator(new DecelerateInterpolator())
+                    .setInterpolator(new AccelerateInterpolator())
                     .build();
             cardStackManager.setSwipeAnimationSetting(setting);
-            cardStackView.rewind();
-        });*/
+            cardStackView.swipe();
+        });
 
         binding.likeButton.setOnClickListener(v -> {
 
@@ -180,26 +198,6 @@ public class ExploreFragment extends Fragment implements CardStackListener {
                     .build();
             cardStackManager.setSwipeAnimationSetting(setting);
             cardStackView.swipe();
-        });
-    }
-
-    private void loadDataFromDatabase() {
-        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
-            List<Book> allBooks = bookDao.getAllBooks();
-
-            for (Book book : allBooks) {
-                if (!book.isSaved()) {
-                    bookList.add(book);
-                }
-            }
-
-            requireActivity().runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    cardStackAdapter.setBooks(bookList);
-                }
-            });
         });
     }
 }

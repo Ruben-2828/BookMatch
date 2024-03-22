@@ -81,6 +81,8 @@
         <item>Travel</item>
     </string-array>
     <string name="genre">Genre</string>
+    <string name="explore_placeholder">Select a genre to start searching!</string>
+    <string name="finished_book_list">No more books of this genre, try something else!</string>
     <!-- End ExploreFragment -->
 
     <!-- Start SavedFragment -->
