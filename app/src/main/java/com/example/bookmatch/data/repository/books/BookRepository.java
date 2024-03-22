@@ -12,7 +12,7 @@ import com.example.bookmatch.data.database.BookRoomDatabase;
 import com.example.bookmatch.data.service.BookAPIService;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.BooksListApiResponse;
-import com.example.bookmatch.utils.ResponseCallback;
+import com.example.bookmatch.utils.BookAPIResponseCallback;
 import com.example.bookmatch.utils.ServiceLocator;
 
 import java.util.ArrayList;
@@ -27,9 +27,9 @@ public class BookRepository implements IBookRepository{
     private static final String TAG = BookRepository.class.getSimpleName();
     private final BookAPIService bookAPIService;
     private final BookDao bookDao;
-    private ResponseCallback callback;
+    private BookAPIResponseCallback callback;
 
-    public void setCallback(ResponseCallback callback) {
+    public void setCallback(BookAPIResponseCallback callback) {
         this.callback = callback;
     }
 
