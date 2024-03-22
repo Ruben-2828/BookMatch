@@ -4,13 +4,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.ActivityPreferencesEditBinding;
+import com.example.bookmatch.model.Book;
+import com.example.bookmatch.ui.main.BookViewModel;
+import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -24,10 +33,39 @@ public class AccountPreferencesActivity extends AppCompatActivity {
         binding = ActivityPreferencesEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        getDataFromSavedFragment();
         undoEditPreferences();
         setupSaveButton();
 
     }
+
+    private void getDataFromSavedFragment() {
+
+        BookViewModelFactory factory = new BookViewModelFactory(getApplication());
+        BookViewModel bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
+
+        bookViewModel.getSavedBooksLiveData().observe(this, savedBooks -> {
+            if (savedBooks != null && savedBooks.size() > 0) {
+                List<String> titles = new ArrayList<>();
+                List<String> authors = new ArrayList<>();
+
+                for (Book savedBook : savedBooks) {
+                    titles.add(savedBook.getTitle());
+                    authors.addAll(savedBook.getAuthors());
+                }
+
+                ArrayAdapter<String> titleAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, titles);
+                ArrayAdapter<String> authorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, authors);
+
+                binding.book.setAdapter(titleAdapter);
+                binding.author.setAdapter(authorAdapter);
+            } else {
+                binding.menuAuthor.setError("Please, add some books to your saved list");
+                binding.menuBook.setError("Please, add some books to your saved list");
+            }
+        });
+    }
+
 
     private void undoEditPreferences() {
         binding.goBackButton.setOnClickListener(v -> finish());

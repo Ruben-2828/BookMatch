@@ -50,6 +50,7 @@ public class SavedFragment extends Fragment {
         bookViewModel.getSavedBooksLiveData().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
     }
 
+
     private void updateSavedBooksList(List<Book> savedBooks) {
         SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedBooks, saved -> {
             Bundle bundle = new Bundle();
@@ -57,7 +58,6 @@ public class SavedFragment extends Fragment {
         });
         binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
     }
-
 
     @Override
     public void onDestroyView() {
