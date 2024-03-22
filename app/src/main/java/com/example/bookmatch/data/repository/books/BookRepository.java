@@ -30,17 +30,16 @@ public class BookRepository implements IBookRepository{
     private final BookDao bookDao;
     private BookAPIResponseCallback callback;
 
-    public void setCallback(BookAPIResponseCallback callback) {
-        this.callback = callback;
-    }
-
     public BookRepository(Application application) {
         this.bookAPIService = ServiceLocator.getInstance().getBooksApiService();
         BookRoomDatabase bookRoomDatabase = ServiceLocator.getInstance().getBookDao(application);
         this.bookDao = bookRoomDatabase.bookDao();
         this.callback = null;
     }
-
+    @Override
+    public void setCallback(BookAPIResponseCallback callback) {
+        this.callback = callback;
+    }
     @Override
     public void fetchBooks(String genre, int startIndex) {
 
@@ -78,61 +77,40 @@ public class BookRepository implements IBookRepository{
         });
     }
 
-    //LiveData
-
-    public LiveData<List<Book>> getSavedBooksLiveData() {
-        return bookDao.getSavedBooksLiveData();
+    @Override
+    public List<Book> getAllBooks() {
+        return bookDao.getAllBooks();
     }
 
-    public LiveData<Integer> getSavedBooksCountLiveData() {
-        return bookDao.getSavedBooksCountLiveData();
+    @Override
+    public List<Book> getSavedBooks() {
+        return bookDao.getSavedBooks();
     }
+
+    @Override
+    public Integer getSavedBooksCount() {
+        return bookDao.getSavedBooksCount();
+    }
+
 
     //Database operations
-
+    @Override
     public void updateBook(Book book) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
             bookDao.updateSingleSavedBook(book);
         });
     }
-
+    @Override
     public void insertBook(Book book) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> {
             bookDao.insertBook(book);
         });
     }
 
-    public LiveData<List<Book>> getSavedBooks() {
-        return bookDao.getSavedBooks();
-    }
-
-    public void removeBookFromSaved(Book book) {
-        book.setSaved(false);
-        updateBook(book);
-    }
-
+    @Override
     public void deleteBook(Book book) {
         BookRoomDatabase.databaseWriteExecutor.execute(() -> bookDao.deleteBook(book));
     }
 
-    public MutableLiveData<List<Book>> getAllBooksLiveData() {
-        return new MutableLiveData<>(bookDao.getAllBooksLiveData());
-    }
-
-    @Override
-    public List<Book> getAllBooks() {
-        return bookDao.getAllBooks();
-    }
-
-    public LiveData<Integer> getSavedBooksCount() {
-        return bookDao.getSavedBooksCount();
-    }
-
-
-    private void saveDataInDatabase(List<Book> bookList) {
-        BookRoomDatabase.databaseWriteExecutor.execute(() -> {
-            bookDao.insertBookList(bookList);
-        });
-    }
 
 }

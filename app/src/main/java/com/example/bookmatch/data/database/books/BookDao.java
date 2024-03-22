@@ -1,4 +1,4 @@
-package com.example.bookmatch.data.database;
+package com.example.bookmatch.data.database.books;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -29,10 +29,10 @@ public interface BookDao {
     List<Long> insertBookList(List<Book> bookList);
 
     @Query("SELECT * FROM Book WHERE is_saved = 1")
-    LiveData<List<Book>> getSavedBooks();
+    List<Book> getSavedBooks();
 
     @Query("SELECT COUNT(*) FROM Book WHERE is_saved = 1")
-    LiveData<Integer> getSavedBooksCount();
+    Integer getSavedBooksCount();
 
     @Query("UPDATE Book SET is_saved = :isSaved WHERE id = :bookId")
     void updateBookSavedStatus(String bookId, boolean isSaved);
@@ -42,18 +42,5 @@ public interface BookDao {
 
     @Delete
     void deleteBook(Book book);
-
-    //LiveData queries
-
-    @Query("SELECT * FROM Book")
-    LiveData<List<Book>> getAllBooksLiveData();
-
-    @Query("SELECT * FROM Book WHERE is_saved = 1")
-    LiveData<List<Book>> getSavedBooksLiveData();
-
-    @Query("SELECT COUNT(*) FROM Book WHERE is_saved = 1")
-    LiveData<Integer> getSavedBooksCountLiveData();
-
-
 }
 

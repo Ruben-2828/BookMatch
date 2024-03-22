@@ -1,6 +1,9 @@
 package com.example.bookmatch.data.repository.books;
 
+import android.app.Application;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.utils.BookAPIResponseCallback;
@@ -13,21 +16,15 @@ public interface IBookRepository {
 
     List<Book> getAllBooks();
 
+    List<Book> getSavedBooks();
+
+    Integer getSavedBooksCount();
+
     void insertBook(Book book);
 
     void updateBook(Book book);
 
-    void removeBookFromSaved(Book book);
-
     void deleteBook(Book book);
-
-    //LiveData methods
-
-    LiveData<Integer> getSavedBooksCountLiveData();
-
-    LiveData<List<Book>> getAllBooksLiveData();
-
-    LiveData<List<Book>> getSavedBooksLiveData();
 
     void setCallback(BookAPIResponseCallback callback);
 }

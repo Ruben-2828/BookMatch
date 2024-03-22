@@ -6,7 +6,6 @@ import static com.example.bookmatch.utils.Constants.API_SEARCH_BOOK_MIN_RESULTS_
 import android.app.Application;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -21,14 +20,14 @@ import java.util.List;
 public class BookViewModel extends ViewModel implements BookAPIResponseCallback {
     private static final String TAG = BookViewModel.class.getSimpleName();
     private final IBookRepository bookRepository;
-    private MutableLiveData<ArrayList<Book>> savedBooks;
+    private MutableLiveData<List<Book>> savedBooks;
     private MutableLiveData<ArrayList<Book>> extractedBooks;
     private String prevGenre;
     private int startIndex;
 
     public BookViewModel(Application application) {
         this.bookRepository = new BookRepository(application);
-        savedBooks = bookRepository.getSavedBooksLiveData();
+        savedBooks = new MutableLiveData<>(bookRepository.getSavedBooks());
         this.extractedBooks = new MutableLiveData<>();
         prevGenre = null;
         startIndex = 0;
@@ -53,12 +52,7 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         bookRepository.insertBook(book);
     }
 
-    public MutableLiveData<ArrayList<Book>> getSavedBooks() {
-        return savedBooks;
-    }
-
     public void deleteBook(Book book) {
-
         bookRepository.deleteBook(book);
     }
 
@@ -66,20 +60,13 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         return extractedBooks;
     }
 
-    public List<Book> getAllBooks() {
-        return bookRepository.getAllBooks();
-
     // LiveData methods
-    public LiveData<List<Book>> getSavedBooksLiveData() {
+    public MutableLiveData<List<Book>> getSavedBooksLiveData() {
         return savedBooks;
     }
 
-    public LiveData<List<Book>> getAllBooksLiveData() {
-        return bookRepository.getAllBooksLiveData();
-    }
-
-    public LiveData<Integer> getSavedBooksCountLiveData() {
-        return bookRepository.getSavedBooksCountLiveData();
+    public MutableLiveData<Integer> getSavedBooksCountLiveData() {
+        return new MutableLiveData<>(bookRepository.getSavedBooksCount());
     }
 
     @Override

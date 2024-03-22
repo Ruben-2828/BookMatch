@@ -33,8 +33,8 @@
         android:label="@string/collections"
         tools:layout="@layout/fragment_saved" >
         <action
-            android:id="@+id/action_navigation_collections_to_createCollectionsFragment"
-            app:destination="@id/createCollectionsFragment" />
+            android:id="@+id/action_navigation_collections_to_createCollectionFragment"
+            app:destination="@id/createCollectionFragment" />
     </fragment>
 
     <fragment
@@ -50,10 +50,10 @@
         android:id="@+id/navigation_book"
         android:name="com.example.bookmatch.ui.main.book_page.BookPageFragment"
         android:label="BookPageFragment" />
-    <fragment
-        android:id="@+id/createCollectionsFragment"
-        android:name="com.example.bookmatch.ui.main.collections.CreateCollectionsActivity"
-        android:label="CreateCollectionsFragment" />
+    <activity
+        android:id="@+id/createCollectionFragment"
+        android:name="com.example.bookmatch.ui.main.collections.CreateCollectionActivity"
+        android:label="CreateCollectionFragment" />
     <activity
         android:id="@+id/accountEditActivity"
         android:name="com.example.bookmatch.ui.main.account.AccountEditActivity"

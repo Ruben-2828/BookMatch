@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.ui.main.BookViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -85,7 +86,7 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
+            int position = getAbsoluteAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Book book = savedList.get(position);
                 if (view.getId() == R.id.imageview_edit) {
@@ -109,9 +110,10 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
                 public void onDismissed(Snackbar transientBottomBar, int event) {
                     super.onDismissed(transientBottomBar, event);
                     if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                        //TODO: SISTEMARE, creare callback, mettere onClickListener dal savedFragment
                         Application application = (Application) itemView.getContext().getApplicationContext();
-                        BookRepository bookRepository = new BookRepository(application);
-                        bookRepository.removeBookFromSaved(removedBook);
+                        BookViewModel bookViewModel = new BookViewModel(application);
+                        bookViewModel.deleteBook(removedBook);
                     }
                 }
             });
