@@ -10,9 +10,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     card_view:cardUseCompatPadding="true"
-    android:layout_margin="8dp"
-    card_view:cardCornerRadius="28dp"
-    card_view:cardElevation="6dp"
+    card_view:cardCornerRadius="8dp"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardBackgroundColor="?attr/colorSecondaryContainer">
 
@@ -24,51 +22,44 @@
             android:id="@+id/book_cover"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
             android:contentDescription="@string/book_thumbnail"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintBottom_toTopOf="@+id/book_title"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/book_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/default_title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            card_view:layout_constraintBottom_toTopOf="@+id/book_author_by"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/book_author_by"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/by"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/book_author"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/default_author"
-            android:textStyle="bold"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="1.0"
-            card_view:layout_constraintStart_toEndOf="@+id/book_author_by" />
+            card_view:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#70000000"
+            android:padding="16dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/book_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_title"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/book_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_author"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
 
 
 

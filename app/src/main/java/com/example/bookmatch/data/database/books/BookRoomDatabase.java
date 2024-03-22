@@ -35,6 +35,7 @@ public abstract class BookRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             BookRoomDatabase.class, BOOK_DATABASE_NAME)
                             .fallbackToDestructiveMigration()
+                            .allowMainThreadQueries()
                             .build();
                 }
             }

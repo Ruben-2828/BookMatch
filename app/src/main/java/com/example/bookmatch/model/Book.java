@@ -1,7 +1,5 @@
 package com.example.bookmatch.model;
 
-import static com.example.bookmatch.utils.Constants.API_RETRIEVE_BOOK_COVER_BY_ID_ENDPOINT;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,14 +9,13 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Entity
 public class Book implements Parcelable {
-
-    @PrimaryKey(autoGenerate = true)
-    private long book_id;
-
-    private String key;
+    @PrimaryKey()
+    @NonNull
+    private String id;
 
     private String title;
 
@@ -38,9 +35,9 @@ public class Book implements Parcelable {
     private boolean isSaved;
 
 
-    public Book(String key, String title, ArrayList<String> authors, String description,
+    public Book(String id, String title, ArrayList<String> authors, String description,
                 String publicationYear, String coverURI, boolean isSaved){
-        this.key = key;
+        this.id = id;
         this.title = title;
         this.authors = authors;
         this.description = description;
@@ -50,7 +47,7 @@ public class Book implements Parcelable {
     }
 
     protected Book(Parcel in) {
-        book_id = in.readLong();
+        id = in.readString();
         title = in.readString();
         authors = in.createStringArrayList();
         description = in.readString();
@@ -70,10 +67,9 @@ public class Book implements Parcelable {
         }
     };
 
-    public long getBook_id() { return book_id; }
 
-    public String getKey() {
-        return key;
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -98,12 +94,8 @@ public class Book implements Parcelable {
         return isSaved;
     }
 
-    public void setBook_id(long book_id) {
-        this.book_id = book_id;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setTitle(String title) {
@@ -133,8 +125,7 @@ public class Book implements Parcelable {
     @Override
     public String toString() {
         return "Book{" +
-                "book_id=" + book_id +
-                ", key='" + key + '\'' +
+                "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", authors=" + authors +
                 ", description='" + description + '\'' +
@@ -151,11 +142,24 @@ public class Book implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeLong(book_id);
+        dest.writeString(id);
         dest.writeString(title);
         dest.writeStringList(authors);
         dest.writeString(description);
         dest.writeString(publicationYear);
         dest.writeString(coverURI);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return Objects.equals(getId(), book.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
