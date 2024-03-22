@@ -113,12 +113,14 @@
     <string name="error_first_name_required">First name is required</string>
     <string name="error_last_name_required">Last name is required</string>
     <string name="save">Save</string>
+    <string name="description_edit_account">Edit your account information by entering your nickname, first name, last name and a profile picture!</string>
     <!-- End AccountEditFragment -->
 
     <!-- Start PreferencesEditFragment -->
     <string name="edit_preferences">Edit preferences</string>
     <string name="book">Book</string>
     <string name="author">Author</string>
+    <string name="description_edit_preferences">Edit your profile preferences by selecting your favorite genre, author, and book!</string>
 
     <string-array name="search_author">
     </string-array>
