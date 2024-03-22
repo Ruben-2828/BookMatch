@@ -55,14 +55,17 @@ public class LoginFragment extends Fragment {
         //TODO: controllare se lo user è già loggato
 
         binding.buttonLogin.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registrationFragment);
             String email = Objects.requireNonNull(binding.textInputLayoutEmail.
                     getEditText()).getText().toString();
             String password = Objects.requireNonNull(binding.textInputLayoutPassword.
                     getEditText()).getText().toString();
 
             if(isEmailOk(email) && isPasswordOk(password)){
-
+                userViewModel.getUserMutableLiveData(email, password, true).observe(
+                        getViewLifecycleOwner(), result -> {
+                            Log.d("WELCOME", result.getEmail());
+                        }
+                );
             }else {
 
             }

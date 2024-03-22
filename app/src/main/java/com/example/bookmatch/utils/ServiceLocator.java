@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.data.repository.user.UserRepository;
+import com.example.bookmatch.data.repository.user.auth.IUserAuthentication;
+import com.example.bookmatch.data.repository.user.auth.UserAuthentication;
 
 public class ServiceLocator {
 
@@ -23,6 +25,8 @@ public class ServiceLocator {
     public IUserRepository getUserRepository(Application application){
         SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(application);
 
-        return new UserRepository();
+        IUserAuthentication userAuthentication = new UserAuthentication();
+
+        return new UserRepository(userAuthentication);
     }
 }
