@@ -115,6 +115,38 @@
     <string name="save">Save</string>
     <!-- End AccountEditFragment -->
 
+    <!-- Start PreferencesEditFragment -->
+    <string name="edit_preferences">Edit preferences</string>
+    <string name="book">Book</string>
+    <string name="author">Author</string>
+
+    <string-array name="search_author">
+        <item>Author 1</item>
+        <item>Author 2</item>
+        <item>Author 3</item>
+        <item>Author 4</item>
+        <item>Author 5</item>
+        <item>Author 6</item>
+        <item>Author 7</item>
+        <item>Author 8</item>
+        <item>Author 9</item>
+        <item>Author 10</item>
+    </string-array>
+
+    <string-array name="search_book">
+        <item>Book 1</item>
+        <item>Book 2</item>
+        <item>Book 3</item>
+        <item>Book 4</item>
+        <item>Book 5</item>
+        <item>Book 6</item>
+        <item>Book 7</item>
+        <item>Book 8</item>
+        <item>Book 9</item>
+        <item>Book 10</item>
+    </string-array>
+    <!-- End PreferencesEditFragment -->
+
     <!-- Start CollectionsFragment -->
     <string name="create_button">Create</string>
     <string name="create_a_new_collection">Create a New Collection</string>

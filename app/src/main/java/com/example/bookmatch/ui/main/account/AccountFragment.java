@@ -65,7 +65,6 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        binding.userFavoriteGenre.setText("ezezez");
     }
 
     private void setButtonClickListeners() {
@@ -83,6 +82,10 @@ public class AccountFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.edit_profile_item) {
             launchEditProfileActivity();
+            return true;
+        }
+        if (id == R.id.edit_preferences_item) {
+            launchEditPreferencesActivity();
             return true;
         }
         if (id == R.id.about_us_item) {
@@ -122,6 +125,35 @@ public class AccountFragment extends Fragment {
                         binding.userNickname.setText(userNickname);
                         binding.userFirstName.setText(userFirstName);
                         binding.userLastName.setText(userLastName);
+                    }
+                }
+            }
+    );
+
+    private void launchEditPreferencesActivity() {
+        Bundle args = new Bundle();
+        args.putString("genre", binding.userFavoriteGenre.getText().toString());
+        args.putString("author", binding.userFavoriteAuthor.getText().toString());
+        args.putString("book", binding.userFavoriteBook.getText().toString());
+
+        Intent intent = new Intent(getContext(), AccountPreferencesActivity.class);
+        intent.putExtras(args);
+        editPreferencesLauncher.launch(intent);
+    }
+
+    private final ActivityResultLauncher<Intent> editPreferencesLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        String genre = data.getStringExtra("genre");
+                        String author = data.getStringExtra("author");
+                        String book = data.getStringExtra("book");
+
+                        binding.userFavoriteGenre.setText(genre);
+                        binding.userFavoriteAuthor.setText(author);
+                        binding.userFavoriteBook.setText(book);
                     }
                 }
             }

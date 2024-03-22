@@ -6,6 +6,9 @@
     <item android:id="@+id/edit_profile_item"
         android:title="@string/edit_profile" />
 
+    <item android:id="@+id/edit_preferences_item"
+        android:title="@string/edit_preferences" />
+
     <item android:id="@+id/about_us_item"
         android:title="@string/about_us" />
 
