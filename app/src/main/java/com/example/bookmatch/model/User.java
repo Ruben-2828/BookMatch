@@ -6,6 +6,12 @@ public class User {
     private String email;
     private String tokenId;
 
+    public User(String username, String email, String tokenId) {
+        this.username = username;
+        this.email = email;
+        this.tokenId = tokenId;
+    }
+
     public String getUsername() {
         return username;
     }

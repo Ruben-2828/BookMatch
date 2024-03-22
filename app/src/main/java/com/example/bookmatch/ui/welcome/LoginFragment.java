@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.bookmatch.R;
+import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentLoginBinding;
+import com.example.bookmatch.utils.ServiceLocator;
+import com.google.firebase.FirebaseApp;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -22,27 +26,46 @@ import java.util.Objects;
 public class LoginFragment extends Fragment {
 
     private FragmentLoginBinding binding;
+    private UserViewModel userViewModel;
 
     public LoginFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        IUserRepository userRepository = ServiceLocator.getInstance().getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(requireActivity(), new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+
+        FirebaseApp.initializeApp(getActivity().getApplication());
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater);
+
         return binding.getRoot();
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonRegistration.setOnClickListener(v -> {
+        //TODO: controllare se lo user è già loggato
+
+        binding.buttonLogin.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registrationFragment);
             String email = Objects.requireNonNull(binding.textInputLayoutEmail.
                     getEditText()).getText().toString();
             String password = Objects.requireNonNull(binding.textInputLayoutPassword.
                     getEditText()).getText().toString();
 
+            if(isEmailOk(email) && isPasswordOk(password)){
+
+            }else {
+
+            }
             Log.d("WELCOME", email + password);
         });
     }

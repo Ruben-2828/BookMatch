@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "341806699288",
+    "project_id": "bookmatch-ac37f",
+    "storage_bucket": "bookmatch-ac37f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341806699288:android:8170e358c60cf027acc46d",
+        "android_client_info": {
+          "package_name": "com.example.bookmatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnDT4cPq9km-ideo5ResPBTLPF3ykMzzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
