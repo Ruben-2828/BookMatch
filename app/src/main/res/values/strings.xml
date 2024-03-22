@@ -91,11 +91,11 @@
     <string name="saved_books">Saved books</string>
     <string name="default_saved_books">default saved books</string>
     <string name="default_books_read">default books read</string>
-    <string name="default_favorite_genre">default favorite genre</string>
+    <string name="default_favorite_genre">Favorite genre not yet specified</string>
     <string name="default_collection_created">default collection created</string>
-    <string name="default_favorite_book">default favorite book</string>
+    <string name="default_favorite_book">Favorite book not yet specified</string>
     <string name="preferences">Preferences</string>
-    <string name="default_favorite_author">default favorite author</string>
+    <string name="default_favorite_author">Favorite author not yet specified</string>
     <string name="collection_created">Collection created</string>
     <string name="edit_profile">Edit profile</string>
     <string name="about_us">About us</string>
