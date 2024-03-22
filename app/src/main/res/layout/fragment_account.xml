@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.account.AccountFragment">
+    tools:context=".ui.main.account.AccountFragment"
+    android:layout_marginBottom="16dp">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -90,7 +91,7 @@
                         android:text="@string/default_nickname"
                         android:textColor="?attr/colorPrimary"
                         android:fontFamily="serif"
-                        android:textSize="24sp"
+                        android:textSize="28sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -181,7 +182,7 @@
                 android:text="@string/statistics"
                 android:fontFamily="serif"
                 android:textColor="?attr/colorSecondary"
-                android:textSize="32sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -190,174 +191,188 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardview_statistics"
                 android:layout_width="0dp"
+                android:backgroundTint="?attr/colorSecondaryContainer"
+                android:layout_height="120dp"
+                android:layout_marginTop="16sp"
+                android:layout_centerHorizontal="true"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/Statistics"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/saved_books"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="@string/saved_books"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/user_saved_books"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:textColor="?attr/colorTertiary"
+                            android:fontFamily="serif"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/collection_created"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="@string/collection_created"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/user_collection_created"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:textColor="?attr/colorTertiary"
+                            android:textSize="20sp"
+                            android:fontFamily="serif"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/Preferences"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/preferences"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorSecondary"
+                android:fontFamily="serif"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardview_statistics" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_preferences"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="?attr/colorSecondaryContainer"
                 app:cardCornerRadius="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Statistics">
+                app:layout_constraintTop_toBottomOf="@+id/Preferences">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
+                    android:id="@+id/layout_preferences"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
 
+                    <LinearLayout
+                        android:id="@+id/favorite_genre"
+                        android:layout_marginTop="24sp"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="24sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/saved_books"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/saved_books"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/baseline_genre_24"/>
 
-                    <TextView
-                        android:id="@+id/collection_created"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/collection_created"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/saved_books" />
+                        <TextView
+                            android:id="@+id/user_favorite_genre"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24sp"
+                            android:text="@string/default_favorite_genre"/>
 
-                    <TextView
-                        android:id="@+id/user_saved_books"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/default_saved_books"
-                        android:fontFamily="sans-serif-condensed-medium"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/saved_books"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/favorite_author"
+                        android:layout_marginTop="24sp"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="24sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/user_collection_created"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/default_collection_created"
-                        android:fontFamily="sans-serif-condensed-medium"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/collection_created"
-                        app:layout_constraintTop_toBottomOf="@+id/user_saved_books" />
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/baseline_account_circle_24"/>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/user_favorite_author"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24sp"
+                            android:text="@string/default_favorite_author"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/favorite_book"
+                        android:layout_marginTop="24sp"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="24sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/baseline_book_24"/>
+
+                        <TextView
+                            android:id="@+id/user_favorite_book"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24sp"
+                            android:text="@string/default_favorite_book"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/Preferences"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/preferences"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorSecondary"
-            android:fontFamily="serif"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardview_statistics" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardview_preferences"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="?attr/colorSecondaryContainer"
-            app:cardCornerRadius="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Preferences">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/favorite_genre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/favorite_genre"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:fontFamily="sans-serif-condensed"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/favorite_book"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/favorite_book"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:fontFamily="sans-serif-condensed"
-                    app:layout_constraintTop_toBottomOf="@+id/favorite_genre" />
-
-                <TextView
-                    android:id="@+id/favorite_author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/favorite_author"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/favorite_book" />
-
-                <TextView
-                    android:id="@+id/user_favorite_genre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="sans-serif-condensed-medium"
-                    android:text="@string/default_favorite_genre"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/favorite_genre"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/user_favorite_book"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/default_favorite_book"
-                    android:fontFamily="sans-serif-condensed-medium"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/favorite_book"
-                    app:layout_constraintTop_toBottomOf="@+id/user_favorite_genre" />
-
-                <TextView
-                    android:id="@+id/user_favorite_author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/default_favorite_book"
-                    android:fontFamily="sans-serif-condensed-medium"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/favorite_author"
-                    app:layout_constraintTop_toBottomOf="@+id/user_favorite_book" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
