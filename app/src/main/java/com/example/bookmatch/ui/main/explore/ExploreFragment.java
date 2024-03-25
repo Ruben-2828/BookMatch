@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 public class ExploreFragment extends Fragment implements CardStackListener {
 
     private static final String TAG = ExploreFragment.class.getSimpleName();
+    private static final String GENRE_KEY = "genre";
+    private static final String CURRENT_ITEM_KEY = "current";
 
     private FragmentExploreBinding binding;
     private CardStackView cardStackView;
@@ -61,6 +65,11 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getContext(),
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.search_genre));
+        binding.genre.setAdapter(genreAdapter);
 
         binding.noMoreBooks.setVisibility(View.INVISIBLE);
 
@@ -112,7 +121,13 @@ public class ExploreFragment extends Fragment implements CardStackListener {
             }
         });
 
-        //binding.genre.setListSelection(0);
+        // Restore view
+        if (savedInstanceState != null) {
+            binding.genre.setText(savedInstanceState.getString(GENRE_KEY));
+            Log.d(TAG, "fatto: "+genreAdapter.getCount());
+        } else {
+            binding.genre.setText(genreAdapter.getItem(0), false);
+        }
     }
 
     @Override
@@ -199,5 +214,24 @@ public class ExploreFragment extends Fragment implements CardStackListener {
             cardStackManager.setSwipeAnimationSetting(setting);
             cardStackView.swipe();
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        String genre = String.valueOf(binding.genre.getText());
+        outState.putString(GENRE_KEY, genre);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Not the finest thing to do, see this: https://github.com/material-components/material-components-android/issues/2012
+        ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getContext(),
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.search_genre));
+        binding.genre.setAdapter(genreAdapter);
     }
 }

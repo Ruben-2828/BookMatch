@@ -54,8 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="?attr/colorSecondaryContainer"
-                    android:inputType="none"
-                    app:simpleItems="@array/search_genre" />
+                    android:inputType="none"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
