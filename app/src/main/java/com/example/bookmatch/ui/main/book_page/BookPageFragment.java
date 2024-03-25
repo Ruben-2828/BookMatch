@@ -40,6 +40,7 @@ public class BookPageFragment extends Fragment {
         if (arguments != null) {
             Book book = arguments.getParcelable("book");
 
+            binding.bookTitleAppbar.setText(book.getTitle());
             binding.bookTitle.setText(book.getTitle());
             binding.authorTextView.setText(book.getAuthors().toString());
             binding.pubblicationYearTextView.setText(book.getPublicationYear());
@@ -56,13 +57,20 @@ public class BookPageFragment extends Fragment {
             if (!book.getCoverURI().isEmpty()) {
                 Glide.with(this)
                         .load(book.getCoverURI())
-                        .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 1)))
                         .into(binding.coverBook);
+
+                binding.coverBook.setOnClickListener(v -> {
+                    Intent intent = new Intent(getContext(), FullscreenImageActivity.class);
+                    intent.putExtra("image uri", book.getCoverURI());
+                    intent.putExtra("book title", book.getTitle());
+                    intent.putExtra("book status", book.isSaved());
+                    startActivity(intent);
+                });
             } else {
                 Toast.makeText(getContext(), (R.string.book_cover_not_available_toast), Toast.LENGTH_SHORT).show();
             }
 
-            if(!book.isSaved()){
+            if(book.isSaved()){
                 binding.savedButton.setVisibility(View.VISIBLE);
                 binding.notSavedButton.setVisibility(View.INVISIBLE);
             } else {
