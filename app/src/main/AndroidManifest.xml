@@ -67,6 +67,11 @@
             android:label="edit preferences">
         </activity>
 
+        <activity
+            android:name=".ui.main.book_page.FullscreenImageActivity"
+            android:label="fullscreen image">
+        </activity>
+
     </application>
 
 
