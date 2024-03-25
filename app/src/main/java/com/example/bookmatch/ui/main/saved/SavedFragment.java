@@ -18,12 +18,14 @@ import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class SavedFragment extends Fragment {
 
     private FragmentSavedBinding binding;
+    SavedRecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,18 +47,15 @@ public class SavedFragment extends Fragment {
         BookViewModel bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+        recyclerViewAdapter = new SavedRecyclerViewAdapter(new ArrayList<>(),null);
         binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
 
         bookViewModel.getSavedBooksLiveData().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
     }
 
-
     private void updateSavedBooksList(List<Book> savedBooks) {
-        SavedRecyclerViewAdapter recyclerViewAdapter = new SavedRecyclerViewAdapter(savedBooks, saved -> {
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("book", saved);
-        });
-        binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.setBooks(savedBooks);
     }
 
     @Override

@@ -42,5 +42,8 @@ public interface BookDao {
 
     @Delete
     void deleteBook(Book book);
+
+    @Query("SELECT * FROM Book WHERE is_saved = 1")
+    LiveData<List<Book>> getSavedBooksLiveData();
 }
 

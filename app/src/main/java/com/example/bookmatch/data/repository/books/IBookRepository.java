@@ -27,4 +27,6 @@ public interface IBookRepository {
     void deleteBook(Book book);
 
     void setCallback(BookAPIResponseCallback callback);
+
+    LiveData<List<Book>> getSavedBooksLiveData();
 }

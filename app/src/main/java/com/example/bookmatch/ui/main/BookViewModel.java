@@ -6,6 +6,7 @@ import static com.example.bookmatch.utils.Constants.API_SEARCH_BOOK_MIN_RESULTS_
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,15 +21,15 @@ import java.util.List;
 public class BookViewModel extends ViewModel implements BookAPIResponseCallback {
     private static final String TAG = BookViewModel.class.getSimpleName();
     private final IBookRepository bookRepository;
-    private MutableLiveData<List<Book>> savedBooks;
+    private LiveData<List<Book>> savedBooks;
     private MutableLiveData<ArrayList<Book>> extractedBooks;
     private String prevGenre;
     private int startIndex;
 
     public BookViewModel(Application application) {
         this.bookRepository = new BookRepository(application);
-        savedBooks = new MutableLiveData<>(bookRepository.getSavedBooks());
         this.extractedBooks = new MutableLiveData<>();
+        savedBooks = bookRepository.getSavedBooksLiveData();
         prevGenre = null;
         startIndex = 0;
     }
@@ -61,7 +62,7 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
     }
 
     // LiveData methods
-    public MutableLiveData<List<Book>> getSavedBooksLiveData() {
+    public LiveData<List<Book>> getSavedBooksLiveData() {
         return savedBooks;
     }
 

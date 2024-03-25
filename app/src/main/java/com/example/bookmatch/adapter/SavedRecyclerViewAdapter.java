@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +14,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
-import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.google.android.material.snackbar.Snackbar;
@@ -24,15 +22,20 @@ import java.util.List;
 
 public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecyclerViewAdapter.SavedViewHolder> {
 
-    private final List<Book> savedList;
+    private List<Book> books;
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+        notifyItemRangeInserted(0, books.size());
+    }
 
     public interface OnItemClickListener {
 
         void onItemClick(Book book);
     }
 
-    public SavedRecyclerViewAdapter(List<Book> savedList, OnItemClickListener onItemClickListener) {
-        this.savedList = savedList;
+    public SavedRecyclerViewAdapter(List<Book> books, OnItemClickListener onItemClickListener) {
+        this.books = books;
     }
 
     @NonNull
@@ -47,9 +50,9 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
     @Override
     public void onBindViewHolder(@NonNull SavedRecyclerViewAdapter.SavedViewHolder holder, int position) {
-        holder.bind(savedList.get(position));
+        holder.bind(books.get(position));
         holder.itemView.setOnClickListener(v -> {
-            Book currentBook = savedList.get(position);
+            Book currentBook = books.get(position);
             Bundle args = new Bundle();
             args.putParcelable("book", currentBook);
 
@@ -60,8 +63,8 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
     @Override
     public int getItemCount() {
-        if (savedList != null)
-            return savedList.size();
+        if (books != null)
+            return books.size();
         return 0;
     }
 
@@ -79,16 +82,25 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
             addImageButton.setOnClickListener(this);
         }
 
-        public void bind(Book p) {
-            title.setText(p.getTitle());
-            author.setText(p.getAuthors().toString());
+        public void bind(Book b) {
+            title.setText(b.getTitle());
+            String authors;
+            if (b.getAuthors() != null) {
+                authors = "";
+                for (String a : b.getAuthors())
+                    authors += a + ", ";
+                authors = authors.substring(0, authors.length() - 2);
+            } else {
+                authors = "No author found";
+            }
+            author.setText(authors);
         }
 
         @Override
         public void onClick(View view) {
             int position = getAbsoluteAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                Book book = savedList.get(position);
+                Book book = books.get(position);
                 if (view.getId() == R.id.imageview_edit) {
                     removeItem(position);
                 } else {
@@ -98,11 +110,11 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
         }
 
         private void removeItem(final int position) {
-            final Book removedBook = savedList.remove(position);
+            final Book removedBook = books.remove(position);
             notifyItemRemoved(position);
             Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_LONG);
             snackbar.setAction(R.string.undo, v -> {
-                savedList.add(position, removedBook);
+                books.add(position, removedBook);
                 notifyItemInserted(position);
             });
             snackbar.addCallback(new Snackbar.Callback() {

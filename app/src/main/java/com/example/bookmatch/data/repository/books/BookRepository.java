@@ -40,6 +40,8 @@ public class BookRepository implements IBookRepository{
     public void setCallback(BookAPIResponseCallback callback) {
         this.callback = callback;
     }
+
+
     @Override
     public void fetchBooks(String genre, int startIndex) {
 
@@ -112,5 +114,8 @@ public class BookRepository implements IBookRepository{
         BookRoomDatabase.databaseWriteExecutor.execute(() -> bookDao.deleteBook(book));
     }
 
-
+    @Override
+    public LiveData<List<Book>> getSavedBooksLiveData() {
+        return bookDao.getSavedBooksLiveData();
+    }
 }
