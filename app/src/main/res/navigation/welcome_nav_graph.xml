@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/welcome_nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/onboardFragment">
 
 
     <fragment
@@ -29,6 +29,18 @@
     </fragment>
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.bookmatch.MainActivity"
+        android:name="com.example.bookmatch.ui.main.MainActivity"
         android:label="MainActivity" />
+    <fragment
+        android:id="@+id/onboardFragment"
+        android:name="com.example.bookmatch.ui.welcome.OnboardFragment"
+        android:label="fragment_onboard"
+        tools:layout="@layout/fragment_onboard" >
+        <action
+            android:id="@+id/action_onboardFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_onboardFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
 </navigation>
