@@ -25,11 +25,14 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OnboardFragment extends Fragment {
 
     private FragmentOnboardBinding binding;
     private Animation btnAnim;
+
+    private boolean isFromProfile = false;
     private int position = 0;
     private static final String PREF_NAME = "myPrefs";
     private static final String KEY_ONBOARD_OPENED = "isOnboardOpened";
@@ -48,6 +51,9 @@ public class OnboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         btnAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.button_animation);
+        Bundle args = getArguments();
+        isFromProfile = Objects.requireNonNull(args).getBoolean("isFromProfile", false);
+
 
         final List<OnboardItem> mList = new ArrayList<>();
 
@@ -103,12 +109,14 @@ public class OnboardFragment extends Fragment {
 
         binding.btnGetStarted.setOnClickListener(v -> {
             savePrefData();
-            Navigation.findNavController(view).navigate(R.id.action_onboardFragment_to_loginFragment);
-
+            if (!isFromProfile) {
+                Navigation.findNavController(view).navigate(R.id.action_onboardFragment_to_loginFragment);
+            } else {
+                Navigation.findNavController(view).popBackStack();
+            }
         });
 
-
-        if (isOnboardOpened()) {
+        if (isOnboardOpened() && !isFromProfile) {
             Navigation.findNavController(view).navigate(R.id.action_onboardFragment_to_loginFragment);
         }
 

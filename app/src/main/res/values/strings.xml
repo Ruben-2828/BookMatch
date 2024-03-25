@@ -196,6 +196,7 @@
     <string name="desc_first">Discover the books that inspire you most and set your imagination free!</string>
     <string name="desc_third">Enrich your profile with your beloved books, treasured authors, and favored genres!</string>
     <string name="desc_fourth">Share your thoughts, advice, and reviews to help grow the reading community!</string>
+    <string name="see_intro">See Intro</string>
     <!-- End OnBoard Activity -->
 
 </resources>

@@ -1,7 +1,9 @@
 package com.example.bookmatch.ui.main.account;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
@@ -92,6 +95,10 @@ public class AccountFragment extends Fragment {
             openAboutUsPage();
             return true;
         }
+        if (id == R.id.see_intro){
+            seeIntro();
+            return true;
+        }
         if (id == R.id.logout_item) {
             showLogoutSnackbar();
             return true;
@@ -166,6 +173,24 @@ public class AccountFragment extends Fragment {
 
     private void showLogoutSnackbar() {
         Snackbar.make(requireView(), "Logout", Snackbar.LENGTH_LONG).show();
+    }
+
+    private void seeIntro(){
+        resetOnboardPref();
+        openIntro();
+    }
+
+    private void resetOnboardPref(){
+        SharedPreferences pref = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("isIntroOpened", false);
+        editor.apply();
+    }
+
+    private void openIntro(){
+        Bundle args = new Bundle();
+        args.putBoolean("isFromProfile", true);
+        Navigation.findNavController(requireView()).navigate(R.id.action_navigation_account_to_onboardFragment, args);
     }
 
     @Override

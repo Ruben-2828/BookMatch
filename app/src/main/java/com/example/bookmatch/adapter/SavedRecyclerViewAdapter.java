@@ -26,7 +26,7 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
     public void setBooks(List<Book> books) {
         this.books = books;
-        notifyItemRangeInserted(0, books.size());
+        notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {
