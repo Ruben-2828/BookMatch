@@ -1,6 +1,7 @@
 package com.example.bookmatch.ui.welcome;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.navigation.Navigation;
 import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentLoginBinding;
+import com.example.bookmatch.ui.main.MainActivity;
 import com.example.bookmatch.utils.ServiceLocator;
 import com.google.firebase.FirebaseApp;
 
@@ -63,7 +65,11 @@ public class LoginFragment extends Fragment {
             if(isEmailOk(email) && isPasswordOk(password)){
                 userViewModel.getUserMutableLiveData(email, password, true).observe(
                         getViewLifecycleOwner(), result -> {
-                            Log.d("WELCOME", result.getEmail());
+                            Log.d("WELCOME", result.getTokenId());
+                            if(result.getTokenId() != null) {
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
+                            }
                         }
                 );
             }else {

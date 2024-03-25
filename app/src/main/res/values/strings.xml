@@ -166,4 +166,36 @@
     <string name="publication_year_not_found">Publication year not found</string>
     <!-- End BookPageFragment -->
 
+    <!-- Start OnBoard Activity -->
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="skip">Skip</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="get_started">Get Started!</string>
+
+    <string-array name="onboard_string_array" >
+        <item>@string/intro_first</item>
+        <item>@string/intro_second</item>
+        <item>@string/intro_third</item>
+        <item>@string/intro_fourth</item>
+    </string-array>
+
+    <string-array name="onboard_desc_array" >
+        <item>@string/desc_first</item>
+        <item>@string/desc_second</item>
+        <item>@string/desc_third</item>
+        <item>@string/desc_fourth</item>
+    </string-array>
+
+    <string name="intro_second">Create Collections!</string>
+    <string name="intro_first">Let\'s Explore!</string>
+    <string name="intro_third">Custom your Profile!</string>
+    <string name="intro_fourth">Help the Community!</string>
+    <string name="desc_second">Create collections with your favorite book or your future reads</string>
+    <string name="desc_first">Discover the books that inspire you most and set your imagination free!</string>
+    <string name="desc_third">Enrich your profile with your beloved books, treasured authors, and favored genres!</string>
+    <string name="desc_fourth">Share your thoughts, advice, and reviews to help grow the reading community!</string>
+    <!-- End OnBoard Activity -->
+
 </resources>
