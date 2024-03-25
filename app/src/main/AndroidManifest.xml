@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-        <!-- Start with the main activity
+        <!-- Start with the main activity -->
 
         <activity
             android:name=".ui.main.MainActivity"
@@ -27,8 +27,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> -->
+        </activity>
 
+        <!--
         <activity
             android:name=".ui.welcome.WelcomeActivity"
             android:exported="true">
@@ -44,7 +45,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
-        </activity>
+        </activity> -->
 
 
         <activity

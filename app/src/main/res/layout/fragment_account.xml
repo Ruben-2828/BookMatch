@@ -90,7 +90,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/default_nickname"
                         android:textColor="?attr/colorPrimary"
-                        android:fontFamily="serif"
                         android:textSize="28sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +101,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:fontFamily="sans-serif-condensed"
                         android:text="@string/first_name"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +110,6 @@
                         android:id="@+id/last_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-condensed"
                         android:layout_marginTop="8dp"
                         android:text="@string/last_name"
                         android:textSize="16sp"
@@ -123,7 +120,6 @@
                         android:id="@+id/email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-condensed"
                         android:layout_marginTop="8dp"
                         android:text="@string/email_account"
                         android:textSize="16sp"
@@ -137,7 +133,6 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/default_first_name"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/first_name"
@@ -150,7 +145,6 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:text="@string/default_last_name"
-                        android:fontFamily="sans-serif-condensed-medium"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/last_name"
@@ -162,8 +156,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:fontFamily="sans-serif-condensed-medium"
-
                         android:text="@string/default_email"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -174,29 +166,56 @@
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/Statistics"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/relative_layout_statistics"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/statistics"
-                android:fontFamily="serif"
-                android:textColor="?attr/colorSecondary"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/CardView_accountPage" />
+                app:layout_constraintTop_toBottomOf="@+id/CardView_accountPage">
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/textview_statistics"
+                    android:background="@color/grey_separator"
+                    android:backgroundTint="?attr/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/textview_statistics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/statistics"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/textview_statistics"
+                    android:background="@color/grey_separator"
+                    android:backgroundTint="?attr/colorPrimary" />
+
+            </RelativeLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardview_statistics"
                 android:layout_width="0dp"
                 android:backgroundTint="?attr/colorSecondaryContainer"
                 android:layout_height="120dp"
-                android:layout_marginTop="16sp"
                 android:layout_centerHorizontal="true"
                 app:cardCornerRadius="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/Statistics"
+                app:layout_constraintTop_toBottomOf="@+id/relative_layout_statistics"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -217,7 +236,6 @@
                             android:id="@+id/saved_books"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-condensed"
                             android:text="@string/saved_books"
                             android:textSize="16sp" />
 
@@ -227,7 +245,6 @@
                             android:layout_height="wrap_content"
                             android:paddingTop="10dp"
                             android:textColor="?attr/colorTertiary"
-                            android:fontFamily="serif"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -244,7 +261,6 @@
                             android:id="@+id/collection_created"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-condensed"
                             android:text="@string/collection_created"
                             android:textSize="16sp" />
 
@@ -255,7 +271,6 @@
                             android:paddingTop="10dp"
                             android:textColor="?attr/colorTertiary"
                             android:textSize="20sp"
-                            android:fontFamily="serif"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -264,31 +279,57 @@
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/Preferences"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/relative_layout_preferences"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/preferences"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorSecondary"
-                android:fontFamily="serif"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardview_statistics" />
+                app:layout_constraintTop_toBottomOf="@+id/cardview_statistics">
 
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/textview_preferences"
+                    android:background="@color/grey_separator"
+                    android:backgroundTint="?attr/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/textview_preferences"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/preferences"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/textview_preferences"
+                    android:background="@color/grey_separator"
+                    android:backgroundTint="?attr/colorPrimary" />
+
+            </RelativeLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardview_preferences"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:backgroundTint="?attr/colorSecondaryContainer"
                 app:cardCornerRadius="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Preferences">
+                app:layout_constraintTop_toBottomOf="@+id/relative_layout_preferences">
 
                 <LinearLayout
                     android:id="@+id/layout_preferences"
