@@ -20,4 +20,6 @@ public class Constants {
 
     public static final String SHARED_PREF_NAME = "appSharedPreferences";
 
+    public static final String USER_REMEMBER_ME_SP = "rememberMe";
+
 }

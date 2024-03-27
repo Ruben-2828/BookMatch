@@ -1,7 +1,12 @@
 package com.example.bookmatch.ui.welcome;
 
+import static com.example.bookmatch.utils.Constants.SHARED_PREF_NAME;
+import static com.example.bookmatch.utils.Constants.USER_REMEMBER_ME_SP;
+
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,6 +62,9 @@ public class LoginFragment extends Fragment {
         //TODO: controllare se lo user è già loggato
 
         binding.buttonLogin.setOnClickListener(v -> {
+
+            setRememberMe(binding.checkboxRememberMe.isChecked());
+
             String email = Objects.requireNonNull(binding.textInputLayoutEmail.
                     getEditText()).getText().toString();
             String password = Objects.requireNonNull(binding.textInputLayoutPassword.
@@ -112,5 +120,13 @@ public class LoginFragment extends Fragment {
         builder.setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void setRememberMe(Boolean rememberMe) {
+        SharedPreferences sp = getContext().getSharedPreferences(
+                SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(USER_REMEMBER_ME_SP, rememberMe);
+        editor.apply();
     }
 }

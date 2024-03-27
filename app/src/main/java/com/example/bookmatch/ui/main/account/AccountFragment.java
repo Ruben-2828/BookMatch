@@ -23,17 +23,21 @@ import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionViewModel;
 import com.example.bookmatch.ui.main.CollectionViewModelFactory;
+import com.example.bookmatch.ui.welcome.WelcomeActivity;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountFragment extends Fragment {
 
     private FragmentAccountBinding binding;
     private BookViewModel bookViewModel;
     private CollectionViewModel collectionViewModel;
+    private FirebaseAuth mAuth;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
+        mAuth = FirebaseAuth.getInstance();
         return binding.getRoot();
     }
 
@@ -93,7 +97,10 @@ public class AccountFragment extends Fragment {
             return true;
         }
         if (id == R.id.logout_item) {
-            showLogoutSnackbar();
+            mAuth.signOut();
+            Intent intent = new Intent(requireContext(), WelcomeActivity.class);
+            startActivity(intent);
+            requireActivity().finish();
             return true;
         }
         return false;
@@ -164,9 +171,6 @@ public class AccountFragment extends Fragment {
         startActivity(browserIntent);
     }
 
-    private void showLogoutSnackbar() {
-        Snackbar.make(requireView(), "Logout", Snackbar.LENGTH_LONG).show();
-    }
 
     @Override
     public void onDestroyView() {
