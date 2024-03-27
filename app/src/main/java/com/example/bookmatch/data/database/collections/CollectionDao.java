@@ -1,5 +1,7 @@
 package com.example.bookmatch.data.database.collections;
 
+import android.database.sqlite.SQLiteConstraintException;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -14,7 +16,7 @@ import java.util.List;
 @Dao
 public interface CollectionDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertCollection(Collection collection);
 
     @Query("SELECT * FROM Collection")
@@ -26,5 +28,6 @@ public interface CollectionDao {
     @Delete
     void deleteCollection(Collection collection);
 
-
+    @Query("SELECT * FROM Collection WHERE name = :name")
+    Collection getCollectionByName(String name);
 }

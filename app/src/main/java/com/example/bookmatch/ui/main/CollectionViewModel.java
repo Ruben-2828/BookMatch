@@ -4,7 +4,6 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.bookmatch.data.database.collections.CollectionRoomDatabase;
 import com.example.bookmatch.data.repository.collections.CollectionRepository;
 import com.example.bookmatch.data.repository.collections.ICollectionRepository;
 import com.example.bookmatch.model.Collection;
@@ -27,8 +26,12 @@ public class CollectionViewModel extends AndroidViewModel {
         return collectionRepository.getCountCollectionLiveData();
     }
 
-    public void insertCollection(Collection collection) {
-        collectionRepository.insertCollection(collection);
+    public Collection getCollectionByName(String name) {
+        return collectionRepository.getCollectionByName(name);
+    }
+
+    public boolean insertCollection(Collection collection) {
+        return collectionRepository.insertCollection(collection);
     }
 
     public void deleteCollection(Collection collection) {

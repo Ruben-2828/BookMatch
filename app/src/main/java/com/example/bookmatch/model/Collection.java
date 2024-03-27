@@ -3,33 +3,32 @@ package com.example.bookmatch.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.Objects;
 
 @Entity
 public class Collection implements Parcelable {
 
-    @PrimaryKey(autoGenerate = true)
-    private Integer id;
+    @PrimaryKey
+    @NonNull
     private String name;
     private String description;
 
-
-    public Collection(Integer id, String name, String description) {
-        this.id = id;
+    public Collection(@NonNull String name, String description) {
         this.name = name;
         this.description = description;
     }
 
     protected Collection(Parcel in) {
-        id = in.readInt();
         name = in.readString();
         description = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(description);
     }
@@ -51,13 +50,6 @@ public class Collection implements Parcelable {
         }
     };
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
     public String getName() {
         return name;
     }
@@ -74,6 +66,17 @@ public class Collection implements Parcelable {
         this.description = description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Collection)) return false;
+        Collection that = (Collection) o;
+        return Objects.equals(getName(), that.getName());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
+    }
 }
 

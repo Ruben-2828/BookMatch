@@ -31,12 +31,9 @@ import java.util.UUID;
 public class CollectionsFragment extends Fragment {
 
     private FragmentCollectionsBinding binding;
-    private final List<Collection> collectionsList = new ArrayList<>();
     private CollectionsRecyclerViewAdapter adapter;
-    private final List<Book> selectedBooks = new ArrayList<>();
 
     private CollectionViewModel collectionViewModel;
-
 
     private final ActivityResultLauncher<Intent> createCollectionLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -46,38 +43,13 @@ public class CollectionsFragment extends Fragment {
                     String name = data.getStringExtra("collectionName");
                     String description = data.getStringExtra("collectionDescription");
 
-                    Collection newCollection = new Collection(UUID.randomUUID().hashCode(), name, description);
+                    Collection newCollection = new Collection(name, description);
                     collectionViewModel.insertCollection(newCollection);
 
                     Toast.makeText(getActivity(), "Collection added successfully", Toast.LENGTH_SHORT).show();
                 }
             }
     );
-
-    private void setupRecyclerView() {
-        adapter = new CollectionsRecyclerViewAdapter(
-                collectionsList,
-                collection -> {
-                    Intent intent = new Intent(getActivity(), AddBookToCollectionActivity.class);
-                    intent.putExtra("collectionId", collection.getId());
-                    startActivity(intent);
-                },
-                selectedBooks,
-                collection -> {
-
-                    collectionViewModel.deleteCollection(collection);
-                    collectionsList.remove(collection);
-                    adapter.notifyDataSetChanged();
-                }
-        );
-
-        binding.collectionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.collectionsRecyclerView.setAdapter(adapter);
-    }
-
-
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -96,9 +68,7 @@ public class CollectionsFragment extends Fragment {
         collectionViewModel = new ViewModelProvider(this, factoryCollection).get(CollectionViewModel.class);
 
         collectionViewModel.getAllCollectionsLiveData().observe(getViewLifecycleOwner(), collections -> {
-            collectionsList.clear();
-            collectionsList.addAll(collections);
-            adapter.notifyDataSetChanged();
+            adapter.setCollections(collections);
         });
 
         binding.fabCreateCollection.setOnClickListener(v -> {
@@ -107,6 +77,25 @@ public class CollectionsFragment extends Fragment {
         });
     }
 
+    private void setupRecyclerView() {
+        adapter = new CollectionsRecyclerViewAdapter(new ArrayList<>(),
+                new CollectionsRecyclerViewAdapter.OnCollectionClickListener() {
+                    @Override
+                    public void onItemClick(Collection collection) {
+                        Intent intent = new Intent(getActivity(), AddBookToCollectionActivity.class);
+                        intent.putExtra("collectionId", collection.getName());
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onDeleteButtonClick(Collection collection) {
+                        collectionViewModel.deleteCollection(collection);
+                    }
+                });
+
+        binding.collectionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.collectionsRecyclerView.setAdapter(adapter);
+    }
 
     @Override
     public void onDestroyView() {

@@ -22,7 +22,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.CardViewHolder> {
 
     private ArrayList<Book> books;
-    private CardStackAdapter.OnItemClickListener onItemClickListener;
+    private final CardStackAdapter.OnItemClickListener onItemClickListener;
 
     public CardStackAdapter(ArrayList<Book> books, OnItemClickListener onItemClickListener) {
         this.books = books;
