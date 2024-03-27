@@ -20,6 +20,8 @@ public interface IBookRepository {
 
     Integer getSavedBooksCount();
 
+    Integer getReviewedBooksCount();
+
     void insertBook(Book book);
 
     void updateBook(Book book);
@@ -29,4 +31,6 @@ public interface IBookRepository {
     void setCallback(BookAPIResponseCallback callback);
 
     LiveData<List<Book>> getSavedBooksLiveData();
+
+    LiveData<List<Book>> getReviewedBooksLiveData();
 }

@@ -94,6 +94,10 @@ public class BookRepository implements IBookRepository{
         return bookDao.getSavedBooksCount();
     }
 
+    public Integer getReviewedBooksCount() {
+        return bookDao.getReviewedBooksCount();
+    }
+
 
     //Database operations
     @Override
@@ -118,4 +122,11 @@ public class BookRepository implements IBookRepository{
     public LiveData<List<Book>> getSavedBooksLiveData() {
         return bookDao.getSavedBooksLiveData();
     }
+
+    @Override
+    public LiveData<List<Book>> getReviewedBooksLiveData() {
+        return bookDao.getReviewedBooksLiveData();
+    }
+
+
 }

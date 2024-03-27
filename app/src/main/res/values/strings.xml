@@ -7,6 +7,7 @@
     <string name="search">Search</string>
     <string name="explore">Explore</string>
     <string name="saved">Saved</string>
+    <string name="reviews">Reviews</string>
     <string name="collections">Collections</string>
     <string name="account">Account</string>
     <string name="title_home">Home</string>
@@ -103,6 +104,7 @@
     <string name="default_email">Default email</string>
     <string name="statistics">Statistics</string>
     <string name="saved_books">Saved books</string>
+    <string name="reviewed_books">Reviewed Books</string>
     <string name="default_saved_books">default saved books</string>
     <string name="default_books_read">default books read</string>
     <string name="default_favorite_genre">Favorite genre not yet specified</string>
@@ -197,5 +199,9 @@
     <string name="desc_third">Enrich your profile with your beloved books, treasured authors, and favored genres!</string>
     <string name="desc_fourth">Share your thoughts, advice, and reviews to help grow the reading community!</string>
     <!-- End OnBoard Activity -->
+
+    <!-- Start ReviewFragment -->
+    <string name="default_review">Default review</string>
+
 
 </resources>

@@ -39,6 +39,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     private static final String TAG = ExploreFragment.class.getSimpleName();
     private static final String GENRE_KEY = "genre";
     private static final String CURRENT_ITEM_KEY = "current";
+    private int currentItemIndex = 0;
 
     private FragmentExploreBinding binding;
     private CardStackView cardStackView;
@@ -124,7 +125,8 @@ public class ExploreFragment extends Fragment implements CardStackListener {
         // Restore view
         if (savedInstanceState != null) {
             binding.genre.setText(savedInstanceState.getString(GENRE_KEY));
-            Log.d(TAG, "fatto: "+genreAdapter.getCount());
+            currentItemIndex = savedInstanceState.getInt(CURRENT_ITEM_KEY, 0);
+            Log.d(TAG, "Restored current item index: " + currentItemIndex);
         } else {
             binding.genre.setText(genreAdapter.getItem(0), false);
         }
@@ -222,7 +224,9 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
         String genre = String.valueOf(binding.genre.getText());
         outState.putString(GENRE_KEY, genre);
+        outState.putInt(CURRENT_ITEM_KEY, cardStackManager.getTopPosition());
     }
+
 
     @Override
     public void onResume() {

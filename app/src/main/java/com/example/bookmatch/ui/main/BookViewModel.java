@@ -22,6 +22,7 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
     private static final String TAG = BookViewModel.class.getSimpleName();
     private final IBookRepository bookRepository;
     private LiveData<List<Book>> savedBooks;
+    private LiveData<List<Book>> reviewedBooks;
     private MutableLiveData<ArrayList<Book>> extractedBooks;
     private String prevGenre;
     private int startIndex;
@@ -30,6 +31,7 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         this.bookRepository = new BookRepository(application);
         this.extractedBooks = new MutableLiveData<>();
         savedBooks = bookRepository.getSavedBooksLiveData();
+        reviewedBooks = bookRepository.getReviewedBooksLiveData();
         prevGenre = null;
         startIndex = 0;
     }
@@ -66,8 +68,14 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         return savedBooks;
     }
 
+    public LiveData<List<Book>> getReviewedBooksLiveData() { return reviewedBooks; }
+
     public MutableLiveData<Integer> getSavedBooksCountLiveData() {
         return new MutableLiveData<>(bookRepository.getSavedBooksCount());
+    }
+
+    public MutableLiveData<Integer> getReviewedBooksCountLiveData() {
+        return new MutableLiveData<>(bookRepository.getReviewedBooksCount());
     }
 
     @Override
@@ -85,4 +93,10 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
     public void onFailure(String message) {
         Log.d(TAG, message);
     }
+
+    public void updateBook(Book book) {
+        bookRepository.updateBook(book);
+    }
+
+
 }

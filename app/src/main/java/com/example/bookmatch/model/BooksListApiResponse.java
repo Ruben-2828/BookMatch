@@ -100,7 +100,9 @@ public class BooksListApiResponse {
                     i.getBookInfos().getDescription(),
                     i.getBookInfos().getPublishedDate(),
                     imageURI,
-                    false);
+                    false,
+                    false,
+                    null);
             books.add(b);
         }
 

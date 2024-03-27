@@ -58,5 +58,9 @@
         android:id="@+id/accountEditActivity"
         android:name="com.example.bookmatch.ui.main.account.AccountEditActivity"
         android:label="AccountEditActivity" />
+    <fragment
+        android:id="@+id/navigation_reviews"
+        android:name="com.example.bookmatch.ui.main.reviews.ReviewsFragment"
+        android:label="@string/reviews" />
 
 </navigation>

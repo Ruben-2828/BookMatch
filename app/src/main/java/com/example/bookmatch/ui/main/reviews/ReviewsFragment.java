@@ -1,4 +1,4 @@
-package com.example.bookmatch.ui.main.saved;
+package com.example.bookmatch.ui.main.reviews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,10 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-
-import com.example.bookmatch.adapter.SavedRecyclerViewAdapter;
-import com.example.bookmatch.databinding.FragmentSavedBinding;
+import com.example.bookmatch.adapter.ReviewsRecyclerViewAdapter;
+import com.example.bookmatch.databinding.FragmentReviewsBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
@@ -21,11 +19,10 @@ import com.example.bookmatch.ui.main.BookViewModelFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+public class ReviewsFragment extends Fragment {
 
-public class SavedFragment extends Fragment {
-
-    private FragmentSavedBinding binding;
-    SavedRecyclerViewAdapter recyclerViewAdapter;
+    private FragmentReviewsBinding binding;
+    ReviewsRecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +32,7 @@ public class SavedFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentSavedBinding.inflate(inflater, container, false);
+        binding = FragmentReviewsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -47,14 +44,14 @@ public class SavedFragment extends Fragment {
         BookViewModel bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-        recyclerViewAdapter = new SavedRecyclerViewAdapter(new ArrayList<>());
-        binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
-        binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter = new ReviewsRecyclerViewAdapter(new ArrayList<>());
+        binding.recyclerViewReviews.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewReviews.setAdapter(recyclerViewAdapter);
 
-        bookViewModel.getSavedBooksLiveData().observe(getViewLifecycleOwner(), this::updateSavedBooksList);
+        bookViewModel.getReviewedBooksLiveData().observe(getViewLifecycleOwner(), this::updateReviewedBooksList);
     }
 
-    private void updateSavedBooksList(List<Book> savedBooks) {
+    private void updateReviewedBooksList(List<Book> savedBooks) {
         recyclerViewAdapter.setBooks(savedBooks);
     }
 
@@ -64,5 +61,3 @@ public class SavedFragment extends Fragment {
         binding = null;
     }
 }
-
-

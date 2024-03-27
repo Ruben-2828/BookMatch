@@ -35,8 +35,14 @@ public class Book implements Parcelable {
     private boolean isSaved;
 
 
+    @ColumnInfo(name = "is_reviewed")
+    private boolean isReviewed;
+
+    private String review;
+
+
     public Book(String id, String title, ArrayList<String> authors, String description,
-                String publicationYear, String coverURI, boolean isSaved){
+                String publicationYear, String coverURI, boolean isSaved, boolean isReviewed, String review){
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -44,6 +50,8 @@ public class Book implements Parcelable {
         this.publicationYear = publicationYear;
         this.coverURI = coverURI;
         this.isSaved = isSaved;
+        this.review = review;
+        this.isReviewed = isReviewed;
     }
 
     protected Book(Parcel in) {
@@ -94,6 +102,12 @@ public class Book implements Parcelable {
         return isSaved;
     }
 
+    public String getReview() { return review; }
+
+    public boolean isReviewed() {
+        return isReviewed;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -122,6 +136,14 @@ public class Book implements Parcelable {
         isSaved = saved;
     }
 
+    public void setReview(String review){
+        this.review = review;
+    }
+
+    public void setReviewed(boolean reviewed) {
+        isReviewed = reviewed;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -132,6 +154,7 @@ public class Book implements Parcelable {
                 ", publicationYear='" + publicationYear + '\'' +
                 ", coverURI='" + coverURI + '\'' +
                 ", isSaved=" + isSaved +
+                ", review='" + review + '\'' +
                 '}';
     }
 
