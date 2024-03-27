@@ -217,14 +217,6 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        String genre = String.valueOf(binding.genre.getText());
-        outState.putString(GENRE_KEY, genre);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 

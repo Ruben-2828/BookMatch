@@ -9,6 +9,8 @@ import com.example.bookmatch.databinding.ActivityCreateCollectionBinding;
 import com.example.bookmatch.model.Collection;
 import com.example.bookmatch.ui.main.CollectionViewModel;
 import com.example.bookmatch.ui.main.CollectionViewModelFactory;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Objects;
 
 public class CreateCollectionActivity extends AppCompatActivity {
@@ -31,8 +33,10 @@ public class CreateCollectionActivity extends AppCompatActivity {
             String collectionDescription = Objects.requireNonNull(binding.collectionDescriptionInput.getText()).toString().trim();
 
             if (validateInput(collectionName, collectionDescription)) {
-                Collection collection = new Collection(null, collectionName, collectionDescription);
-                collectionViewModel.insertCollection(collection);
+                Collection collection = new Collection(collectionName, collectionDescription);
+                if (!collectionViewModel.insertCollection(collection)) {
+                    Snackbar.make(view, "Collection with this name already existing!", Snackbar.LENGTH_SHORT).show();
+                }
                 finish();
             }
 

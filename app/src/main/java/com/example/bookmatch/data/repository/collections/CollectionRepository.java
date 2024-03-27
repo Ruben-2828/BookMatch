@@ -19,16 +19,26 @@ public class CollectionRepository implements ICollectionRepository {
         collectionDao = database.collectionDao();
     }
 
-    public void insertCollection(Collection collection) {
-        CollectionRoomDatabase.databaseWriteExecutor.execute(() -> {
-            collectionDao.insertCollection(collection);
-        });
+    public boolean insertCollection(Collection collection) {
+        try{
+            CollectionRoomDatabase.databaseWriteExecutor.execute(() -> {
+                collectionDao.insertCollection(collection);
+            });
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public void deleteCollection(Collection collection) {
         CollectionRoomDatabase.databaseWriteExecutor.execute(() -> {
             collectionDao.deleteCollection(collection);
         });
+    }
+
+    @Override
+    public Collection getCollectionByName(String name) {
+        return collectionDao.getCollectionByName(name);
     }
 
     public LiveData<Integer> getCountCollectionLiveData() {
