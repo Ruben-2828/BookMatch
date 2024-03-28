@@ -24,8 +24,8 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.Card
     private ArrayList<Book> books;
     private final CardStackAdapter.OnItemClickListener onItemClickListener;
 
-    public CardStackAdapter(ArrayList<Book> books, OnItemClickListener onItemClickListener) {
-        this.books = books;
+    public CardStackAdapter(OnItemClickListener onItemClickListener) {
+        this.books = new ArrayList<>();
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -37,17 +37,15 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.Card
         return books.get(position);
     }
 
-    public void setBooks(ArrayList<Book> books) {
-        this.books = books;
+    public void clearBooks() {
+        this.books.clear();
         notifyDataSetChanged();
     }
 
     public void addBooks(ArrayList<Book> books) {
-        int startPos = getItemCount();
-        int itemCount = books.size();
-
+        int pos = this.books.size();
         this.books.addAll(books);
-        notifyItemRangeChanged(startPos, itemCount);
+        notifyItemRangeInserted(pos, books.size());
     }
 
     public void removeBook(int position) {

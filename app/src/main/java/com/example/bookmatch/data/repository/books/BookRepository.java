@@ -63,8 +63,10 @@ public class BookRepository implements IBookRepository{
                 if (response.body() != null && response.isSuccessful()) {
                     // Remove books already seen by user
                     ArrayList<Book> finalBooks = response.body().getBooksList();
-                    if (finalBooks != null)
+                    if (finalBooks != null) {
+                        Log.d(TAG, "Libri estratti: " + getAllBooks());
                         finalBooks.removeAll(getAllBooks());
+                    }
                     callback.onSuccess(finalBooks);
                 } else {
                     callback.onFailure("Error generating response");

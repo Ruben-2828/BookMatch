@@ -52,6 +52,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
         BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
         bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
+        bookViewModel.setStartIndex(0);
 
         return binding.getRoot();
     }
@@ -75,7 +76,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
         cardStackView = binding.cardStackView;
         cardStackManager = new CardStackLayoutManager(getContext(), this);
-        cardStackAdapter = new CardStackAdapter(new ArrayList<>(), new CardStackAdapter.OnItemClickListener() {
+        cardStackAdapter = new CardStackAdapter(new CardStackAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Book book) {
                 Bundle args = new Bundle();
@@ -104,8 +105,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
                     binding.noMoreBooks.setVisibility(View.VISIBLE);
                 }
 
-
-                cardStackAdapter.setBooks(new ArrayList<>());
+                cardStackAdapter.clearBooks();
                 bookViewModel.fetchBooks(s.toString());
             }
 
@@ -222,7 +222,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
         // Not the finest thing to do, see this: https://github.com/material-components/material-components-android/issues/2012
         ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+               androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.search_genre));
         binding.genre.setAdapter(genreAdapter);
     }
