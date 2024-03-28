@@ -156,7 +156,6 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
             BookViewModel bookViewModel = new BookViewModel(application);
             bookViewModel.updateBook(book);
         }
-
     }
 
 }

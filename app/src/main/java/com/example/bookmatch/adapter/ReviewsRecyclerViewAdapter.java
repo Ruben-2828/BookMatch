@@ -17,6 +17,8 @@ import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecyclerViewAdapter.ReviewsViewHolder> {
@@ -57,6 +59,8 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         private final TextView title;
         private final TextView author;
         private final TextView review;
+
+        private final TextView rating;
         private final ImageButton editButton;
 
         private final ImageButton deleteButton;
@@ -67,6 +71,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
             title = itemView.findViewById(R.id.book_title);
             author = itemView.findViewById(R.id.book_author);
             review = itemView.findViewById(R.id.book_review);
+            rating = itemView.findViewById(R.id.book_rating);
             deleteButton = itemView.findViewById(R.id.imageview_delete);
             editButton = itemView.findViewById(R.id.imageview_edit);
             deleteButton.setOnClickListener(this);
@@ -85,6 +90,9 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
                 authors = "No author found";
             }
             author.setText(authors);
+            if(review != null)
+                review.setText(b.getReview());
+            rating.setText(String.valueOf(b.getRating()));
         }
 
         @Override

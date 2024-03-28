@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.book_page.FullscreenImageActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
@@ -94,7 +96,7 @@ public class AddReviewActivity extends AppCompatActivity {
 
             bookViewModel.updateBook(book);
 
-            Toast.makeText(this, "Review Saved!", Toast.LENGTH_SHORT).show();
+            Snackbar.make(v, book.getTitle() + "has been reviewed!", Snackbar.LENGTH_SHORT).show();
             finish();
         });
     }
