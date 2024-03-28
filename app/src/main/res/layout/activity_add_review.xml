@@ -179,7 +179,7 @@
                 android:layout_marginTop="32dp"
                 android:hint="@string/insert_a_review"
                 app:counterEnabled="true"
-                app:counterMaxLength="300"
+                app:counterMaxLength="1000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/relative_layout">
@@ -188,7 +188,7 @@
                     android:id="@+id/ti_review_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="300" />
+                    android:maxLength="1000" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <RatingBar
