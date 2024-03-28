@@ -95,7 +95,6 @@ public class AddReviewActivity extends AppCompatActivity {
 
             bookViewModel.updateBook(book);
 
-            Snackbar.make(v, book.getTitle() + getString(R.string.has_been_reviewed), Snackbar.LENGTH_SHORT).show();
             finish();
         });
     }

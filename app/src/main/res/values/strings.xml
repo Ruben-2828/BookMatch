@@ -199,12 +199,12 @@
 
     <string name="intro_second">Create Collections!</string>
     <string name="intro_first">Let\'s Explore!</string>
-    <string name="intro_third">Custom your Profile!</string>
-    <string name="intro_fourth">Help the Community!</string>
-    <string name="desc_second">Create collections with your favorite book or your future reads</string>
-    <string name="desc_first">Discover the books that inspire you most and set your imagination free!</string>
-    <string name="desc_third">Enrich your profile with your beloved books, treasured authors, and favored genres!</string>
-    <string name="desc_fourth">Share your thoughts, advice, and reviews to help grow the reading community!</string>
+    <string name="intro_third">Add Reviews!</string>
+    <string name="intro_fourth">Custom your Profile!</string>
+    <string name="desc_second">Create collections with your favorite book or your future reads!</string>
+    <string name="desc_first">Discover the books that inspire you most!</string>
+    <string name="desc_third">Add reviews and ratings to your favorite books!</string>
+    <string name="desc_fourth">Enrich your profile with your beloved books, treasured authors, and favored genres!</string>
     <!-- End OnBoard Activity -->
 
     <!-- Start ReviewFragment -->
@@ -212,7 +212,6 @@
     <string name="insert_a_review">Insert a review</string>
     <string name="default_rating">0.0</string>
     <string name="favorite">Favorite</string>
-    <string name="has_been_reviewed">has been reviewed!</string>
     <string name="removed_from_reviews">" removed from reviews!"</string>
     <!-- End ReviewFragment -->
 
