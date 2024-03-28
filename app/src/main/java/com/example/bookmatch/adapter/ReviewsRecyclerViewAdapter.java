@@ -19,14 +19,17 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecyclerViewAdapter.ReviewsViewHolder> {
 
     private List<Book> books;
+    private final OnItemClickListener onItemClickListener;
 
-    public ReviewsRecyclerViewAdapter(List<Book> books) {
-        this.books = books;
+    public ReviewsRecyclerViewAdapter(OnItemClickListener onItemClickListener) {
+        this.books = new ArrayList<>();
+        this.onItemClickListener = onItemClickListener;
     }
 
     public void setBooks(List<Book> books) {
@@ -34,7 +37,24 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         notifyDataSetChanged();
     }
 
+    public Book removeBook(int position) {
+        return books.remove(position);
+    }
+
+    public void addBook(int position, Book book) {
+        books.add(position, book);
+    }
+
+    public Book getBook(int position) {
+        return books.get(position);
+    }
+
     //TODO: ONCLICKLISTENER PER I BOTTONI
+
+    public interface OnItemClickListener {
+        void onDeleteButtonClick(int position);
+        void onEditButtonClick(int position);
+    }
 
     @NonNull
     @Override
@@ -101,44 +121,11 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
             if (position != RecyclerView.NO_POSITION) {
                 Book book = books.get(position);
                 if (view.getId() == R.id.imageview_delete) {
-                    removeItem(position);
+                    onItemClickListener.onDeleteButtonClick(position);
                 } else if (view.getId() == R.id.imageview_edit){
-                    addReview(position);
-                } else {
-                    Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
+                    onItemClickListener.onEditButtonClick(position);
                 }
             }
-        }
-
-        private void removeItem(final int position) {
-            final Book removedBook = books.remove(position);
-            notifyItemRemoved(position);
-            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from reviews!", Snackbar.LENGTH_LONG);
-            snackbar.setAction(R.string.undo, v -> {
-                books.add(position, removedBook);
-                notifyItemInserted(position);
-            });
-            snackbar.addCallback(new Snackbar.Callback() {
-                @Override
-                public void onDismissed(Snackbar transientBottomBar, int event) {
-                    super.onDismissed(transientBottomBar, event);
-                    if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                        removedBook.setReviewed(false);
-                        Application application = (Application) itemView.getContext().getApplicationContext();
-                        BookViewModel bookViewModel = new BookViewModel(application);
-                        bookViewModel.updateBook(removedBook);
-                    }
-                }
-            });
-            snackbar.show();
-        }
-
-        private void addReview(final int position) {
-            final Book book = books.get(position);
-            Intent intent = new Intent(itemView.getContext(), AddReviewActivity.class);
-            intent.putExtra("book", book);
-            itemView.getContext().startActivity(intent);
-
         }
     }
 }

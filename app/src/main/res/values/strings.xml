@@ -204,7 +204,7 @@
     <string name="default_review">This book does not have a review. Try adding one!</string>
     <string name="insert_a_review">Insert a review</string>
     <string name="default_rating">0.0</string>
+    <string name="favorite">Favorite</string>
     <!-- End ReviewFragment -->
-
 
 </resources>

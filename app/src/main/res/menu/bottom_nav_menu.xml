@@ -14,7 +14,7 @@
     <item
         android:id="@+id/navigation_reviews"
         android:icon="@drawable/baseline_star_rate_24"
-        android:title="@string/reviews" />
+        android:title="@string/favorite" />
 
     <item
         android:id="@+id/navigation_collections"
