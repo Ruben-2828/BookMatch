@@ -69,6 +69,12 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        bookViewModel.getReviewedBooksCountLiveData().observe(getViewLifecycleOwner(), count -> {
+            if (count != null) {
+                binding.userReviewedBooks.setText(String.valueOf(count));
+            }
+        });
+
     }
 
     private void setButtonClickListeners() {

@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
@@ -23,13 +24,13 @@
             android:id="@+id/book_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
             android:layout_marginEnd="12sp"
             android:text="@string/default_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/imageview_delete"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textStyle="bold"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
@@ -49,44 +50,64 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/baseline_delete_24"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imageview_review"
+            app:layout_constraintEnd_toStartOf="@id/imageview_edit"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorPrimary"/>
+            app:tint="?attr/colorPrimary" />
 
         <ImageButton
-            android:id="@+id/imageview_review"
+            android:id="@+id/imageview_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:focusable="true"
             android:padding="12dp"
-            android:src="@drawable/baseline_checklist_rtl_24"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/baseline_edit_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorPrimary"/>
+            app:tint="?attr/colorPrimary" />
 
-        <ImageButton
-            android:id="@+id/imageview_reviewed"
+        <TextView
+            android:id="@+id/book_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="12sp"
+            android:text="@string/default_review"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/book_author" />
+
+        <TextView
+            android:id="@+id/book_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="48dp"
+            android:text="@string/default_rating"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/book_review"
+            app:layout_constraintStart_toEndOf="@+id/book_review"
+            app:layout_constraintTop_toTopOf="@+id/book_review" />
+
+
+        <ImageView
+            android:id="@+id/imageview_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:focusable="true"
             android:padding="12dp"
-            android:src="@drawable/baseline_check_24"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorPrimary"
-            android:visibility="invisible"/>
-
+            android:src="@drawable/baseline_favorite_border_24"
+            app:layout_constraintBottom_toBottomOf="@+id/book_rating"
+            app:layout_constraintStart_toEndOf="@+id/book_rating"
+            app:layout_constraintTop_toTopOf="@+id/book_rating"
+            app:tint="?attr/colorPrimary" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

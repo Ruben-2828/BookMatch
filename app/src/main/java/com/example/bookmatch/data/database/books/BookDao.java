@@ -45,5 +45,12 @@ public interface BookDao {
 
     @Query("SELECT * FROM Book WHERE is_saved = 1")
     LiveData<List<Book>> getSavedBooksLiveData();
+
+    @Query("SELECT * FROM Book WHERE is_reviewed = 1 AND is_saved = 1")
+    LiveData<List<Book>> getReviewedBooksLiveData();
+
+    @Query("SELECT COUNT(*) FROM Book WHERE is_reviewed = 1 AND is_saved = 1")
+    Integer getReviewedBooksCount();
+
 }
 
