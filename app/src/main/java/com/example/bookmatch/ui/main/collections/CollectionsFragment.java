@@ -26,6 +26,7 @@ import com.example.bookmatch.ui.main.CollectionViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CollectionsFragment extends Fragment {
@@ -43,7 +44,7 @@ public class CollectionsFragment extends Fragment {
                     String name = data.getStringExtra("collectionName");
                     String description = data.getStringExtra("collectionDescription");
 
-                    Collection newCollection = new Collection(name, description);
+                    Collection newCollection = new Collection(Objects.requireNonNull(name), description);
                     collectionViewModel.insertCollection(newCollection);
 
                     Toast.makeText(getActivity(), "Collection added successfully", Toast.LENGTH_SHORT).show();

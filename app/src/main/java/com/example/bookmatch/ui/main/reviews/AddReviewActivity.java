@@ -1,20 +1,13 @@
 package com.example.bookmatch.ui.main.reviews;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
@@ -76,7 +69,7 @@ public class AddReviewActivity extends AppCompatActivity {
                     startActivity(intent);
                 });
             } else {
-                Toast.makeText(this, R.string.book_cover_not_available_toast, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.book_cover_not_available, Toast.LENGTH_SHORT).show();
             }
 
             if (book.getReview() != null) {
@@ -85,7 +78,7 @@ public class AddReviewActivity extends AppCompatActivity {
             }
 
         } else {
-            Toast.makeText(this, R.string.book_details_not_available_toast, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.book_details_not_available, Toast.LENGTH_SHORT).show();
         }
 
         binding.goBackButton.setOnClickListener(v -> finish());
@@ -102,7 +95,7 @@ public class AddReviewActivity extends AppCompatActivity {
 
             bookViewModel.updateBook(book);
 
-            Snackbar.make(v, book.getTitle() + "has been reviewed!", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(v, book.getTitle() + getString(R.string.has_been_reviewed), Snackbar.LENGTH_SHORT).show();
             finish();
         });
     }

@@ -1,5 +1,6 @@
 package com.example.bookmatch.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         this.onItemClickListener = onItemClickListener;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setBooks(List<Book> books) {
         this.books = books;
         notifyDataSetChanged();
@@ -48,8 +50,6 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
     public Book getBook(int position) {
         return books.get(position);
     }
-
-    //TODO: ONCLICKLISTENER PER I BOTTONI
 
     public interface OnItemClickListener {
         void onDeleteButtonClick(int position);
@@ -70,8 +70,9 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
 
     @Override
     public int getItemCount() {
-
-        return books.size();
+        if (books != null)
+            return books.size();
+        return 0;
     }
 
     public class ReviewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -81,9 +82,6 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         private final TextView review;
 
         private final TextView rating;
-        private final ImageButton editButton;
-
-        private final ImageButton deleteButton;
 
 
         public ReviewsViewHolder(@NonNull View itemView) {
@@ -92,24 +90,21 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
             author = itemView.findViewById(R.id.book_author);
             review = itemView.findViewById(R.id.book_review);
             rating = itemView.findViewById(R.id.book_rating);
-            deleteButton = itemView.findViewById(R.id.imageview_delete);
-            editButton = itemView.findViewById(R.id.imageview_edit);
+            ImageButton deleteButton = itemView.findViewById(R.id.imageview_delete);
+            ImageButton editButton = itemView.findViewById(R.id.imageview_edit);
             deleteButton.setOnClickListener(this);
             editButton.setOnClickListener(this);
         }
 
         public void bind(Book b) {
             title.setText(b.getTitle());
-            String authors;
             if (b.getAuthors() != null) {
-                authors = "";
+                String authors = "";
                 for (String a : b.getAuthors())
                     authors += a + ", ";
                 authors = authors.substring(0, authors.length() - 2);
-            } else {
-                authors = "No author found";
+                author.setText(authors);
             }
-            author.setText(authors);
             if(b.getReview() != null)
                 review.setText(b.getReview());
             rating.setText(String.valueOf(b.getRating()));
@@ -119,7 +114,6 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         public void onClick(View view) {
             int position = getAbsoluteAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                Book book = books.get(position);
                 if (view.getId() == R.id.imageview_delete) {
                     onItemClickListener.onDeleteButtonClick(position);
                 } else if (view.getId() == R.id.imageview_edit){

@@ -80,8 +80,13 @@ public class ReviewsFragment extends Fragment {
             public void onDeleteButtonClick(int position) {
                 final Book removedBook = recyclerViewAdapter.removeBook(position);
                 recyclerViewAdapter.notifyItemRemoved(position);
-                Snackbar snackbar = Snackbar.make(view, removedBook.getTitle() + " removed from reviews!", Snackbar.LENGTH_SHORT).setAnchorView(bottomNavigationView);
+
+                Snackbar snackbar = Snackbar.make(view,
+                        removedBook.getTitle() + getString(R.string.removed_from_reviews),
+                        Snackbar.LENGTH_SHORT).setAnchorView(bottomNavigationView);
+
                 snackbar.setAnchorView(bottomNavigationView);
+
                 snackbar.setAction(R.string.undo, v -> {
                     recyclerViewAdapter.addBook(position, removedBook);
                     recyclerViewAdapter.notifyItemInserted(position);

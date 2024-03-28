@@ -14,15 +14,10 @@ import retrofit2.http.Query;
 
 public interface BookAPIService {
 
-    //TODO: implement response objects
     @GET(API_SEARCH_BOOK_ENDPOINT)
     Call<BooksListApiResponse> getBooks(
             @Query(API_SEARCH_BOOK_QUERY) String subject,
             @Query(API_SEARCH_BOOK_MAX_RESULTS) int maxResults,
             @Query(API_SEARCH_BOOK_START_INDEX) int startIndex);
 
-    /*
-    @GET(API_RETRIEVE_BOOK_BY_KEY_ENDPOINT)
-    Call<BookByKeyApiResponse> getBookByKey(
-            @Path("key") String bookKey);*/
 }

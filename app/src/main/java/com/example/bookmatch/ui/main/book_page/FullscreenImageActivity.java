@@ -7,9 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.ActivityFullscreenImageBinding;
-import com.jsibbold.zoomage.ZoomageView;
 
 public class FullscreenImageActivity extends AppCompatActivity {
 
@@ -33,8 +31,6 @@ public class FullscreenImageActivity extends AppCompatActivity {
             binding.savedButton.setVisibility(View.INVISIBLE);
             binding.notSavedButton.setVisibility(View.VISIBLE);
         }
-
-        ZoomageView imageView = findViewById(R.id.imageView);
 
         Glide.with(this).load(imageUri).into(binding.imageView);
 

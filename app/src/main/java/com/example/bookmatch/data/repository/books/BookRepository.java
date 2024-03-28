@@ -5,8 +5,8 @@ import static com.example.bookmatch.utils.Constants.API_SEARCH_BOOK_MAX_RESULTS_
 import android.app.Application;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.bookmatch.data.database.books.BookDao;
 import com.example.bookmatch.data.database.books.BookRoomDatabase;
@@ -25,7 +25,6 @@ import retrofit2.Response;
 
 public class BookRepository implements IBookRepository{
 
-    private static final String TAG = BookRepository.class.getSimpleName();
     private final BookAPIService bookAPIService;
     private final BookDao bookDao;
     private BookAPIResponseCallback callback;
@@ -50,21 +49,17 @@ public class BookRepository implements IBookRepository{
         Call<BooksListApiResponse> booksResponseCall = bookAPIService.getBooks("subject:" + genre,
                 API_SEARCH_BOOK_MAX_RESULTS_VALUE,
                 startIndex);
-        //Log.d(TAG, "genre: " + genre);
 
         booksResponseCall.enqueue(new Callback<BooksListApiResponse>() {
 
             @Override
-            public void onResponse(Call<BooksListApiResponse> call,
-                                   Response<BooksListApiResponse> response) {
-
-                //Log.d(TAG, "Response: "+ response);
+            public void onResponse(@NonNull Call<BooksListApiResponse> call,
+                                   @NonNull Response<BooksListApiResponse> response) {
 
                 if (response.body() != null && response.isSuccessful()) {
                     // Remove books already seen by user
                     ArrayList<Book> finalBooks = response.body().getBooksList();
                     if (finalBooks != null) {
-                        Log.d(TAG, "Libri estratti: " + getAllBooks());
                         finalBooks.removeAll(getAllBooks());
                     }
                     callback.onSuccess(finalBooks);
@@ -74,8 +69,8 @@ public class BookRepository implements IBookRepository{
             }
 
             @Override
-            public void onFailure(Call<BooksListApiResponse> call,
-                                  Throwable t) {
+            public void onFailure(@NonNull Call<BooksListApiResponse> call,
+                                  @NonNull Throwable t) {
                 callback.onFailure(t.getMessage());
             }
         });

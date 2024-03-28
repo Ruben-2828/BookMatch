@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+//TODO: Eliminare e spostare eventualmente le informazioni di questo utili nell'altro user
 public class AppUser implements Parcelable {
 
     private String id;

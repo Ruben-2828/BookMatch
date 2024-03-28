@@ -1,5 +1,6 @@
 package com.example.bookmatch.adapter;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.app.Application;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
     private List<Book> books;
     private final OnItemClickListener onItemClickListener;
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setBooks(List<Book> books) {
         this.books = books;
         notifyDataSetChanged();
@@ -83,13 +85,12 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
         private final TextView title;
         private final TextView author;
         private final ImageButton reviewButton;
-        private final ImageButton deleteButton;
 
         public SavedViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.book_title);
             author = itemView.findViewById(R.id.book_author);
-            deleteButton = itemView.findViewById(R.id.imageview_delete);
+            ImageButton deleteButton = itemView.findViewById(R.id.imageview_delete);
             reviewButton = itemView.findViewById(R.id.imageview_review);
 
             itemView.setOnClickListener(this);
@@ -99,16 +100,13 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
         public void bind(Book b) {
             title.setText(b.getTitle());
-            String authors;
             if (b.getAuthors() != null) {
-                authors = "";
+                String authors = "";
                 for (String a : b.getAuthors())
                     authors += a + ", ";
                 authors = authors.substring(0, authors.length() - 2);
-            } else {
-                authors = "No author found";
+                author.setText(authors);
             }
-            author.setText(authors);
 
             if (b.isReviewed())
                 reviewButton.setImageResource(R.drawable.baseline_star_rate_24);
@@ -120,7 +118,6 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
         public void onClick(View view) {
             int position = getAbsoluteAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                Book book = books.get(position);
                 if (view.getId() == R.id.imageview_delete ) {
                     onItemClickListener.onDeleteButtonClick(position);
                 } else if (view.getId() == R.id.imageview_review) {

@@ -173,7 +173,8 @@ public class AccountFragment extends Fragment {
     );
 
     private void openAboutUsPage() {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Ruben-2828/BookMatch/tree/main"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("https://github.com/Ruben-2828/BookMatch/tree/main"));
         startActivity(browserIntent);
     }
 

@@ -1,7 +1,7 @@
 package com.example.bookmatch.adapter;
 
-import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,6 @@ import com.example.bookmatch.model.Book;
 
 import java.util.ArrayList;
 
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.CardViewHolder> {
 
@@ -37,6 +36,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.Card
         return books.get(position);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void clearBooks() {
         this.books.clear();
         notifyDataSetChanged();
@@ -96,16 +96,15 @@ public class CardStackAdapter extends RecyclerView.Adapter<CardStackAdapter.Card
         public void bind(Book b) {
             title.setText(b.getTitle());
 
-            String authors;
+
             if (b.getAuthors() != null) {
-                authors = "";
+                String authors = "";
                 for (String a : b.getAuthors())
                     authors += a + ", ";
                 authors = authors.substring(0, authors.length() - 2);
-            } else {
-                authors = "No author found";
+                author.setText(authors);
             }
-            author.setText(authors);
+
 
             Glide.with(this.itemView)
                     .load(b.getCoverURI())

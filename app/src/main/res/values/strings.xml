@@ -51,11 +51,12 @@
     <!-- End WelcomeActivity -->
 
     <!-- Start ExploreFragment -->
-    <string name="skip_toast">Skip!</string>
-    <string name="saved_toast">Saved!</string>
-    <string name="delete_toast">Delete!</string>
-    <string name="book_cover_not_available_toast">Book cover not available</string>
-    <string name="book_details_not_available_toast">Book details not available</string>
+    <string name="book_cover_not_available">Book cover not available</string>
+    <string name="book_details_not_available">Book details not available</string>
+    <string name="no_author_found">No author found</string>
+    <string name="book_saved">Book saved!</string>
+    <string name="book_skipped">Book skipped!</string>
+    <string name="book_deleted">Book deleted!</string>
     <string-array name="search_genre">
         <item>Art</item>
         <item>Architecture</item>
@@ -88,7 +89,7 @@
 
     <!-- Start SavedFragment -->
     <string name="default_title">Default title</string>
-    <string name="default_author">Default author</string>
+    <string name="default_author">Author not found</string>
     <string name="by">By:</string>
     <string name="add_to_collection">Add to Collection</string>
     <string name="remove_from_saved_book">Remove from saved book</string>
@@ -120,6 +121,12 @@
     <!-- End AccountFragment -->
 
     <!-- Start AccountEditFragment -->
+    <string name="please_add_some_books_to_your_saved_list">Please, add some books to your saved list</string>
+    <string name="preferences_saved">Preferences Saved!</string>
+    <string name="please_make_some_changes_to_save_preferences">Please, make some changes to save preferences</string>
+    <string name="genre_cannot_be_empty">Genre cannot be empty</string>
+    <string name="author_cannot_be_empty">Author cannot be empty</string>
+    <string name="book_cannot_be_empty">Book cannot be empty</string>
     <string name="hint_nickname">Nickname</string>
     <string name="first_name_hint">First name</string>
     <string name="last_name_hint">Last name</string>
@@ -205,6 +212,8 @@
     <string name="insert_a_review">Insert a review</string>
     <string name="default_rating">0.0</string>
     <string name="favorite">Favorite</string>
+    <string name="has_been_reviewed">has been reviewed!</string>
+    <string name="removed_from_reviews">" removed from reviews!"</string>
     <!-- End ReviewFragment -->
 
 </resources>

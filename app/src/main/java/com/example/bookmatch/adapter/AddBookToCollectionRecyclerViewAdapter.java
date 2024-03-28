@@ -79,7 +79,7 @@ public class AddBookToCollectionRecyclerViewAdapter extends
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
+            int position = getAbsoluteAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Book book = bookList.get(position);
                 if (view.getId() == R.id.imageview_edit) {
@@ -95,7 +95,7 @@ public class AddBookToCollectionRecyclerViewAdapter extends
             bookList.remove(position);
             notifyItemRemoved(position);
 
-            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " added to collection", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " added to collection", Snackbar.LENGTH_SHORT);
             snackbar.setAction(R.string.undo, v -> {
                 bookList.add(position, removedBook);
                 notifyItemInserted(position);

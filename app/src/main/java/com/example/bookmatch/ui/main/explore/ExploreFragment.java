@@ -3,13 +3,11 @@ package com.example.bookmatch.ui.main.explore;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +23,7 @@ import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.google.android.material.snackbar.Snackbar;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -32,13 +31,9 @@ import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.Duration;
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 
-import java.util.ArrayList;
-
 public class ExploreFragment extends Fragment implements CardStackListener {
 
-    private static final String TAG = ExploreFragment.class.getSimpleName();
     private static final String GENRE_KEY = "genre";
-    private static final String CURRENT_ITEM_KEY = "current";
 
     private FragmentExploreBinding binding;
     private CardStackView cardStackView;
@@ -67,7 +62,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getContext(),
+        ArrayAdapter<String> genreAdapter = new ArrayAdapter<>(getContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.search_genre));
         binding.genre.setAdapter(genreAdapter);
@@ -76,15 +71,12 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
         cardStackView = binding.cardStackView;
         cardStackManager = new CardStackLayoutManager(getContext(), this);
-        cardStackAdapter = new CardStackAdapter(new CardStackAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Book book) {
-                Bundle args = new Bundle();
-                args.putParcelable("book", book);
+        cardStackAdapter = new CardStackAdapter(book -> {
+            Bundle args = new Bundle();
+            args.putParcelable("book", book);
 
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.action_navigation_explore_to_navigation_book, args);
-            }
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_navigation_explore_to_navigation_book, args);
         });
 
         cardStackView.setLayoutManager(cardStackManager);
@@ -124,7 +116,6 @@ public class ExploreFragment extends Fragment implements CardStackListener {
         // Restore view
         if (savedInstanceState != null) {
             binding.genre.setText(savedInstanceState.getString(GENRE_KEY));
-            Log.d(TAG, "fatto: "+genreAdapter.getCount());
         } else {
             binding.genre.setText(genreAdapter.getItem(0), false);
         }
@@ -141,38 +132,33 @@ public class ExploreFragment extends Fragment implements CardStackListener {
         Book currentBook = cardStackAdapter.getBook(position);
 
         if (direction == Direction.Right) {
-            Log.d(TAG, "saved book as favorite: " + cardStackAdapter.getBook(position).getTitle());
+            Snackbar.make(binding.getRoot(), getString(R.string.book_saved), Snackbar.LENGTH_SHORT).show();
             bookViewModel.saveBook(currentBook, true);
         }
         if (direction == Direction.Left) {
-            Log.d(TAG, "skipped book: " + cardStackAdapter.getBook(position).getTitle());
+            Snackbar.make(binding.getRoot(), getString(R.string.book_skipped), Snackbar.LENGTH_SHORT).show();
         }
         if (direction == Direction.Bottom) {
-            Log.d(TAG, "saved book as deleted: " + cardStackAdapter.getBook(position).getTitle());
+            Snackbar.make(binding.getRoot(), getString(R.string.book_deleted), Snackbar.LENGTH_SHORT).show();
             bookViewModel.saveBook(currentBook, false);
         }
     }
 
     @Override
     public void onCardRewound() {
-        Log.d(TAG, "onCardRewound: " + cardStackManager.getTopPosition());
     }
 
     @Override
     public void onCardCanceled() {
-        Log.d(TAG, "onCardCanceled: " + cardStackManager.getTopPosition());
     }
 
     @Override
     public void onCardAppeared(@NonNull View view, int position) {
         TextView titleView = view.findViewById(R.id.book_title);
-        Log.d(TAG, "onCardAppeared: (" + position + ") " + titleView.getText());
     }
 
     @Override
     public void onCardDisappeared(@NonNull View view, int position) {
-        TextView titleView = view.findViewById(R.id.book_title);
-        Log.d(TAG, "onCardDisappeared: (" + position + ") " + titleView.getText());
 
         if(cardStackManager.getTopPosition() == cardStackAdapter.getItemCount() - 5) {
             String genre = String.valueOf(binding.genre.getText());

@@ -8,14 +8,14 @@ import java.util.List;
 
 public class BooksListApiResponse {
 
-    private class Item {
+    private static class Item {
 
-        private class VolumeInfo {
-            private String title;
-            private ArrayList<String> authors;
-            private String description;
-            private String publishedDate;
-            private HashMap<String, String> imageLinks;
+        private static class VolumeInfo {
+            private final String title;
+            private final ArrayList<String> authors;
+            private final String description;
+            private final String publishedDate;
+            private final HashMap<String, String> imageLinks;
 
             public VolumeInfo(String title,
                               ArrayList<String> authors,
@@ -49,9 +49,9 @@ public class BooksListApiResponse {
                 return imageLinks;
             }
         }
-        private String id;
+        private final String id;
         @SerializedName("volumeInfo")
-        private VolumeInfo bookInfos;
+        private final VolumeInfo bookInfos;
 
         public Item(String id, VolumeInfo bookInfos) {
             this.id = id;

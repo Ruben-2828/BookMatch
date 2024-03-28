@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,12 +13,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.bookmatch.R;
+
 import com.example.bookmatch.databinding.FragmentBookPageBinding;
 import com.example.bookmatch.model.Book;
+import com.google.android.material.snackbar.Snackbar;
 
-import jp.wasabeef.glide.transformations.BlurTransformation;
+import java.util.Objects;
+
 
 public class BookPageFragment extends Fragment {
 
@@ -40,7 +41,7 @@ public class BookPageFragment extends Fragment {
         if (arguments != null) {
             Book book = arguments.getParcelable("book");
 
-            binding.bookTitleAppbar.setText(book.getTitle());
+            binding.bookTitleAppbar.setText(Objects.requireNonNull(book).getTitle());
             binding.bookTitle.setText(book.getTitle());
             binding.authorTextView.setText(book.getAuthors().toString());
             binding.pubblicationYearTextView.setText(book.getPublicationYear());
@@ -67,7 +68,7 @@ public class BookPageFragment extends Fragment {
                     startActivity(intent);
                 });
             } else {
-                Toast.makeText(getContext(), (R.string.book_cover_not_available_toast), Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, getString(R.string.book_cover_not_available), Snackbar.LENGTH_SHORT).show();
             }
 
             if(book.isSaved()){
@@ -79,7 +80,7 @@ public class BookPageFragment extends Fragment {
             }
 
         } else {
-            Toast.makeText(getContext(), (R.string.book_details_not_available_toast), Toast.LENGTH_SHORT).show();
+            Snackbar.make(view, getString(R.string.book_details_not_available), Snackbar.LENGTH_SHORT).show();
         }
 
         binding.goBackButton.setOnClickListener(v -> {

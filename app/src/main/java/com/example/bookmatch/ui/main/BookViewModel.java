@@ -21,7 +21,7 @@ import java.util.List;
 public class BookViewModel extends ViewModel implements BookAPIResponseCallback {
     private static final String TAG = BookViewModel.class.getSimpleName();
     private final IBookRepository bookRepository;
-    private MutableLiveData<ArrayList<Book>> extractedBooks;
+    private final MutableLiveData<ArrayList<Book>> extractedBooks;
     private String prevGenre;
     private int startIndex;
 
@@ -43,7 +43,6 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
             startIndex = 0;
         }
 
-        Log.d(TAG, "Fetching books of genre: " + genre + ", starting at: " + startIndex * API_SEARCH_BOOK_MAX_RESULTS_VALUE);
         bookRepository.setCallback(this);
         bookRepository.fetchBooks(genre, startIndex * API_SEARCH_BOOK_MAX_RESULTS_VALUE);
         startIndex++;
@@ -91,7 +90,7 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
 
     @Override
     public void onFailure(String message) {
-        Log.d(TAG, message);
+        Log.e(TAG, message);
     }
 
     public void updateBook(Book book) {

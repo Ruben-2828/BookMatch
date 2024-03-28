@@ -1,5 +1,7 @@
 package com.example.bookmatch.model;
 
+//TODO: Eliminare e spostare eventualmente le informazioni di questo utili nell'altro user
+
 public class User {
 
     private String username;

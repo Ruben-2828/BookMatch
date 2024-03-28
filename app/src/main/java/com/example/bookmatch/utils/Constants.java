@@ -10,16 +10,14 @@ public class Constants {
     public static final int API_SEARCH_BOOK_MAX_RESULTS_VALUE = 20;
     public static final int API_SEARCH_BOOK_MIN_RESULTS_VALUE = 20;
     public static final String API_SEARCH_BOOK_START_INDEX = "startIndex";
-    public static final String API_RETRIEVE_BOOK_BY_KEY_ENDPOINT = "works/{key}.json";
-    public static final String API_RETRIEVE_BOOK_COVER_BY_ID_ENDPOINT = "https://covers.openlibrary.org/b/id/%s-L.jpg";
-
     public static final String BOOK_DATABASE_NAME = "book_db";
 
     public static final String COLLECTION_DATABASE_NAME = "collection_db";
     public static final int DATABASE_VERSION = 11;
 
     public static final String SHARED_PREF_NAME = "appSharedPreferences";
-
     public static final String USER_REMEMBER_ME_SP = "rememberMe";
+    public static final String KEY_ONBOARD_OPENED = "isOnboardOpened";
+
 
 }

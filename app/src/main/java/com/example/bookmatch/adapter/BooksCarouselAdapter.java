@@ -17,8 +17,8 @@ import java.util.List;
 
 public class BooksCarouselAdapter extends RecyclerView.Adapter<BooksCarouselAdapter.BookViewHolder> {
 
-    private Context context;
-    private List<Book> books;
+    private final Context context;
+    private final List<Book> books;
 
     public BooksCarouselAdapter(Context context, List<Book> books) {
         this.context = context;

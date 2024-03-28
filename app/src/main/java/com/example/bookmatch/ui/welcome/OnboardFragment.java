@@ -2,6 +2,9 @@ package com.example.bookmatch.ui.welcome;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.bookmatch.utils.Constants.KEY_ONBOARD_OPENED;
+import static com.example.bookmatch.utils.Constants.SHARED_PREF_NAME;
+
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,8 +34,6 @@ public class OnboardFragment extends Fragment {
     private FragmentOnboardBinding binding;
     private Animation btnAnim;
     private int position = 0;
-    private static final String PREF_NAME = "myPrefs";
-    private static final String KEY_ONBOARD_OPENED = "isOnboardOpened";
 
     public OnboardFragment() {
         // Required empty public constructor
@@ -137,14 +138,14 @@ public class OnboardFragment extends Fragment {
     }
 
     private void savePrefData() {
-        SharedPreferences pref = requireContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        SharedPreferences pref = requireContext().getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(KEY_ONBOARD_OPENED, true);
         editor.apply();
     }
 
     private boolean isOnboardOpened() {
-        SharedPreferences pref = requireContext().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        SharedPreferences pref = requireContext().getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         return pref.getBoolean(KEY_ONBOARD_OPENED, false);
     }
 

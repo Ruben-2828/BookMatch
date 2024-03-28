@@ -43,7 +43,7 @@ public class Book implements Parcelable {
     private Float rating;
 
 
-    public Book(String id, String title, ArrayList<String> authors, String description,
+    public Book(@NonNull String id, String title, ArrayList<String> authors, String description,
                 String publicationYear, String coverURI, boolean isSaved, boolean isReviewed,
                 String review, Float rating){
         this.id = id;
@@ -58,10 +58,7 @@ public class Book implements Parcelable {
         this.rating = rating;
     }
 
-
-
-
-
+    @NonNull
     public String getId() {
         return id;
     }
@@ -98,7 +95,7 @@ public class Book implements Parcelable {
         return rating;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -186,7 +183,7 @@ public class Book implements Parcelable {
     }
 
     public void readFromParcel(Parcel source) {
-        this.id = source.readString();
+        this.id = Objects.requireNonNull(source.readString());
         this.title = source.readString();
         this.authors = source.createStringArrayList();
         this.description = source.readString();
@@ -199,7 +196,7 @@ public class Book implements Parcelable {
     }
 
     protected Book(Parcel in) {
-        this.id = in.readString();
+        this.id = Objects.requireNonNull(in.readString());
         this.title = in.readString();
         this.authors = in.createStringArrayList();
         this.description = in.readString();

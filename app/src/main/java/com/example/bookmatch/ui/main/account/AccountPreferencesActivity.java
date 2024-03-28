@@ -60,8 +60,8 @@ public class AccountPreferencesActivity extends AppCompatActivity {
                 binding.book.setAdapter(titleAdapter);
                 binding.author.setAdapter(authorAdapter);
             } else {
-                binding.menuAuthor.setError("Please, add some books to your saved list");
-                binding.menuBook.setError("Please, add some books to your saved list");
+                binding.menuAuthor.setError(getString(R.string.please_add_some_books_to_your_saved_list));
+                binding.menuBook.setError(getString(R.string.please_add_some_books_to_your_saved_list));
             }
         });
     }
@@ -112,7 +112,7 @@ public class AccountPreferencesActivity extends AppCompatActivity {
         String author = binding.author.getText().toString();
         String book = binding.book.getText().toString();
 
-        Snackbar.make(binding.getRoot(), "Preferences Saved!", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(binding.getRoot(), getString(R.string.preferences_saved), Snackbar.LENGTH_SHORT).show();
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra("genre", genre);
@@ -126,19 +126,19 @@ public class AccountPreferencesActivity extends AppCompatActivity {
     private void setErrorAndShowMessage(boolean changesDetected, boolean fieldsNotEmpty) {
         clearErrors();
         if (!changesDetected) {
-            binding.menuGenre.setError("Please, make some changes to save preferences");
-            binding.menuAuthor.setError("Please, make some changes to save preferences");
-            binding.menuBook.setError("Please, make some changes to save preferences");
+            binding.menuGenre.setError(getString(R.string.please_make_some_changes_to_save_preferences));
+            binding.menuAuthor.setError(getString(R.string.please_make_some_changes_to_save_preferences));
+            binding.menuBook.setError(getString(R.string.please_make_some_changes_to_save_preferences));
         }
         if (!fieldsNotEmpty) {
             if (TextUtils.isEmpty(binding.genre.getText())) {
-                binding.menuGenre.setError("Genre cannot be empty");
+                binding.menuGenre.setError(getString(R.string.genre_cannot_be_empty));
             }
             if (TextUtils.isEmpty(binding.author.getText())) {
-                binding.menuAuthor.setError("Author cannot be empty");
+                binding.menuAuthor.setError(getString(R.string.author_cannot_be_empty));
             }
             if (TextUtils.isEmpty(binding.book.getText())) {
-                binding.menuBook.setError("Book cannot be empty");
+                binding.menuBook.setError(getString(R.string.book_cannot_be_empty));
             }
         }
     }
