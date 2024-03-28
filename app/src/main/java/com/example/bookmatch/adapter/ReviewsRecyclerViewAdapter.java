@@ -1,6 +1,7 @@
 package com.example.bookmatch.adapter;
 
 import android.app.Application;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
+import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -93,7 +95,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
                 if (view.getId() == R.id.imageview_delete) {
                     removeItem(position);
                 } else if (view.getId() == R.id.imageview_edit){
-                    Snackbar.make(view, "Book edited!", Snackbar.LENGTH_SHORT).show();
+                    addReview(position);
                 } else {
                     Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
                 }
@@ -103,7 +105,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
         private void removeItem(final int position) {
             final Book removedBook = books.remove(position);
             notifyItemRemoved(position);
-            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from reviews!", Snackbar.LENGTH_LONG);
             snackbar.setAction(R.string.undo, v -> {
                 books.add(position, removedBook);
                 notifyItemInserted(position);
@@ -121,6 +123,14 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
                 }
             });
             snackbar.show();
+        }
+
+        private void addReview(final int position) {
+            final Book book = books.get(position);
+            Intent intent = new Intent(itemView.getContext(), AddReviewActivity.class);
+            intent.putExtra("book", book);
+            itemView.getContext().startActivity(intent);
+
         }
     }
 }

@@ -102,7 +102,8 @@ public class BooksListApiResponse {
                     imageURI,
                     false,
                     false,
-                    null);
+                    null,
+                    0.0f);
             books.add(b);
         }
 

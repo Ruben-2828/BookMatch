@@ -40,9 +40,12 @@ public class Book implements Parcelable {
 
     private String review;
 
+    private Float rating;
+
 
     public Book(String id, String title, ArrayList<String> authors, String description,
-                String publicationYear, String coverURI, boolean isSaved, boolean isReviewed, String review){
+                String publicationYear, String coverURI, boolean isSaved, boolean isReviewed,
+                String review, Float rating){
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -52,28 +55,11 @@ public class Book implements Parcelable {
         this.isSaved = isSaved;
         this.review = review;
         this.isReviewed = isReviewed;
+        this.rating = rating;
     }
 
-    protected Book(Parcel in) {
-        id = in.readString();
-        title = in.readString();
-        authors = in.createStringArrayList();
-        description = in.readString();
-        publicationYear = in.readString();
-        coverURI = in.readString();
-    }
 
-    public static final Creator<Book> CREATOR = new Creator<Book>() {
-        @Override
-        public Book createFromParcel(Parcel in) {
-            return new Book(in);
-        }
 
-        @Override
-        public Book[] newArray(int size) {
-            return new Book[size];
-        }
-    };
 
 
     public String getId() {
@@ -106,6 +92,10 @@ public class Book implements Parcelable {
 
     public boolean isReviewed() {
         return isReviewed;
+    }
+
+    public Float getRating() {
+        return rating;
     }
 
     public void setId(String id) {
@@ -144,6 +134,10 @@ public class Book implements Parcelable {
         isReviewed = reviewed;
     }
 
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -159,21 +153,6 @@ public class Book implements Parcelable {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(title);
-        dest.writeStringList(authors);
-        dest.writeString(description);
-        dest.writeString(publicationYear);
-        dest.writeString(coverURI);
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Book)) return false;
@@ -185,4 +164,62 @@ public class Book implements Parcelable {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.title);
+        dest.writeStringList(this.authors);
+        dest.writeString(this.description);
+        dest.writeString(this.publicationYear);
+        dest.writeString(this.coverURI);
+        dest.writeByte(this.isSaved ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isReviewed ? (byte) 1 : (byte) 0);
+        dest.writeString(this.review);
+        dest.writeValue(this.rating);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.id = source.readString();
+        this.title = source.readString();
+        this.authors = source.createStringArrayList();
+        this.description = source.readString();
+        this.publicationYear = source.readString();
+        this.coverURI = source.readString();
+        this.isSaved = source.readByte() != 0;
+        this.isReviewed = source.readByte() != 0;
+        this.review = source.readString();
+        this.rating = (Float) source.readValue(Float.class.getClassLoader());
+    }
+
+    protected Book(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+        this.authors = in.createStringArrayList();
+        this.description = in.readString();
+        this.publicationYear = in.readString();
+        this.coverURI = in.readString();
+        this.isSaved = in.readByte() != 0;
+        this.isReviewed = in.readByte() != 0;
+        this.review = in.readString();
+        this.rating = (Float) in.readValue(Float.class.getClassLoader());
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel source) {
+            return new Book(source);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
 }

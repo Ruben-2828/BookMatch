@@ -61,6 +61,14 @@
     <fragment
         android:id="@+id/navigation_reviews"
         android:name="com.example.bookmatch.ui.main.reviews.ReviewsFragment"
-        android:label="@string/reviews" />
+        android:label="@string/reviews" >
+        <action
+            android:id="@+id/action_navigation_reviews_to_addReviewActivity"
+            app:destination="@id/addReviewActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/addReviewActivity"
+        android:name="com.example.bookmatch.ui.main.reviews.AddReviewActivity"
+        android:label="AddReviewActivity" />
 
 </navigation>

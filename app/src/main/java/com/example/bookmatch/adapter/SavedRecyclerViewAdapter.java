@@ -70,15 +70,21 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
         private final TextView title;
         private final TextView author;
 
+        private final ImageButton reviewButton;
+        private final ImageButton reviewedButton;
+
         public SavedViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.book_title);
             author = itemView.findViewById(R.id.book_author);
             ImageButton deleteButton = itemView.findViewById(R.id.imageview_delete);
-            ImageButton reviewButton = itemView.findViewById(R.id.imageview_review);
+            reviewButton = itemView.findViewById(R.id.imageview_review);
+            reviewedButton = itemView.findViewById(R.id.imageview_reviewed);
+
             itemView.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
             reviewButton.setOnClickListener(this);
+            reviewedButton.setOnClickListener(this);
         }
 
         public void bind(Book b) {
@@ -93,6 +99,9 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
                 authors = "No author found";
             }
             author.setText(authors);
+
+            reviewButton.setVisibility(b.isReviewed() ? View.INVISIBLE : View.VISIBLE);
+            reviewedButton.setVisibility(b.isReviewed() ? View.VISIBLE : View.INVISIBLE);
         }
 
         @Override
@@ -104,7 +113,7 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
                     removeItem(position);
                 } else if (view.getId() == R.id.imageview_review && !book.isReviewed()) {
                     addItemToReview(position);
-                } else if(view.getId() == R.id.imageview_review &&  book.isReviewed()) {
+                } else if(view.getId() == R.id.imageview_reviewed && book.isReviewed()) {
                     Snackbar.make(view,  book.getTitle() + " already reviewed!", Snackbar.LENGTH_SHORT).show();
                 } else {
                     Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
@@ -136,8 +145,13 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
         private void addItemToReview(final int position) {
             final Book book = books.get(position);
+
             book.setReviewed(true);
             Snackbar.make(itemView, book.getTitle() + " added to reviewed!", Snackbar.LENGTH_SHORT).show();
+
+            reviewButton.setVisibility(View.INVISIBLE);
+            reviewedButton.setVisibility(View.VISIBLE);
+
             Application application = (Application) itemView.getContext().getApplicationContext();
             BookViewModel bookViewModel = new BookViewModel(application);
             bookViewModel.updateBook(book);

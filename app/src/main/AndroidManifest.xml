@@ -71,6 +71,11 @@
             android:label="fullscreen image">
         </activity>
 
+        <activity
+            android:name=".ui.main.reviews.AddReviewActivity"
+            android:label="add review">
+        </activity>
+
     </application>
 
 

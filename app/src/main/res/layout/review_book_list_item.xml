@@ -50,10 +50,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="12sp"
             android:text="@string/default_review"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@id/imageview_delete"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/book_author" />
 
@@ -62,28 +61,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/baseline_delete_24"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/book_review"
             app:layout_constraintEnd_toStartOf="@id/imageview_edit"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorPrimary"/>
+            app:tint="?attr/colorPrimary" />
 
         <ImageButton
             android:id="@+id/imageview_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:focusable="true"
             android:padding="12dp"
             android:src="@drawable/baseline_edit_24"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/book_review"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorPrimary"/>
+            app:tint="?attr/colorPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
