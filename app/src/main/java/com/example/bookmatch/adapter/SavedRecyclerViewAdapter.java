@@ -114,7 +114,7 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
                 } else if (view.getId() == R.id.imageview_review && !book.isReviewed()) {
                     addItemToReview(position);
                 } else if(view.getId() == R.id.imageview_reviewed && book.isReviewed()) {
-                    Snackbar.make(view,  book.getTitle() + " already reviewed!", Snackbar.LENGTH_SHORT).show();
+                    removeItemFromReview(position);
                 } else {
                     Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
                 }
@@ -124,7 +124,7 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
         private void removeItem(final int position) {
             final Book removedBook = books.remove(position);
             notifyItemRemoved(position);
-            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_SHORT);
             snackbar.setAction(R.string.undo, v -> {
                 books.add(position, removedBook);
                 notifyItemInserted(position);
@@ -151,6 +151,22 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
             reviewButton.setVisibility(View.INVISIBLE);
             reviewedButton.setVisibility(View.VISIBLE);
+
+            Application application = (Application) itemView.getContext().getApplicationContext();
+            BookViewModel bookViewModel = new BookViewModel(application);
+            bookViewModel.updateBook(book);
+        }
+
+        private void removeItemFromReview(final int position) {
+            final Book book = books.get(position);
+
+            book.setReviewed(false);
+            book.setReview(null);
+            book.setRating(0.0f);
+            Snackbar.make(itemView, book.getTitle() + " removed from reviewed!", Snackbar.LENGTH_SHORT).show();
+
+            reviewButton.setVisibility(View.VISIBLE);
+            reviewedButton.setVisibility(View.INVISIBLE);
 
             Application application = (Application) itemView.getContext().getApplicationContext();
             BookViewModel bookViewModel = new BookViewModel(application);

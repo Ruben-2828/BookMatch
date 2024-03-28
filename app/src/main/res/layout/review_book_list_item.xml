@@ -103,7 +103,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:focusable="true"
             android:padding="12dp"
-            android:src="@drawable/baseline_favorite_border_24"
+            android:src="@drawable/baseline_star_rate_24"
             app:layout_constraintBottom_toBottomOf="@+id/book_rating"
             app:layout_constraintStart_toEndOf="@+id/book_rating"
             app:layout_constraintTop_toTopOf="@+id/book_rating"

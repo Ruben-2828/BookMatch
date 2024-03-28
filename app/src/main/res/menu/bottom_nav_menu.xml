@@ -8,17 +8,17 @@
 
     <item
         android:id="@+id/navigation_saved"
-        android:icon="@drawable/baseline_favorite_border_24"
+        android:icon="@drawable/baseline_bookmark_24"
         android:title="@string/saved" />
 
     <item
         android:id="@+id/navigation_reviews"
-        android:icon="@drawable/baseline_checklist_rtl_24"
+        android:icon="@drawable/baseline_star_rate_24"
         android:title="@string/reviews" />
 
     <item
         android:id="@+id/navigation_collections"
-        android:icon="@drawable/baseline_bookmark_24"
+        android:icon="@drawable/baseline_collections_bookmark_24"
         android:title="@string/collections" />
 
 

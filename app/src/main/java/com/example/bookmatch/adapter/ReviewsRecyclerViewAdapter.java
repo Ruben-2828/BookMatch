@@ -90,7 +90,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
                 authors = "No author found";
             }
             author.setText(authors);
-            if(review != null)
+            if(b.getReview() != null)
                 review.setText(b.getReview());
             rating.setText(String.valueOf(b.getRating()));
         }

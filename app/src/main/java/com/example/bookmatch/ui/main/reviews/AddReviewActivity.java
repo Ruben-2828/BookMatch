@@ -78,6 +78,12 @@ public class AddReviewActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, R.string.book_cover_not_available_toast, Toast.LENGTH_SHORT).show();
             }
+
+            if (book.getReview() != null) {
+                binding.tiReviewInput.setText(book.getReview());
+                binding.ratingBar.setRating(book.getRating());
+            }
+
         } else {
             Toast.makeText(this, R.string.book_details_not_available_toast, Toast.LENGTH_SHORT).show();
         }
