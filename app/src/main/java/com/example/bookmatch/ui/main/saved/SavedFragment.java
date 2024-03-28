@@ -1,22 +1,28 @@
 package com.example.bookmatch.ui.main.saved;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
+import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.SavedRecyclerViewAdapter;
 import com.example.bookmatch.databinding.FragmentSavedBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +31,8 @@ import java.util.List;
 public class SavedFragment extends Fragment {
 
     private FragmentSavedBinding binding;
-    SavedRecyclerViewAdapter recyclerViewAdapter;
+    private SavedRecyclerViewAdapter recyclerViewAdapter;
+    private BookViewModel bookViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,10 +51,11 @@ public class SavedFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
-        BookViewModel bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
+        bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-        recyclerViewAdapter = new SavedRecyclerViewAdapter(new ArrayList<>());
+        recyclerViewAdapter = new SavedRecyclerViewAdapter(createOnItemClickListener(view));
+
         binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
         binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
 
@@ -62,6 +70,58 @@ public class SavedFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private SavedRecyclerViewAdapter.OnItemClickListener createOnItemClickListener(View view) {
+
+        return new SavedRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Book book) {
+                Bundle args = new Bundle();
+                args.putParcelable("book", book);
+
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_navigation_saved_to_navigation_book, args);
+            }
+
+            @Override
+            public void onDeleteButtonClick(int position) {
+                final Book removedBook = recyclerViewAdapter.removeBook(position);
+                recyclerViewAdapter.notifyItemRemoved(position);
+                Snackbar snackbar = Snackbar.make(view, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_SHORT);
+                snackbar.setAction(R.string.undo, v -> {
+                    recyclerViewAdapter.addBook(position, removedBook);
+                    recyclerViewAdapter.notifyItemInserted(position);
+                });
+                snackbar.addCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                        super.onDismissed(transientBottomBar, event);
+                        if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                            BookViewModel bookViewModel = new BookViewModel(requireActivity().getApplication());
+                            bookViewModel.deleteBook(removedBook);
+                        }
+                    }
+                });
+                snackbar.show();
+            }
+
+            @Override
+            public void onReviewButtonClick(int position) {
+                final Book book = recyclerViewAdapter.getBook(position);
+
+                if (book.isReviewed()) {
+                    book.setReviewed(false);
+                    Snackbar.make(view, book.getTitle() + " removed from reviewed!", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    book.setReviewed(true);
+                    Snackbar.make(view, book.getTitle() + " added to reviewed!", Snackbar.LENGTH_SHORT).show();
+                }
+
+                recyclerViewAdapter.notifyItemChanged(position);
+                bookViewModel.updateBook(book);
+            }
+        };
     }
 }
 

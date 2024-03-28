@@ -2,6 +2,7 @@ package com.example.bookmatch.adapter;
 
 import android.os.Bundle;
 import android.app.Application;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +16,44 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.model.Collection;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecyclerViewAdapter.SavedViewHolder> {
 
     private List<Book> books;
+    private final OnItemClickListener onItemClickListener;
 
     public void setBooks(List<Book> books) {
         this.books = books;
         notifyDataSetChanged();
     }
 
-    //TODO: ONCLICKLISTENER PER I BOTTONI
+    public interface OnItemClickListener {
+        void onItemClick(Book book);
+        void onDeleteButtonClick(int position);
+        void onReviewButtonClick(int position);
+    }
 
-    public SavedRecyclerViewAdapter(List<Book> books) {
-        this.books = books;
+    public SavedRecyclerViewAdapter(OnItemClickListener onItemClickListener) {
+        this.books = new ArrayList<>();
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public Book removeBook(int position) {
+        return books.remove(position);
+    }
+
+    public void addBook(int position, Book book) {
+        books.add(position, book);
+    }
+
+    public Book getBook(int position) {
+        return books.get(position);
     }
 
     @NonNull
@@ -48,14 +69,6 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
     @Override
     public void onBindViewHolder(@NonNull SavedRecyclerViewAdapter.SavedViewHolder holder, int position) {
         holder.bind(books.get(position));
-        holder.itemView.setOnClickListener(v -> {
-            Book currentBook = books.get(position);
-            Bundle args = new Bundle();
-            args.putParcelable("book", currentBook);
-
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_navigation_saved_to_navigation_book, args);
-        });
     }
 
     @Override
@@ -69,22 +82,19 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
 
         private final TextView title;
         private final TextView author;
-
         private final ImageButton reviewButton;
-        private final ImageButton reviewedButton;
+        private final ImageButton deleteButton;
 
         public SavedViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.book_title);
             author = itemView.findViewById(R.id.book_author);
-            ImageButton deleteButton = itemView.findViewById(R.id.imageview_delete);
+            deleteButton = itemView.findViewById(R.id.imageview_delete);
             reviewButton = itemView.findViewById(R.id.imageview_review);
-            reviewedButton = itemView.findViewById(R.id.imageview_reviewed);
 
             itemView.setOnClickListener(this);
             deleteButton.setOnClickListener(this);
             reviewButton.setOnClickListener(this);
-            reviewedButton.setOnClickListener(this);
         }
 
         public void bind(Book b) {
@@ -100,8 +110,10 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
             }
             author.setText(authors);
 
-            reviewButton.setVisibility(b.isReviewed() ? View.INVISIBLE : View.VISIBLE);
-            reviewedButton.setVisibility(b.isReviewed() ? View.VISIBLE : View.INVISIBLE);
+            if (b.isReviewed())
+                reviewButton.setImageResource(R.drawable.baseline_star_rate_24);
+            else
+                reviewButton.setImageResource(R.drawable.baseline_star_outline_24);
         }
 
         @Override
@@ -110,68 +122,13 @@ public class SavedRecyclerViewAdapter extends RecyclerView.Adapter<SavedRecycler
             if (position != RecyclerView.NO_POSITION) {
                 Book book = books.get(position);
                 if (view.getId() == R.id.imageview_delete ) {
-                    removeItem(position);
-                } else if (view.getId() == R.id.imageview_review && !book.isReviewed()) {
-                    addItemToReview(position);
-                } else if(view.getId() == R.id.imageview_reviewed && book.isReviewed()) {
-                    removeItemFromReview(position);
+                    onItemClickListener.onDeleteButtonClick(position);
+                } else if (view.getId() == R.id.imageview_review) {
+                    onItemClickListener.onReviewButtonClick(position);
                 } else {
-                    Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
+                    onItemClickListener.onItemClick(books.get(position));
                 }
             }
         }
-
-        private void removeItem(final int position) {
-            final Book removedBook = books.remove(position);
-            notifyItemRemoved(position);
-            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_SHORT);
-            snackbar.setAction(R.string.undo, v -> {
-                books.add(position, removedBook);
-                notifyItemInserted(position);
-            });
-            snackbar.addCallback(new Snackbar.Callback() {
-                @Override
-                public void onDismissed(Snackbar transientBottomBar, int event) {
-                    super.onDismissed(transientBottomBar, event);
-                    if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                        Application application = (Application) itemView.getContext().getApplicationContext();
-                        BookViewModel bookViewModel = new BookViewModel(application);
-                        bookViewModel.deleteBook(removedBook);
-                    }
-                }
-            });
-            snackbar.show();
-        }
-
-        private void addItemToReview(final int position) {
-            final Book book = books.get(position);
-
-            book.setReviewed(true);
-            Snackbar.make(itemView, book.getTitle() + " added to reviewed!", Snackbar.LENGTH_SHORT).show();
-
-            reviewButton.setVisibility(View.INVISIBLE);
-            reviewedButton.setVisibility(View.VISIBLE);
-
-            Application application = (Application) itemView.getContext().getApplicationContext();
-            BookViewModel bookViewModel = new BookViewModel(application);
-            bookViewModel.updateBook(book);
-        }
-
-        private void removeItemFromReview(final int position) {
-            final Book book = books.get(position);
-
-            book.setReviewed(false);
-            book.setReview(null);
-            book.setRating(0.0f);
-            Snackbar.make(itemView, book.getTitle() + " removed from reviewed!", Snackbar.LENGTH_SHORT).show();
-
-            reviewButton.setVisibility(View.VISIBLE);
-            reviewedButton.setVisibility(View.INVISIBLE);
-
-            Application application = (Application) itemView.getContext().getApplicationContext();
-            BookViewModel bookViewModel = new BookViewModel(application);
-            bookViewModel.updateBook(book);
-        }
     }
-
 }
