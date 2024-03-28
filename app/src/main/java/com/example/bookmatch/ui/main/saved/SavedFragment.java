@@ -22,6 +22,7 @@ import com.example.bookmatch.databinding.FragmentSavedBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -53,8 +54,10 @@ public class SavedFragment extends Fragment {
         BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
         bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
 
+        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
-        recyclerViewAdapter = new SavedRecyclerViewAdapter(createOnItemClickListener(view));
+        recyclerViewAdapter = new SavedRecyclerViewAdapter(createOnItemClickListener(view, bottomNavigationView));
 
         binding.recyclerViewSaved.setLayoutManager(linearLayoutManager);
         binding.recyclerViewSaved.setAdapter(recyclerViewAdapter);
@@ -72,7 +75,7 @@ public class SavedFragment extends Fragment {
         binding = null;
     }
 
-    private SavedRecyclerViewAdapter.OnItemClickListener createOnItemClickListener(View view) {
+    private SavedRecyclerViewAdapter.OnItemClickListener createOnItemClickListener(View view, BottomNavigationView bottomNavigationView) {
 
         return new SavedRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -88,7 +91,8 @@ public class SavedFragment extends Fragment {
             public void onDeleteButtonClick(int position) {
                 final Book removedBook = recyclerViewAdapter.removeBook(position);
                 recyclerViewAdapter.notifyItemRemoved(position);
-                Snackbar snackbar = Snackbar.make(view, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = Snackbar.make(view, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_SHORT).setAnchorView(bottomNavigationView);
+                snackbar.setAnchorView(bottomNavigationView);
                 snackbar.setAction(R.string.undo, v -> {
                     recyclerViewAdapter.addBook(position, removedBook);
                     recyclerViewAdapter.notifyItemInserted(position);
@@ -112,10 +116,14 @@ public class SavedFragment extends Fragment {
 
                 if (book.isReviewed()) {
                     book.setReviewed(false);
-                    Snackbar.make(view, book.getTitle() + " removed from reviewed!", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, book.getTitle() + " removed from reviewed!", Snackbar.LENGTH_SHORT)
+                            .setAnchorView(bottomNavigationView)
+                            .show();
                 } else {
                     book.setReviewed(true);
-                    Snackbar.make(view, book.getTitle() + " added to reviewed!", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, book.getTitle() + " added to reviewed!", Snackbar.LENGTH_SHORT)
+                            .setAnchorView(bottomNavigationView)
+                            .show();
                 }
 
                 recyclerViewAdapter.notifyItemChanged(position);
