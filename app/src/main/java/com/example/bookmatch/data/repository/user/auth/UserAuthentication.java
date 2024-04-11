@@ -51,7 +51,8 @@ public class UserAuthentication extends IUserAuthentication {
                             }
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w("TAG", "signInWithEmail:failure", task.getException());
+                            Log.w("WELCOME", "signInWithEmail:failure", task.getException());
+                            responseCallback.onFailureFromAuthentication();
                         }
                     }
                 });

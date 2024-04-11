@@ -50,8 +50,9 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     }
 
     @Override
-    public void onFailureFromAuthentication(String message) {
-
+    public void onFailureFromAuthentication() {
+        User user = new User(null, null, null);
+        userMutableLiveData.postValue(user);
     }
 
     @Override

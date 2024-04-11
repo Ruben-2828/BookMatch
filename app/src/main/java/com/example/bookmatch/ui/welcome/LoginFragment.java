@@ -73,10 +73,14 @@ public class LoginFragment extends Fragment {
             if(isEmailOk(email) && isPasswordOk(password)){
                 userViewModel.getUserMutableLiveData(email, password, true).observe(
                         getViewLifecycleOwner(), result -> {
-                            Log.d("WELCOME", result.getTokenId());
                             if(result.getTokenId() != null) {
+                                Log.d("WELCOME", result.getTokenId());
+                                userViewModel.setLoginError(false);
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
+                            }else{
+                                Log.d("WELCOME", "login failed");
+                                userViewModel.setLoginError(true);
                             }
                         }
                 );
@@ -84,6 +88,10 @@ public class LoginFragment extends Fragment {
 
             }
             Log.d("WELCOME", email + password);
+        });
+
+        binding.buttonRegistration.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registrationFragment);
         });
     }
 

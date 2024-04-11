@@ -10,14 +10,17 @@ public class UserViewModel extends ViewModel {
     private final IUserRepository userRepository;
     private MutableLiveData<User> userMutableLiveData;
 
+    private boolean loginError;
+
     //Mutable live data
 
     public UserViewModel(IUserRepository userRepository){
         this.userRepository = userRepository;
+        this.loginError = false;
     }
 
     public MutableLiveData<User> getUserMutableLiveData(String email, String password, boolean isUserRegistered) {
-        if(userMutableLiveData == null){
+        if(loginError == true || userMutableLiveData == null){
             getUserData(email, password, isUserRegistered);
         }
         return userMutableLiveData;
@@ -25,5 +28,9 @@ public class UserViewModel extends ViewModel {
 
     private void getUserData(String email, String password, boolean isUserRegistered) {
         userMutableLiveData = userRepository.getUser(email, password, isUserRegistered);
+    }
+
+    public void setLoginError(boolean loginError){
+        this.loginError = loginError;
     }
 }
