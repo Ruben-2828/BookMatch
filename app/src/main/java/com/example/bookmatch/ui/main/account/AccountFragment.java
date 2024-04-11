@@ -24,6 +24,7 @@ import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionViewModel;
 import com.example.bookmatch.ui.main.CollectionViewModelFactory;
 import com.example.bookmatch.ui.welcome.WelcomeActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -138,6 +139,11 @@ public class AccountFragment extends Fragment {
                         binding.userNickname.setText(userNickname);
                         binding.userFirstName.setText(userFirstName);
                         binding.userLastName.setText(userLastName);
+
+                        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+                        Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.profile_information_saved), Snackbar.LENGTH_SHORT);
+                        snackbar.setAnchorView(bottomNavigationView);
+                        snackbar.show();
                     }
                 }
             }
@@ -167,6 +173,11 @@ public class AccountFragment extends Fragment {
                         binding.userFavoriteGenre.setText(genre);
                         binding.userFavoriteAuthor.setText(author);
                         binding.userFavoriteBook.setText(book);
+
+                        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+                        Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.preferences_saved), Snackbar.LENGTH_SHORT);
+                        snackbar.setAnchorView(bottomNavigationView);
+                        snackbar.show();
                     }
                 }
             }

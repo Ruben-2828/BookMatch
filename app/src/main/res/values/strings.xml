@@ -122,6 +122,7 @@
 
     <!-- Start AccountEditFragment -->
     <string name="please_add_some_books_to_your_saved_list">Please, add some books to your saved list</string>
+    <string name="profile_information_saved">Profile information Saved!</string>
     <string name="preferences_saved">Preferences Saved!</string>
     <string name="please_make_some_changes_to_save_preferences">Please, make some changes to save preferences</string>
     <string name="genre_cannot_be_empty">Genre cannot be empty</string>
@@ -213,6 +214,7 @@
     <string name="default_rating">0.0</string>
     <string name="favorite">Favorite</string>
     <string name="removed_from_reviews">" removed from reviews!"</string>
+    <string name="review_saved">The review has been saved!</string>
     <!-- End ReviewFragment -->
 
 </resources>

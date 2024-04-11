@@ -1,5 +1,6 @@
 package com.example.bookmatch.ui.main.reviews;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -94,7 +95,7 @@ public class AddReviewActivity extends AppCompatActivity {
 
 
             bookViewModel.updateBook(book);
-
+            setResult(Activity.RESULT_OK);
             finish();
         });
     }

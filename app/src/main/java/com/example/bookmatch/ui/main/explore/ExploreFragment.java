@@ -23,6 +23,7 @@ import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
@@ -127,21 +128,42 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardSwiped(@NonNull Direction direction) {
-
         int position = cardStackManager.getTopPosition() - 1;
         Book currentBook = cardStackAdapter.getBook(position);
+        FloatingActionButton likeButton = binding.likeButton;
 
-        if (direction == Direction.Right) {
-            Snackbar.make(binding.getRoot(), getString(R.string.book_saved), Snackbar.LENGTH_SHORT).show();
+        int messageResId;
+        boolean saveBook = false;
+
+        switch (direction) {
+            case Right:
+                messageResId = R.string.book_saved;
+                saveBook = true;
+                break;
+            case Left:
+                messageResId = R.string.book_skipped;
+                break;
+            case Bottom:
+                messageResId = R.string.book_deleted;
+                break;
+            default:
+                return;
+        }
+
+        showSnackbar(messageResId, likeButton);
+
+        if (saveBook) {
             bookViewModel.saveBook(currentBook, true);
-        }
-        if (direction == Direction.Left) {
-            Snackbar.make(binding.getRoot(), getString(R.string.book_skipped), Snackbar.LENGTH_SHORT).show();
-        }
-        if (direction == Direction.Bottom) {
-            Snackbar.make(binding.getRoot(), getString(R.string.book_deleted), Snackbar.LENGTH_SHORT).show();
+        } else if (direction == Direction.Bottom) {
             bookViewModel.saveBook(currentBook, false);
         }
+    }
+
+    private void showSnackbar(int messageResId, View anchorView) {
+        Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(messageResId), Snackbar.LENGTH_SHORT);
+        snackbar.setDuration(500);
+        snackbar.setAnchorView(anchorView);
+        snackbar.show();
     }
 
     @Override

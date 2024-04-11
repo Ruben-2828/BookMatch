@@ -17,6 +17,7 @@ import com.example.bookmatch.R;
 
 import com.example.bookmatch.databinding.FragmentBookPageBinding;
 import com.example.bookmatch.model.Book;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
@@ -68,7 +69,10 @@ public class BookPageFragment extends Fragment {
                     startActivity(intent);
                 });
             } else {
-                Snackbar.make(view, getString(R.string.book_cover_not_available), Snackbar.LENGTH_SHORT).show();
+                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+                Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.book_cover_not_available), Snackbar.LENGTH_SHORT);
+                snackbar.setAnchorView(bottomNavigationView);
+                snackbar.show();
             }
 
             if(book.isSaved()){
@@ -80,7 +84,10 @@ public class BookPageFragment extends Fragment {
             }
 
         } else {
-            Snackbar.make(view, getString(R.string.book_details_not_available), Snackbar.LENGTH_SHORT).show();
+            BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+            Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.book_details_not_available), Snackbar.LENGTH_SHORT);
+            snackbar.setAnchorView(bottomNavigationView);
+            snackbar.show();
         }
 
         binding.goBackButton.setOnClickListener(v -> {
