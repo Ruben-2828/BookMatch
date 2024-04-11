@@ -29,7 +29,8 @@ public class UserAuthentication extends IUserAuthentication {
 
     @Override
     public void logout() {
-
+        mAuth.signOut();
+        responseCallback.onSuccessLogout();
     }
 
     @Override

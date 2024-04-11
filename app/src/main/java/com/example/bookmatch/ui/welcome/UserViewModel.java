@@ -33,4 +33,9 @@ public class UserViewModel extends ViewModel {
     public void setLoginError(boolean loginError){
         this.loginError = loginError;
     }
+
+    public MutableLiveData<User> logout(){
+        userMutableLiveData = userRepository.logout();
+        return userMutableLiveData;
+    }
 }

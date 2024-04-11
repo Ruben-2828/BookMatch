@@ -18,12 +18,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bookmatch.R;
+import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionViewModel;
 import com.example.bookmatch.ui.main.CollectionViewModelFactory;
+import com.example.bookmatch.ui.welcome.UserViewModel;
+import com.example.bookmatch.ui.welcome.UserViewModelFactory;
 import com.example.bookmatch.ui.welcome.WelcomeActivity;
+import com.example.bookmatch.utils.ServiceLocator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -32,12 +36,19 @@ public class AccountFragment extends Fragment {
     private FragmentAccountBinding binding;
     private BookViewModel bookViewModel;
     private CollectionViewModel collectionViewModel;
-    private FirebaseAuth mAuth;
+    private UserViewModel userViewModel;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        IUserRepository userRepository = ServiceLocator.getInstance().getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(requireActivity(), new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
-        mAuth = FirebaseAuth.getInstance();
         return binding.getRoot();
     }
 
@@ -103,10 +114,11 @@ public class AccountFragment extends Fragment {
             return true;
         }
         if (id == R.id.logout_item) {
-            mAuth.signOut();
-            Intent intent = new Intent(requireContext(), WelcomeActivity.class);
-            startActivity(intent);
-            requireActivity().finish();
+            userViewModel.logout().observe(getViewLifecycleOwner(), r -> {
+                Intent intent = new Intent(requireContext(), WelcomeActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
+            });
             return true;
         }
         return false;

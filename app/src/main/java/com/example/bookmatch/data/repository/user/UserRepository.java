@@ -43,6 +43,12 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     }
 
     @Override
+    public MutableLiveData<User> logout() {
+        userAuthentication.logout();
+        return userMutableLiveData;
+    }
+
+    @Override
     public void onSuccessFromAuthentication(User user) {
         //TODO: salvare i dati dell'utente
         Log.d("WELCOME", "login callback authentication");
@@ -56,7 +62,13 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     }
 
     @Override
-    public void onSuccessLogout() {
+    public void onSuccessFromLogout() {
 
+    }
+
+    @Override
+    public void onSuccessLogout() {
+        User user = new User(null, null, null);
+        userMutableLiveData.postValue(user);
     }
 }
