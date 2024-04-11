@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Start MainActivity -->
+    <string name="notifications">Notifiche</string>
+    <string name="search">Cerca</string>
+    <string name="explore">Esplora</string>
+    <string name="saved">Salvati</string>
+    <string name="reviews">Recensioni</string>
+    <string name="collections">Collezioni</string>
+    <string name="account">Profilo</string>
+    <string name="title_notifications">Notifiche</string>
+    <string name="default_content_description">Descrizione contenuto predefinita</string>
+    <string name="book_thumbnail">Miniatura del libro</string>
+    <string name="book_title_default">Titolo del libro predefinito</string>
+    <string name="default_book_plot">Trama del libro predefinita</string>
+    <string name="default_book_author">Autore del libro predefinito</string>
+    <string name="genre_book_default">Genere del libro predefinito</string>
+    <string name="publication_year_default">Anno di pubblicazione predefinito</string>
+    <string name="clicked_on">"Cliccato su: "</string>
+    <string name="added">Aggiunto</string>
+    <string name="no_book_selected">Nessun libro selezionato</string>
+    <!-- End MainActivity -->
+
+    <!-- Start WelcomeActivity -->
+    <string name="remember_me">Ricordami</string>
+    <string name="forgot_password">Password dimenticata?</string>
+    <string name="login">Accedi</string>
+    <string name="or">OPPURE</string>
+    <string name="login_with_google">Accedi con Google</string>
+    <string name="new_to_bookmatch">Sei nuovo su BookMatch?</string>
+    <string name="register">Registrati</string>
+    <string name="logo_application">Logo Applicazione</string>
+    <string name="repeat_password">Ripeti Password</string>
+    <string name="username">Nome utente</string>
+    <string name="full_name">Nome completo</string>
+    <string name="registration">Registrazione</string>
+    <string name="error_email">Inserisci un indirizzo email valido</string>
+    <string name="error_password">La password deve contenere almeno 8 caratteri</string>
+    <string name="quit">Sei sicuro di voler uscire?</string>
+    <string name="quit_title">Esci dall\'App</string>
+    <string name="yes">Sì</string>
+    <string name="no">No</string>
+    <string name="error_empty_fields">I campi non possono essere vuoti</string>
+    <string name="error_match_password">Le password non corrispondono</string>
+    <!-- End WelcomeActivity -->
+
+    <!-- Start ExploreFragment -->
+    <string name="book_cover_not_available">Copertina del libro non disponibile</string>
+    <string name="book_details_not_available">Dettagli del libro non disponibili</string>
+    <string name="no_author_found">Nessun autore trovato</string>
+    <string name="book_saved">Libro salvato!</string>
+    <string name="book_skipped">Libro saltato!</string>
+    <string name="book_deleted">Libro eliminato!</string>
+    <string-array name="search_genre">
+        <item>Arte</item>
+        <item>Architettura</item>
+        <item>Biografie</item>
+        <item>Informatica</item>
+        <item>Cucina</item>
+        <item>Design</item>
+        <item>Teatro</item>
+        <item>Educazione</item>
+        <item>Narrativa</item>
+        <item>Giochi</item>
+        <item>Storia</item>
+        <item>Narrativa per ragazzi</item>
+        <item>Diritto</item>
+        <item>Matematica</item>
+        <item>Musica</item>
+        <item>Natura</item>
+        <item>Animali domestici</item>
+        <item>Filosofia</item>
+        <item>Religione</item>
+        <item>Scienza</item>
+        <item>Sport</item>
+        <item>Tecnologia</item>
+        <item>Viaggi</item>
+    </string-array>
+    <string name="genre">Genere</string>
+    <string name="explore_placeholder">Seleziona un genere per iniziare la ricerca!</string>
+    <string name="finished_book_list">Nessun altro libro di questo genere, prova qualcos\'altro!</string>
+    <!-- End ExploreFragment -->
+
+    <!-- Start SavedFragment -->
+    <string name="default_title">Titolo predefinito</string>
+    <string name="default_author">Autore non trovato</string>
+    <string name="by">Di:</string>
+    <string name="add_to_collection">Aggiungi alla collezione</string>
+    <string name="remove_from_saved_book">Rimuovi dai libri salvati</string>
+    <!-- End SavedFragment -->
+
+    <!-- Start AccountFragment -->
+    <string name="default_nickname">soprannome predefinito</string>
+    <string name="first_name">Nome:</string>
+    <string name="last_name">Cognome:</string>
+    <string name="email_account">Email:</string>
+    <string name="default_first_name">Nome predefinito</string>
+    <string name="default_last_name">Cognome predefinito</string>
+    <string name="default_email">Email predefinita</string>
+    <string name="statistics">Statistiche</string>
+    <string name="saved_books">Libri salvati</string>
+    <string name="reviewed_books">Libri recensiti</string>
+    <string name="default_saved_books">libri salvati predefiniti</string>
+    <string name="default_books_read">libri letti predefiniti</string>
+    <string name="default_favorite_genre">Genere preferito non ancora specificato</string>
+    <string name="default_collection_created">collezione predefinita creata</string>
+    <string name="default_favorite_book">Libro preferito non ancora specificato</string>
+    <string name="preferences">Preferenze</string>
+    <string name="default_favorite_author">Autore preferito non ancora specificato</string>
+    <string name="collection_created">Collezione creata</string>
+    <string name="edit_profile">Modifica profilo</string>
+    <string name="about_us">Chi siamo</string>
+    <string name="logout">Disconnettiti</string>
+    <string name="undo">Annulla</string>
+    <!-- End AccountFragment -->
+
+    <!-- Start AccountEditFragment -->
+    <string name="please_add_some_books_to_your_saved_list">Per favore, aggiungi alcuni libri alla tua lista dei salvati</string>
+    <string name="profile_information_saved">Informazioni del profilo salvate!</string>
+    <string name="preferences_saved">Preferenze salvate!</string>
+    <string name="please_make_some_changes_to_save_preferences">Per favore, apporta alcune modifiche per salvare le preferenze</string>
+    <string name="genre_cannot_be_empty">Il genere non può essere vuoto</string>
+    <string name="author_cannot_be_empty">L\'autore non può essere vuoto</string>
+    <string name="book_cannot_be_empty">Il libro non può essere vuoto</string>
+    <string name="hint_nickname">Soprannome</string>
+    <string name="first_name_hint">Nome</string>
+    <string name="last_name_hint">Cognome</string>
+    <string name="edit_account">Modifica account</string>
+    <string name="save_changes">Salva modifiche</string>
+    <string name="error_nickname_required">Il soprannome è obbligatorio</string>
+    <string name="error_first_name_required">Il nome è obbligatorio</string>
+    <string name="error_last_name_required">Il cognome è obbligatorio</string>
+    <string name="save">Salva</string>
+    <string name="description_edit_account">Modifica le informazioni del tuo account inserendo il tuo soprannome, nome, cognome e una foto del profilo!</string>
+    <!-- End AccountEditFragment -->
+
+    <!-- Start PreferencesEditFragment -->
+    <string name="edit_preferences">Modifica preferenze</string>
+    <string name="book">Libro</string>
+    <string name="author">Autore</string>
+    <string name="description_edit_preferences">Modifica le preferenze del tuo profilo selezionando il tuo genere, autore e libro preferiti!</string>
+
+    <string-array name="search_author">
+    </string-array>
+
+    <string-array name="search_book">
+    </string-array>
+    <!-- End PreferencesEditFragment -->
+
+    <!-- Start CollectionsFragment -->
+    <string name="create_button">Crea</string>
+    <string name="create_a_new_collection">Crea una nuova collezione</string>
+    <string name="description_create_collection">Inserisci il nome della tua collezione e fornisci una breve descrizione!</string>
+    <string name="collection_name">Nome</string>
+    <string name="collection_description">Descrizione</string>
+    <string name="collection_created_toast">Collezione creata</string>
+    <string name="error_collection_name_required">Il nome della collezione è obbligatorio</string>
+    <string name="error_collection_description_required">La descrizione della collezione è obbligatoria</string>
+    <string name="name_collection_default">Nome collezione predefinito</string>
+    <string name="description_collection_default">Descrizione collezione predefinita</string>
+    <string name="empty_collection">Questa collezione è vuota! Per aggiungere un libro, tocca qui!</string>
+    <string name="add_book_to_collection">Aggiungi libro alla collezione</string>
+    <string name="add_books_button">Aggiungi libri</string>
+    <!-- End CollectionsFragment -->
+
+    <!-- Start BookPageFragment -->
+    <string name="book_title_not_found">Titolo del libro non trovato</string>
+    <string name="author_not_found">Autore non trovato</string>
+    <string name="plot_not_found">Trama non trovata</string>
+    <string name="publication_year_not_found">Anno di pubblicazione non trovato</string>
+    <!-- End BookPageFragment -->
+
+    <!-- Start OnBoard Activity -->
+    <string name="next">Avanti</string>
+    <string name="back">Indietro</string>
+    <string name="skip">Salta</string>
+    <string name="title">Titolo</string>
+    <string name="description">Descrizione</string>
+    <string name="get_started">Iniziamo!</string>
+
+    <string-array name="onboard_string_array">
+        <item>@string/intro_first</item>
+        <item>@string/intro_second</item>
+        <item>@string/intro_third</item>
+        <item>@string/intro_fourth</item>
+    </string-array>
+
+    <string-array name="onboard_desc_array">
+        <item>@string/desc_first</item>
+        <item>@string/desc_second</item>
+        <item>@string/desc_third</item>
+        <item>@string/desc_fourth</item>
+    </string-array>
+
+    <string name="intro_second">Crea delle collezioni!</string>
+    <string name="intro_first">Esplora!</string>
+    <string name="intro_third">Aggiungi recensioni!</string>
+    <string name="intro_fourth">Personalizza il tuo profilo!</string>
+    <string name="desc_second">Crea collezioni con i tuoi libri preferiti o le tue letture future!</string>
+    <string name="desc_first">Scopri i libri che ti ispirano di più!</string>
+    <string name="desc_third">Aggiungi recensioni e valutazioni ai tuoi libri preferiti!</string>
+    <string name="desc_fourth">Arricchisci il tuo profilo con i tuoi libri amati, autori apprezzati e generi preferiti!</string>
+    <!-- End OnBoard Activity -->
+
+    <!-- Start ReviewFragment -->
+    <string name="default_review">Questo libro non ha una recensione. Prova ad aggiungerne una!</string>
+    <string name="insert_a_review">Inserisci una recensione</string>
+    <string name="favorite">Preferito</string>
+    <string name="removed_from_reviews">" rimosso dalle recensioni!"</string>
+    <string name="review_saved">La recensione è stata salvata!</string>
+    <!-- End ReviewFragment -->
+</resources>

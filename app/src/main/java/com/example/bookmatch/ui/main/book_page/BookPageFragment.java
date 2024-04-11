@@ -56,7 +56,7 @@ public class BookPageFragment extends Fragment {
             authors = authors.substring(0, authors.length() - 2);
             binding.authorTextView.setText(authors);
 
-            if (!book.getCoverURI().isEmpty()) {
+            if (book.getCoverURI() != null && !book.getCoverURI().isEmpty()) {
                 Glide.with(this)
                         .load(book.getCoverURI())
                         .into(binding.coverBook);

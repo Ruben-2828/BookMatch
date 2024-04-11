@@ -36,15 +36,26 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         this.startIndex = startIndex;
     }
 
-    public void fetchBooks(String genre) {
+    public void fetchBooks(String selectedGenre) {
+        String englishGenre = GenreMapping.getEnglishGenre(selectedGenre);
 
-        if (!genre.equals(prevGenre)) {
-            prevGenre = genre;
-            startIndex = 0;
+        if (englishGenre != null) {
+            if (!englishGenre.equals(prevGenre)) {
+                prevGenre = englishGenre;
+                startIndex = 0;
+            }
+
+            bookRepository.setCallback(this);
+            bookRepository.fetchBooks(englishGenre, startIndex * API_SEARCH_BOOK_MAX_RESULTS_VALUE);
+        } else {
+            if (!selectedGenre.equals(prevGenre)) {
+                prevGenre = selectedGenre;
+                startIndex = 0;
+            }
+
+            bookRepository.setCallback(this);
+            bookRepository.fetchBooks("", startIndex * API_SEARCH_BOOK_MAX_RESULTS_VALUE);
         }
-
-        bookRepository.setCallback(this);
-        bookRepository.fetchBooks(genre, startIndex * API_SEARCH_BOOK_MAX_RESULTS_VALUE);
         startIndex++;
     }
 

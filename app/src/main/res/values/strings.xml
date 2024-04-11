@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">BookMatch</string>
-
+    <string name="app_name" translatable="false">BookMatch</string>
 
     <!-- Start MainActivity -->
     <string name="notifications">Notifications</string>
@@ -10,8 +9,8 @@
     <string name="reviews">Reviews</string>
     <string name="collections">Collections</string>
     <string name="account">Account</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="default_content_description">Default content description</string>
     <string name="book_thumbnail">Book Thumbnail</string>
@@ -19,21 +18,21 @@
     <string name="default_book_plot">Default Book Plot</string>
     <string name="default_book_author">Default Book Author</string>
     <string name="genre_book_default">Genre Book Default</string>
-    <string name="pubblication_year_default">Pubblication Year Default</string>
+    <string name="publication_year_default">Publication Year Default</string>
     <string name="clicked_on">"Clicked on: "</string>
     <string name="added">Added</string>
     <string name="no_book_selected">No book selected</string>
     <!-- End MainActivity -->
 
     <!-- Start WelcomeActivity -->
-    <string name="email_welcome">Email</string>
-    <string name="password">Password</string>
+    <string name="email_welcome" translatable="false">Email</string>
+    <string name="password" translatable="false">Password</string>
     <string name="remember_me">Remember me</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="login">Login</string>
     <string name="or">OR</string>
     <string name="login_with_google">Login with Google</string>
-    <string name="new_to_bookmatch">New to BookMatch?</string>
+    <string name="new_to_bookmatch">Are you new to BookMatch?</string>
     <string name="register">Register</string>
     <string name="logo_application">Logo Application</string>
     <string name="repeat_password">Repeat Password</string>
@@ -211,7 +210,7 @@
     <!-- Start ReviewFragment -->
     <string name="default_review">This book does not have a review. Try adding one!</string>
     <string name="insert_a_review">Insert a review</string>
-    <string name="default_rating">0.0</string>
+    <string name="default_rating" translatable="false">0.0</string>
     <string name="favorite">Favorite</string>
     <string name="removed_from_reviews">" removed from reviews!"</string>
     <string name="review_saved">The review has been saved!</string>
