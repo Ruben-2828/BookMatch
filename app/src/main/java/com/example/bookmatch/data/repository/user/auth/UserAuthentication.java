@@ -35,7 +35,23 @@ public class UserAuthentication extends IUserAuthentication {
 
     @Override
     public void signUp(String email, String password) {
-
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("WELCOME", "createUserWithEmail:success");
+                            FirebaseUser createdUser = mAuth.getCurrentUser();
+                            User user = new User(createdUser.getDisplayName(), createdUser.getEmail(), createdUser.getUid());
+                            responseCallback.onSuccessFromAuthentication(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("WELCOME", "createUserWithEmail:failure", task.getException());
+                            responseCallback.onFailureFromAuthentication();
+                        }
+                    }
+                });
     }
 
     @Override

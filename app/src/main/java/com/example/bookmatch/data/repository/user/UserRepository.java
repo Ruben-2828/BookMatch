@@ -19,7 +19,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     }
     @Override
     public void signUp(String email, String password) {
-
+        userAuthentication.signUp(email, password);
     }
 
     @Override
@@ -59,11 +59,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     public void onFailureFromAuthentication() {
         User user = new User(null, null, null);
         userMutableLiveData.postValue(user);
-    }
-
-    @Override
-    public void onSuccessFromLogout() {
-
     }
 
     @Override

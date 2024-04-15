@@ -6,6 +6,5 @@ import com.example.bookmatch.model.User;
 public interface UserResponseCallback {
     void onSuccessFromAuthentication(User user);
     void onFailureFromAuthentication();
-    void onSuccessFromLogout();
     void onSuccessLogout();
 }

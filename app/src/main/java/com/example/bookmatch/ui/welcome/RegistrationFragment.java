@@ -1,6 +1,8 @@
 package com.example.bookmatch.ui.welcome;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +10,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bookmatch.R;
+import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentRegistrationBinding;
+import com.example.bookmatch.ui.main.MainActivity;
+import com.example.bookmatch.utils.ServiceLocator;
+import com.google.firebase.FirebaseApp;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -19,6 +26,15 @@ import java.util.Objects;
 public class RegistrationFragment extends Fragment {
 
     private FragmentRegistrationBinding binding;
+    private UserViewModel userViewModel;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        IUserRepository userRepository = ServiceLocator.getInstance().getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(requireActivity(), new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+    }
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -47,6 +63,21 @@ public class RegistrationFragment extends Fragment {
             String repeatPassword = Objects.requireNonNull(binding.textInputLayoutCheckPassword.
                     getEditText()).getText().toString();
 
+            if(isPasswordOk(password) && isValidEmail(email)){
+                userViewModel.getUserMutableLiveData(email, password, false).observe(
+                        getViewLifecycleOwner(), result -> {
+                            if(result.getTokenId() != null) {
+                                Log.d("WELCOME", result.getTokenId());
+                                userViewModel.setLoginError(false);
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
+                            }else{
+                                Log.d("WELCOME", "login failed");
+                                userViewModel.setLoginError(true);
+                            }
+                        }
+                );
+            }
         });
 
     }
