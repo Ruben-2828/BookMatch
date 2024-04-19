@@ -35,12 +35,12 @@ public class AccountEditActivity extends AppCompatActivity {
 
     private void galleryLauncher() {
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                result -> {
-                    if (result != null) {
-                        String selectedImagePath = result.toString();
-                        loadImageIntoProfile(selectedImagePath);
-                    }
-                });
+            result -> {
+                if (result != null) {
+                    String selectedImagePath = result.toString();
+                    loadImageIntoProfile(selectedImagePath);
+                }
+            });
     }
 
     private void retrieveInfos() {

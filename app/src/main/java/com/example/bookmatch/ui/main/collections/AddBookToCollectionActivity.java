@@ -50,7 +50,8 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
         savedBooksLiveData.observe(this, savedBooks -> {
             savedBooksLiveData.removeObservers(this);
 
-            AddBookToCollectionRecyclerViewAdapter recyclerViewAdapter = new AddBookToCollectionRecyclerViewAdapter(savedBooks, new AddBookToCollectionRecyclerViewAdapter.OnBookSelectedListener() {
+            AddBookToCollectionRecyclerViewAdapter recyclerViewAdapter = new AddBookToCollectionRecyclerViewAdapter(
+                    savedBooks, new AddBookToCollectionRecyclerViewAdapter.OnBookSelectedListener() {
                 @Override
                 public void onBookSelected(List<Book> selectedBooks) {
                     selectedBooks.clear();

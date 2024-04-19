@@ -150,7 +150,7 @@
     <!-- Start CollectionsFragment -->
     <string name="create_button">Crea</string>
     <string name="create_a_new_collection">Crea una nuova collezione</string>
-    <string name="description_create_collection">Inserisci il nome della tua collezione e fornisci una breve descrizione!</string>
+    <string name="description_create_collection">Inserisci un\'immagine, un nome e una descrizione per la tua collezione!</string>
     <string name="collection_name">Nome</string>
     <string name="collection_description">Descrizione</string>
     <string name="collection_created_toast">Collezione creata</string>

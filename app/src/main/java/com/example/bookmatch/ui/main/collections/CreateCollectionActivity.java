@@ -2,8 +2,13 @@ package com.example.bookmatch.ui.main.collections;
 
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.ActivityCreateCollectionBinding;
 import com.example.bookmatch.model.Collection;
@@ -17,6 +22,7 @@ public class CreateCollectionActivity extends AppCompatActivity {
 
     private ActivityCreateCollectionBinding binding;
     private CollectionViewModel collectionViewModel;
+    private ActivityResultLauncher<String> galleryLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,23 +30,26 @@ public class CreateCollectionActivity extends AppCompatActivity {
         binding = ActivityCreateCollectionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        galleryLauncher();
+        changePic();
+
         CollectionViewModelFactory factoryCollection = new CollectionViewModelFactory(this.getApplication());
         collectionViewModel = new ViewModelProvider(this, factoryCollection).get(CollectionViewModel.class);
 
         binding.button.setOnClickListener(view -> {
-
+            String collectionImage = binding.collectionImage.getTag() != null ? binding.collectionImage.getTag().toString() : "";
             String collectionName = Objects.requireNonNull(binding.collectionNameInput.getText()).toString().trim();
             String collectionDescription = Objects.requireNonNull(binding.collectionDescriptionInput.getText()).toString().trim();
 
             if (validateInput(collectionName, collectionDescription)) {
-                Collection collection = new Collection(collectionName, collectionDescription);
+                Collection collection = new Collection(collectionName, collectionDescription, collectionImage);
                 if (!collectionViewModel.insertCollection(collection)) {
                     Snackbar.make(view, "Collection with this name already existing!", Snackbar.LENGTH_SHORT).show();
                 }
                 finish();
             }
-
         });
+
 
         binding.goBackButton.setOnClickListener(view -> finish());
     }
@@ -63,5 +72,23 @@ public class CreateCollectionActivity extends AppCompatActivity {
         }
 
         return isValid;
+    }
+
+    private void galleryLauncher() {
+        galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            result -> {
+                if (result != null) {
+                    String selectedImagePath = result.toString();
+                    loadImageIntoCollection(selectedImagePath);
+                }
+            });
+    }
+
+    private void loadImageIntoCollection(String imagePath) {
+        Glide.with(this).load(imagePath).into(binding.collectionImage);
+    }
+
+    private void changePic() {
+        binding.editPicButton.setOnClickListener(v -> galleryLauncher.launch("image/*"));
     }
 }

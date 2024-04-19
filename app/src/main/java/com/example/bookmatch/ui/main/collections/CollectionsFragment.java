@@ -43,14 +43,16 @@ public class CollectionsFragment extends Fragment {
                     Intent data = result.getData();
                     String name = data.getStringExtra("collectionName");
                     String description = data.getStringExtra("collectionDescription");
+                    String imagePath = data.getStringExtra("collectionImage");
 
-                    Collection newCollection = new Collection(Objects.requireNonNull(name), description);
+                    Collection newCollection = new Collection(Objects.requireNonNull(name), description, imagePath);
                     collectionViewModel.insertCollection(newCollection);
 
                     Toast.makeText(getActivity(), "Collection added successfully", Toast.LENGTH_SHORT).show();
                 }
             }
     );
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

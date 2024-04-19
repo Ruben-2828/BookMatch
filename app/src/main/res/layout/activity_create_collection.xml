@@ -95,7 +95,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="64dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="64dp"
                 android:gravity="center"
                 android:text="@string/description_create_collection"
@@ -104,16 +104,39 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/guideline_top" />
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/collection_image"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/library"
+                android:scaleType="centerCrop"
+                app:civ_border_width="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description" />
+
+            <Button
+                android:id="@+id/edit_pic_button"
+                style="?attr/materialIconButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/cardview_dark_background"
+                android:elevation="4dp"
+                app:icon="@drawable/baseline_edit_24"
+                app:layout_constraintBottom_toBottomOf="@+id/collection_image"
+                app:layout_constraintEnd_toEndOf="@+id/collection_image" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/collection_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="32dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="50"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@+id/description">
+                app:layout_constraintTop_toBottomOf="@+id/collection_image">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/collection_name_input"

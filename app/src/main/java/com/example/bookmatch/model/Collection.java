@@ -16,21 +16,25 @@ public class Collection implements Parcelable {
     @NonNull
     private String name;
     private String description;
+    private String image;
 
-    public Collection(@NonNull String name, String description) {
+    public Collection(@NonNull String name, String description, String image) {
         this.name = name;
         this.description = description;
+        this.image = image;
     }
 
     protected Collection(Parcel in) {
         name = Objects.requireNonNull(in.readString());
         description = in.readString();
+        image = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(description);
+        dest.writeString(image);
     }
 
     @Override
@@ -66,6 +70,10 @@ public class Collection implements Parcelable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getImage() { return image; }
+
+    public void setImage(String image) { this.image = image; }
 
     @Override
     public boolean equals(Object o) {

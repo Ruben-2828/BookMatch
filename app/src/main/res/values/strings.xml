@@ -155,7 +155,7 @@
     <!-- Start CollectionsFragment -->
     <string name="create_button">Create</string>
     <string name="create_a_new_collection">Create a New Collection</string>
-    <string name="description_create_collection">Enter the name of your collection and provide a short description!</string>
+    <string name="description_create_collection">Enter an image, name and a short description for your collection!</string>
     <string name="collection_name">Name</string>
     <string name="collection_description">Description</string>
     <string name="collection_created_toast">Collection Created</string>
