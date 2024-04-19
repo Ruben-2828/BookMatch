@@ -71,16 +71,16 @@ public class LoginFragment extends Fragment {
                     getEditText()).getText().toString();
 
             if(isEmailOk(email) && isPasswordOk(password)){
-                userViewModel.getUserMutableLiveData(email, password, true).observe(
+                userViewModel.getUserMutableLiveData(email, password).observe(
                         getViewLifecycleOwner(), result -> {
                             if(result.getTokenId() != null) {
                                 Log.d("WELCOME", result.getTokenId());
-                                userViewModel.setLoginError(false);
+                                userViewModel.setAuthenticationError(false);
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
                             }else{
                                 Log.d("WELCOME", "login failed");
-                                userViewModel.setLoginError(true);
+                                userViewModel.setAuthenticationError(true);
                             }
                         }
                 );

@@ -34,7 +34,7 @@ public class UserAuthentication extends IUserAuthentication {
     }
 
     @Override
-    public void signUp(String email, String password) {
+    public void signUp(String email, String password, String username, String fullName) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -43,7 +43,7 @@ public class UserAuthentication extends IUserAuthentication {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("WELCOME", "createUserWithEmail:success");
                             FirebaseUser createdUser = mAuth.getCurrentUser();
-                            User user = new User(createdUser.getDisplayName(), createdUser.getEmail(), createdUser.getUid());
+                            User user = new User(username, createdUser.getEmail(), createdUser.getUid(), fullName);
                             responseCallback.onSuccessFromAuthentication(user);
                         } else {
                             // If sign in fails, display a message to the user.

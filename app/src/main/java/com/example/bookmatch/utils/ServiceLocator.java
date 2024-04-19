@@ -5,6 +5,8 @@ import android.app.Application;
 import com.example.bookmatch.data.database.books.BookRoomDatabase;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.data.repository.user.UserRepository;
+import com.example.bookmatch.data.repository.user.firebase.IUserFireStore;
+import com.example.bookmatch.data.repository.user.firebase.UserFireStore;
 import com.example.bookmatch.data.service.BookAPIService;
 
 import retrofit2.Retrofit;
@@ -35,9 +37,7 @@ public class ServiceLocator {
     public IUserRepository getUserRepository(Application application){
         SharedPreferencesUtil sharedPreferencesUtil = new SharedPreferencesUtil(application);
 
-        IUserAuthentication userAuthentication = new UserAuthentication();
-
-        return new UserRepository(userAuthentication);
+        return new UserRepository();
     }
 
     public BookAPIService getBooksApiService() {

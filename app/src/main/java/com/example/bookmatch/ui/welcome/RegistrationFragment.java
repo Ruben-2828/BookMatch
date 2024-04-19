@@ -54,7 +54,7 @@ public class RegistrationFragment extends Fragment {
 
             String fullName = Objects.requireNonNull(binding.textInputLayoutName.
                     getEditText()).getText().toString();
-            String username = Objects.requireNonNull(binding.textInputLayoutPassword.
+            String username = Objects.requireNonNull(binding.textInputLayoutUsername.
                     getEditText()).getText().toString();
             String email = Objects.requireNonNull(binding.textInputLayoutEmail.
                     getEditText()).getText().toString();
@@ -64,16 +64,16 @@ public class RegistrationFragment extends Fragment {
                     getEditText()).getText().toString();
 
             if(isPasswordOk(password) && isValidEmail(email)){
-                userViewModel.getUserMutableLiveData(email, password, false).observe(
+                userViewModel.getUserMutableLiveData(email, password, username, fullName).observe(
                         getViewLifecycleOwner(), result -> {
                             if(result.getTokenId() != null) {
                                 Log.d("WELCOME", result.getTokenId());
-                                userViewModel.setLoginError(false);
+                                userViewModel.setAuthenticationError(false);
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
                             }else{
                                 Log.d("WELCOME", "login failed");
-                                userViewModel.setLoginError(true);
+                                userViewModel.setAuthenticationError(true);
                             }
                         }
                 );
