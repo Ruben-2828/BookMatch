@@ -1,5 +1,7 @@
 package com.example.bookmatch.data.repository.user.firebase;
 
+import static com.example.bookmatch.utils.Constants.USERS_COLLECTION_NAME;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,6 +11,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -26,7 +29,7 @@ public class UserFireStore extends IUserFireStore{
     @Override
     public void saveUserData(User user) {
         Map<String, Object> userToSave = user.toHashMap();
-        dbIstance.collection("users").document(user.getTokenId())
+        dbIstance.collection(USERS_COLLECTION_NAME).document(user.getTokenId())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -49,11 +52,27 @@ public class UserFireStore extends IUserFireStore{
 
     @Override
     public void getUserData(String userId) {
-
+        DocumentReference docRef = dbIstance.collection("users").document(userId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        User user = buildUserFromDocument(document, userId);
+                        responseCallback.onSuccessFromFirestore(user);
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     private void writeData(User user, Map<String, Object> userToSave){
-        dbIstance.collection("users").document(user.getTokenId())
+        dbIstance.collection(USERS_COLLECTION_NAME).document(user.getTokenId())
                 .set(userToSave)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -68,5 +87,14 @@ public class UserFireStore extends IUserFireStore{
                         responseCallback.onFailureFromAuthentication();
                     }
                 });
+    }
+
+    private User buildUserFromDocument(DocumentSnapshot document, String tokenId){
+        return new User(
+                "" + document.get("username"),
+                "" + document.get("email"),
+                tokenId,
+                "" +document.get("fullName")
+                );
     }
 }

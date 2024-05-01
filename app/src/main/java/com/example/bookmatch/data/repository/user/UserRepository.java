@@ -41,12 +41,20 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     @Override
     public MutableLiveData<User> getUser(String email, String password) {
         signIn(email, password);
+
         return userMutableLiveData;
     }
 
     @Override
     public MutableLiveData<User> getUser(String email, String password, String username, String fullName) {
         signUp(email, password, username, fullName);
+        return userMutableLiveData;
+    }
+
+    @Override
+    public MutableLiveData<User> getUserInfo(String tokenId) {
+        userFireStore.getUserData(tokenId);
+
         return userMutableLiveData;
     }
 

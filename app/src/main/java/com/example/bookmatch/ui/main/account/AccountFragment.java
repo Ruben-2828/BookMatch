@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,6 +69,12 @@ public class AccountFragment extends Fragment {
     }
 
     private void updateUserData() {
+        userViewModel.getUserInfo(userViewModel.getLoggedUser().getTokenId()).observe(getViewLifecycleOwner(), user -> {
+            binding.userNickname.setText(user.getUsername());
+            binding.userEmail.setText(user.getEmail());
+            binding.userFullName.setText(user.getFullName());
+        });
+
         bookViewModel.getSavedBooksCountLiveData().observe(getViewLifecycleOwner(), count -> {
             if (count != null) {
                 binding.userSavedBooks.setText(String.valueOf(count));
@@ -85,7 +92,6 @@ public class AccountFragment extends Fragment {
                 binding.userReviewedBooks.setText(String.valueOf(count));
             }
         });
-
     }
 
     private void setButtonClickListeners() {
@@ -127,8 +133,7 @@ public class AccountFragment extends Fragment {
     private void launchEditProfileActivity() {
         Bundle args = new Bundle();
         args.putString("userNickname", binding.userNickname.getText().toString());
-        args.putString("userFirstName", binding.userFirstName.getText().toString());
-        args.putString("userLastName", binding.userLastName.getText().toString());
+        args.putString("userFullName", binding.userFullName.getText().toString());
         args.putString("userEmail", binding.userEmail.getText().toString());
         args.putString("userPic", "https://i.pinimg.com/736x/c6/25/90/c62590c1756680060e7c38011cd704b5.jpg");
 
@@ -144,12 +149,10 @@ public class AccountFragment extends Fragment {
                     Intent data = result.getData();
                     if (data != null) {
                         String userNickname = data.getStringExtra("userNickname");
-                        String userFirstName = data.getStringExtra("userFirstName");
-                        String userLastName = data.getStringExtra("userLastName");
+                        String userFullName = data.getStringExtra("userFullName");
 
                         binding.userNickname.setText(userNickname);
-                        binding.userFirstName.setText(userFirstName);
-                        binding.userLastName.setText(userLastName);
+                        binding.userFullName.setText(userFullName);
                     }
                 }
             }

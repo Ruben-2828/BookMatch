@@ -97,11 +97,9 @@
 
     <!-- Start AccountFragment -->
     <string name="default_nickname">default nickname</string>
-    <string name="first_name">First name:</string>
-    <string name="last_name">Last name:</string>
+    <string name="full_name_account">Full Name:</string>
     <string name="email_account">Email:</string>
-    <string name="default_first_name">Default first name</string>
-    <string name="default_last_name">Default last name</string>
+    <string name="default_full_name">Default full name</string>
     <string name="default_email">Default email</string>
     <string name="statistics">Statistics</string>
     <string name="saved_books">Saved books</string>

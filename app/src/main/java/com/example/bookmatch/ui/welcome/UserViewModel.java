@@ -1,5 +1,7 @@
 package com.example.bookmatch.ui.welcome;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -33,6 +35,13 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
+    public MutableLiveData<User> getUserInfo(String tokenId){
+        if(userMutableLiveData == null)
+            return userRepository.getUserInfo(tokenId);
+
+        return userMutableLiveData;
+    }
+
     private void getUserData(String email, String password) {
         userMutableLiveData = userRepository.getUser(email, password);
     }
@@ -48,5 +57,9 @@ public class UserViewModel extends ViewModel {
     public MutableLiveData<User> logout(){
         userMutableLiveData = userRepository.logout();
         return userMutableLiveData;
+    }
+
+    public User getLoggedUser(){
+        return userRepository.getLoggedUser();
     }
 }

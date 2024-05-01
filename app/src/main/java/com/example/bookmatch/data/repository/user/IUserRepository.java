@@ -11,5 +11,6 @@ public interface IUserRepository {
     User getLoggedUser();
     MutableLiveData<User> getUser(String email, String password);
     MutableLiveData<User> getUser(String email, String password, String username, String fullName);
+    MutableLiveData<User> getUserInfo(String tokenId);
     MutableLiveData<User> logout();
 }
