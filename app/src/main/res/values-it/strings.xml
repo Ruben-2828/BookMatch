@@ -161,6 +161,8 @@
     <string name="empty_collection">Questa collezione è vuota! Per aggiungere un libro, tocca qui!</string>
     <string name="add_book_to_collection">Aggiungi libro alla collezione</string>
     <string name="add_books_button">Aggiungi libri</string>
+    <string name="delete_collection">Elimina collezione</string>
+    <string name="collection_image">Immagine della collezione</string>
     <!-- End CollectionsFragment -->
 
     <!-- Start BookPageFragment -->

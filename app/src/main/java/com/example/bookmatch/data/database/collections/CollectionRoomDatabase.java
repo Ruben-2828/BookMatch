@@ -8,14 +8,17 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.example.bookmatch.model.Collection;
+import com.example.bookmatch.utils.Converters;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 @Database(entities = {Collection.class}, version = DATABASE_VERSION)
+@TypeConverters({Converters.class})
 public abstract class CollectionRoomDatabase extends RoomDatabase {
 
     public abstract CollectionDao collectionDao();

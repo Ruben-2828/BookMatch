@@ -13,7 +13,7 @@ public class Constants {
     public static final String BOOK_DATABASE_NAME = "book_db";
 
     public static final String COLLECTION_DATABASE_NAME = "collection_db";
-    public static final int DATABASE_VERSION = 12;
+    public static final int DATABASE_VERSION = 13;
 
     public static final String SHARED_PREF_NAME = "appSharedPreferences";
     public static final String USER_REMEMBER_ME_SP = "rememberMe";

@@ -166,6 +166,8 @@
     <string name="empty_collection">This collection is empty! To add book, tap here!</string>
     <string name="add_book_to_collection">Add Book to Collection</string>
     <string name="add_books_button">Add Books</string>
+    <string name="delete_collection">Delete collection</string>
+    <string name="collection_image">Collection image</string>
     <!-- End CollectionsFragment -->
 
     <!-- Start BookPageFragment -->

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -16,25 +17,27 @@ public class Collection implements Parcelable {
     @NonNull
     private String name;
     private String description;
-    private String image;
 
-    public Collection(@NonNull String name, String description, String image) {
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] imageData;
+
+    public Collection(@NonNull String name, String description, byte[] imageData) {
         this.name = name;
         this.description = description;
-        this.image = image;
+        this.imageData = imageData;
     }
 
     protected Collection(Parcel in) {
         name = Objects.requireNonNull(in.readString());
         description = in.readString();
-        image = in.readString();
+        imageData = in.createByteArray();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(description);
-        dest.writeString(image);
+        dest.writeByteArray(imageData);
     }
 
     @Override
@@ -71,9 +74,11 @@ public class Collection implements Parcelable {
         this.description = description;
     }
 
-    public String getImage() { return image; }
+    public byte[] getImageData() {
+        return imageData;
+    }
 
-    public void setImage(String image) { this.image = image; }
+    public void setImageData(byte[] imageData) { this.imageData = imageData; }
 
     @Override
     public boolean equals(Object o) {
