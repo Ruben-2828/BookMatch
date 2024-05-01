@@ -131,12 +131,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_first_name"
+                android:id="@+id/til_full_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:layout_marginTop="16dp"
-                android:hint="@string/first_name_hint"
+                android:hint="@string/full_name_hint"
                 app:counterEnabled="true"
                 app:counterMaxLength="100"
                 app:layout_constraintEnd_toStartOf="parent"
@@ -144,27 +144,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/til_nickname">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ti_first_name_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLength="100" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_last_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_marginTop="16dp"
-                android:hint="@string/last_name_hint"
-                app:counterEnabled="true"
-                app:counterMaxLength="100"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_first_name">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ti_last_name_input"
+                    android:id="@+id/ti_full_name_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLength="100" />
@@ -175,12 +155,11 @@
                 android:id="@+id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="@string/save"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_last_name" />
+                tools:layout_editor_absoluteY="528dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

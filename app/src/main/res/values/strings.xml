@@ -126,13 +126,11 @@
     <string name="author_cannot_be_empty">Author cannot be empty</string>
     <string name="book_cannot_be_empty">Book cannot be empty</string>
     <string name="hint_nickname">Nickname</string>
-    <string name="first_name_hint">First name</string>
-    <string name="last_name_hint">Last name</string>
+    <string name="full_name_hint">Full name</string>
     <string name="edit_account">Edit account</string>
     <string name="save_changes">Save changes</string>
     <string name="error_nickname_required">Nickname is required</string>
-    <string name="error_first_name_required">First name is required</string>
-    <string name="error_last_name_required">Last name is required</string>
+    <string name="error_full_name_required">Full name is required</string>
     <string name="save">Save</string>
     <string name="description_edit_account">Edit your account information by entering your nickname, first name, last name and a profile picture!</string>
     <!-- End AccountEditFragment -->

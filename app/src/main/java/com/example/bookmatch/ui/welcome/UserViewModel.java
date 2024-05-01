@@ -62,4 +62,10 @@ public class UserViewModel extends ViewModel {
     public User getLoggedUser(){
         return userRepository.getLoggedUser();
     }
+
+    public void setUserInfo(String username, String fullName){
+        User currentUser = getLoggedUser();
+        User user = new User(username, currentUser.getEmail(), getLoggedUser().getTokenId(), fullName);
+        userRepository.setUserInfo(user);
+    }
 }

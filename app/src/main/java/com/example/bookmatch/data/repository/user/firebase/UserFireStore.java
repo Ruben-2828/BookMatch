@@ -27,7 +27,7 @@ public class UserFireStore extends IUserFireStore{
     }
 
     @Override
-    public void saveUserData(User user) {
+    public void saveUserData(User user, Boolean override) {
         Map<String, Object> userToSave = user.toHashMap();
         dbIstance.collection(USERS_COLLECTION_NAME).document(user.getTokenId())
                 .get()
@@ -36,7 +36,7 @@ public class UserFireStore extends IUserFireStore{
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
+                            if (!override && document.exists()) {
                                 //document exists
                                 responseCallback.onSuccessFromFirestore(user);
                             } else {
