@@ -58,6 +58,7 @@
                 android:contentDescription="@string/delete_collection"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
+                app:tint="?attr/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/baseline_delete_24" />

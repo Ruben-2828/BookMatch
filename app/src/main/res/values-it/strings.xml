@@ -163,6 +163,8 @@
     <string name="add_books_button">Aggiungi libri</string>
     <string name="delete_collection">Elimina collezione</string>
     <string name="collection_image">Immagine della collezione</string>
+    <string name="edit">Modifica</string>
+    <string name="edit_collection">Modifica collezione</string>
     <!-- End CollectionsFragment -->
 
     <!-- Start BookPageFragment -->

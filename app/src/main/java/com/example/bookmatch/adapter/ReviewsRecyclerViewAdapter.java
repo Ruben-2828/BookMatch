@@ -1,8 +1,6 @@
 package com.example.bookmatch.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
-import com.example.bookmatch.ui.main.BookViewModel;
-import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +84,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
             review = itemView.findViewById(R.id.book_review);
             rating = itemView.findViewById(R.id.book_rating);
             ImageButton deleteButton = itemView.findViewById(R.id.imageview_delete);
-            ImageButton editButton = itemView.findViewById(R.id.imageview_edit);
+            ImageButton editButton = itemView.findViewById(R.id.edit_review_btn);
             deleteButton.setOnClickListener(this);
             editButton.setOnClickListener(this);
         }
@@ -116,7 +109,7 @@ public class ReviewsRecyclerViewAdapter extends RecyclerView.Adapter<ReviewsRecy
             if (position != RecyclerView.NO_POSITION) {
                 if (view.getId() == R.id.imageview_delete) {
                     onItemClickListener.onDeleteButtonClick(position);
-                } else if (view.getId() == R.id.imageview_edit){
+                } else if (view.getId() == R.id.edit_review_btn){
                     onItemClickListener.onEditButtonClick(position);
                 }
             }

@@ -21,8 +21,8 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
-import com.example.bookmatch.ui.main.CollectionViewModel;
-import com.example.bookmatch.ui.main.CollectionViewModelFactory;
+import com.example.bookmatch.ui.main.CollectionContainerViewModel;
+import com.example.bookmatch.ui.main.CollectionContainerViewModelFactory;
 import com.example.bookmatch.ui.welcome.WelcomeActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,7 +32,7 @@ public class AccountFragment extends Fragment {
 
     private FragmentAccountBinding binding;
     private BookViewModel bookViewModel;
-    private CollectionViewModel collectionViewModel;
+    private CollectionContainerViewModel collectionViewModel;
     private FirebaseAuth mAuth;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,8 +53,8 @@ public class AccountFragment extends Fragment {
     private void initializeViewModel() {
         BookViewModelFactory factoryBook = new BookViewModelFactory(requireActivity().getApplication());
         bookViewModel = new ViewModelProvider(this, factoryBook).get(BookViewModel.class);
-        CollectionViewModelFactory factoryCollection = new CollectionViewModelFactory(requireActivity().getApplication());
-        collectionViewModel = new ViewModelProvider(this, factoryCollection).get(CollectionViewModel.class);
+        CollectionContainerViewModelFactory factoryCollection = new CollectionContainerViewModelFactory(requireActivity().getApplication());
+        collectionViewModel = new ViewModelProvider(this, factoryCollection).get(CollectionContainerViewModel.class);
     }
 
     private void updateUserData() {

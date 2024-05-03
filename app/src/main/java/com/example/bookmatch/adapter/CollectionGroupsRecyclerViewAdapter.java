@@ -16,20 +16,19 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddBookToCollectionRecyclerViewAdapter extends
-        RecyclerView.Adapter<AddBookToCollectionRecyclerViewAdapter.BookViewHolder> {
+public class CollectionGroupsRecyclerViewAdapter extends
+        RecyclerView.Adapter<CollectionGroupsRecyclerViewAdapter.BookViewHolder> {
 
     private final List<Book> bookList;
     public List<Book> selectedBooks = new ArrayList<>();
-    private String collectionName;
+
     private final OnBookSelectedListener onBookSelectedListener;
 
     public interface OnBookSelectedListener {
-        void onBookSelected(Book book);
+        void onBookSelected(List<Book> selectedBooks);
     }
 
-    public AddBookToCollectionRecyclerViewAdapter(String collectionName, List<Book> bookList, OnBookSelectedListener listener) {
-        this.collectionName = collectionName;
+    public CollectionGroupsRecyclerViewAdapter(List<Book> bookList, OnBookSelectedListener listener) {
         this.bookList = bookList;
         this.onBookSelectedListener = listener;
     }
@@ -55,10 +54,6 @@ public class AddBookToCollectionRecyclerViewAdapter extends
         return 0;
     }
 
-    public List<Book> getSelectedBooks() {
-        return selectedBooks;
-    }
-
     public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView title;
         private final TextView author;
@@ -67,7 +62,7 @@ public class AddBookToCollectionRecyclerViewAdapter extends
             super(itemView);
             title = itemView.findViewById(R.id.book_title);
             author = itemView.findViewById(R.id.book_author);
-            ImageButton addImageButton = itemView.findViewById(R.id.add_book_to_collection);
+            ImageButton addImageButton = itemView.findViewById(R.id.edit_review_btn);
             itemView.setOnClickListener(this);
             addImageButton.setOnClickListener(this);
         }
@@ -89,6 +84,7 @@ public class AddBookToCollectionRecyclerViewAdapter extends
                 Book book = bookList.get(position);
                 if (view.getId() == R.id.add_book_to_collection) {
                     removeItem(position);
+
                 } else {
                     Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
                 }
@@ -104,15 +100,13 @@ public class AddBookToCollectionRecyclerViewAdapter extends
             snackbar.setAction(R.string.undo, v -> {
                 bookList.add(position, removedBook);
                 notifyItemInserted(position);
-                selectedBooks.remove(removedBook);
-                onBookSelectedListener.onBookSelected(removedBook);
             });
             snackbar.addCallback(new Snackbar.Callback() {
                 @Override
                 public void onDismissed(Snackbar snackbar, int event) {
                     if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
                         selectedBooks.add(removedBook);
-                        onBookSelectedListener.onBookSelected(removedBook);
+                        onBookSelectedListener.onBookSelected(selectedBooks);
                     }
                 }
             });

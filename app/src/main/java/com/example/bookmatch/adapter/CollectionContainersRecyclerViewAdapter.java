@@ -12,28 +12,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
-import com.example.bookmatch.model.Collection;
+import com.example.bookmatch.model.CollectionContainer;
 import com.example.bookmatch.utils.Converters;
 
 import java.util.List;
 
-public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<CollectionsRecyclerViewAdapter.CollectionViewHolder> {
+public class CollectionContainersRecyclerViewAdapter extends RecyclerView.Adapter<CollectionContainersRecyclerViewAdapter.CollectionViewHolder> {
 
-    private List<Collection> collections;
+    private List<CollectionContainer> collections;
     private final OnCollectionClickListener onCollectionClickListener;
 
-    public void setCollections(List<Collection> collections) {
+    public void setCollections(List<CollectionContainer> collections) {
         this.collections = collections;
         notifyDataSetChanged();
     }
 
     public interface OnCollectionClickListener {
-        void onItemClick(Collection collection);
-        void onDeleteButtonClick(Collection collection);
+        void onItemClick(CollectionContainer collection);
+        void onDeleteButtonClick(CollectionContainer collection);
     }
 
-    public CollectionsRecyclerViewAdapter(List<Collection> collections,
-                                          OnCollectionClickListener onCollectionClickListener) {
+    public CollectionContainersRecyclerViewAdapter(List<CollectionContainer> collections,
+                                                   OnCollectionClickListener onCollectionClickListener) {
         this.collections = collections;
         this.onCollectionClickListener = onCollectionClickListener;
     }
@@ -47,7 +47,7 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
 
     @Override
     public void onBindViewHolder(@NonNull CollectionViewHolder holder, int position) {
-        Collection item = collections.get(position);
+        CollectionContainer item = collections.get(position);
         holder.bind(item);
     }
 
@@ -72,13 +72,13 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Collection collection) {
+        public void bind(CollectionContainer collection) {
             byte[] imageData = collection.getImageData();
             if (imageData != null) {
                 Bitmap bitmap = Converters.toBitmap(imageData);
                 imageView.setImageBitmap(bitmap);
             } else {
-                imageView.setImageResource(R.drawable.library); // Set a default image if no image is stored
+                imageView.setImageResource(R.drawable.library); // Default image if no image stored
             }
             textViewName.setText(collection.getName());
             textViewDescription.setText(collection.getDescription());

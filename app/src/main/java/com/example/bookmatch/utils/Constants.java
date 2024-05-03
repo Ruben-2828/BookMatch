@@ -12,8 +12,9 @@ public class Constants {
     public static final String API_SEARCH_BOOK_START_INDEX = "startIndex";
     public static final String BOOK_DATABASE_NAME = "book_db";
 
-    public static final String COLLECTION_DATABASE_NAME = "collection_db";
-    public static final int DATABASE_VERSION = 13;
+    public static final String COLLECTION_CONTAINER_DATABASE_NAME = "container_db";
+    public static final String COLLECTION_GROUP_DATABASE_NAME = "group_db";
+    public static final int DATABASE_VERSION = 23;
 
     public static final String SHARED_PREF_NAME = "appSharedPreferences";
     public static final String USER_REMEMBER_ME_SP = "rememberMe";

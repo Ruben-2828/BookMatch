@@ -168,6 +168,8 @@
     <string name="add_books_button">Add Books</string>
     <string name="delete_collection">Delete collection</string>
     <string name="collection_image">Collection image</string>
+    <string name="edit">Edit</string>
+    <string name="edit_collection">Edit collection</string>
     <!-- End CollectionsFragment -->
 
     <!-- Start BookPageFragment -->
