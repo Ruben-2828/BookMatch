@@ -3,6 +3,7 @@ package com.example.bookmatch.ui.main.collections;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -25,14 +26,22 @@ import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionGroupViewModel;
 import com.example.bookmatch.ui.main.CollectionGroupViewModelFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayCollectionActivity extends AppCompatActivity {
-    private static final int ADD_BOOKS_REQUEST_CODE = 1;
-    private ActivityResultLauncher<Intent> addBooksLauncher;
     private ActivityDisplayCollectionBinding binding;
     private CollectionGroupViewModel collectionGroupViewModel;
     private String collectionName;
+    private BookViewModel bookViewModel;
+
+    ActivityResultLauncher<Intent> addBookToCollectionLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    observeSavedBooks();
+                }
+            });
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +52,6 @@ public class DisplayCollectionActivity extends AppCompatActivity {
         setupViewModel();
         retrieveInfos();
         setupRecyclerView();
-        setupAddBooksLauncher();
         setupClickListeners();
     }
 
@@ -59,6 +67,8 @@ public class DisplayCollectionActivity extends AppCompatActivity {
     private void setupViewModel() {
         CollectionGroupViewModelFactory factory = new CollectionGroupViewModelFactory(getApplication());
         collectionGroupViewModel = new ViewModelProvider(this, factory).get(CollectionGroupViewModel.class);
+        BookViewModelFactory factoryBook = new BookViewModelFactory(getApplication());
+        bookViewModel = new ViewModelProvider(this, factoryBook).get(BookViewModel.class);
     }
 
     private void setupRecyclerView() {
@@ -69,12 +79,14 @@ public class DisplayCollectionActivity extends AppCompatActivity {
     }
 
     private void observeSavedBooks() {
-        LiveData<List<Book>> savedGroupOfBooksLiveData = collectionGroupViewModel.getBooksInContainer(collectionName);
-        savedGroupOfBooksLiveData.observe(this, savedBooks -> {
+        LiveData<List<String>> savedGroupOfBooksLiveData = collectionGroupViewModel.getBooksInContainer(collectionName);
+        savedGroupOfBooksLiveData.observe(this, savedBookIds -> {
             savedGroupOfBooksLiveData.removeObservers(this);
 
+            List<Book> booksSavedInCollection = bookViewModel.getBooksByIds(savedBookIds);
+
             CollectionGroupsRecyclerViewAdapter recyclerViewAdapter = new CollectionGroupsRecyclerViewAdapter(
-                    savedBooks, new CollectionGroupsRecyclerViewAdapter.OnBookSelectedListener() {
+                    booksSavedInCollection, new CollectionGroupsRecyclerViewAdapter.OnBookSelectedListener() {
                 @Override
                 public void onBookSelected(List<Book> selectedBooks) {
                     selectedBooks.clear();
@@ -85,30 +97,22 @@ public class DisplayCollectionActivity extends AppCompatActivity {
         });
     }
 
-    private void setupAddBooksLauncher() {
-        addBooksLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null) {
-                            List<Book> selectedBooks = data.getParcelableArrayListExtra("selectedBooks");
-                            if (selectedBooks != null) {
-                                for (Book book : selectedBooks) {
-                                    collectionGroupViewModel.insertInCollection(collectionName, book);
-                                }
-                            }
-                        }
-                    }
-                });
-    }
-
     private void setupClickListeners() {
         binding.topAppBar.setOnClickListener(v -> finish());
         binding.topAppBar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.add_books_to_collection) {
-                Intent intent = new Intent(this, AddBookToCollectionActivity.class);
-                intent.putExtra("collectionName", collectionName);
-                addBooksLauncher.launch(intent);
+                LiveData<List<String>> savedGroupOfBooksLiveData = collectionGroupViewModel.getBooksInContainer(collectionName);
+                savedGroupOfBooksLiveData.observe(this, savedBookIds-> {
+                    savedGroupOfBooksLiveData.removeObservers(this);
+
+                    List<Book> booksSavedInCollection = bookViewModel.getBooksByIds(savedBookIds);
+
+                    Intent intent = new Intent(this, AddBookToCollectionActivity.class);
+                    intent.putExtra("collectionName", collectionName);
+                    intent.putParcelableArrayListExtra("savedBooksInContainer", new ArrayList<>(booksSavedInCollection));
+
+                    addBookToCollectionLauncher.launch(intent);
+                });
                 return true;
             }
             if(item.getItemId() == R.id.edit_collection){

@@ -37,7 +37,7 @@ public class CollectionGroupsRecyclerViewAdapter extends
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.add_book_to_collection_list_item, parent, false);
+                R.layout.collection_book_list_item, parent, false);
 
         return new BookViewHolder(view);
     }
@@ -60,11 +60,11 @@ public class CollectionGroupsRecyclerViewAdapter extends
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.book_title);
-            author = itemView.findViewById(R.id.book_author);
-            ImageButton addImageButton = itemView.findViewById(R.id.edit_review_btn);
-            itemView.setOnClickListener(this);
-            addImageButton.setOnClickListener(this);
+            title = itemView.findViewById(R.id.book_title_collection);
+            author = itemView.findViewById(R.id.book_author_collection);
+            //ImageButton addImageButton = itemView.findViewById(R.id.edit_review_btn);
+            //itemView.setOnClickListener(this);
+            //addImageButton.setOnClickListener(this);
         }
 
         public void bind(Book book) {

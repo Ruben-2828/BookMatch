@@ -11,6 +11,6 @@ import java.util.List;
 public interface ICollectionGroupRepository {
     boolean insertCollectionGroup(CollectionGroup collectionGroup);
     void deleteCollectionGroup(CollectionGroup collectionGroup);
-    LiveData<List<Book>> getBooksInContainerLiveData(String containerName);
+    LiveData<List<String>> getBookIdsInContainerLiveData(String containerName);
     LiveData<Integer> getBooksInContainerCountLiveData(String collectionName);
 }

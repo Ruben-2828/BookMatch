@@ -25,6 +25,11 @@ public class CollectionGroupViewModel extends AndroidViewModel {
         return collectionGroupRepository.insertCollectionGroup(collectionGroup);
     }
 
+    public boolean insertInCollection(String collectionName, String bookId) {
+        CollectionGroup collectionGroup = new CollectionGroup(collectionName, bookId);
+        return collectionGroupRepository.insertCollectionGroup(collectionGroup);
+    }
+
     public boolean insertInCollection(String collectionName, Book selectedBook) {
         CollectionGroup collectionGroup = new CollectionGroup(collectionName, selectedBook.getId());
         return collectionGroupRepository.insertCollectionGroup(collectionGroup);
@@ -34,8 +39,8 @@ public class CollectionGroupViewModel extends AndroidViewModel {
         collectionGroupRepository.deleteCollectionGroup(collectionGroup);
     }
 
-    public LiveData<List<Book>> getBooksInContainer(String containerName) {
-        return collectionGroupRepository.getBooksInContainerLiveData(containerName);
+    public LiveData<List<String>> getBooksInContainer(String containerName) {
+        return collectionGroupRepository.getBookIdsInContainerLiveData(containerName);
     }
 
     public LiveData<Integer> getNumberBooksInContainer(String containerName) {

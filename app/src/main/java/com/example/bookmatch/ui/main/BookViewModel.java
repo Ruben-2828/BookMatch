@@ -88,6 +88,10 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         return new MutableLiveData<>(bookRepository.getReviewedBooksCount());
     }
 
+    public List<Book> getBooksByIds(List<String> ids) {
+        return bookRepository.getBooksByIds(ids);
+    }
+
     @Override
     public void onSuccess(ArrayList<Book> books) {
 
@@ -107,6 +111,4 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
     public void updateBook(Book book) {
         bookRepository.updateBook(book);
     }
-
-
 }

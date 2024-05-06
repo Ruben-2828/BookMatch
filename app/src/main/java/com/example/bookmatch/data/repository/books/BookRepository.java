@@ -126,5 +126,18 @@ public class BookRepository implements IBookRepository{
         return bookDao.getReviewedBooksLiveData();
     }
 
+    @Override
+    public Book getBookById(String id) {
+        return bookDao.getBookById(id);
+    }
+
+    @Override
+    public List<Book> getBooksByIds(List<String> ids) {
+        List<Book> books = new ArrayList<>();
+        for (String id : ids) {
+            books.add(bookDao.getBookById(id));
+        }
+        return books;
+    }
 
 }

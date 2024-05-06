@@ -41,5 +41,7 @@ public interface BookDao {
     @Query("SELECT COUNT(*) FROM Book WHERE is_reviewed = 1 AND is_saved = 1")
     Integer getReviewedBooksCount();
 
+    @Query("SELECT * FROM Book WHERE id = :id")
+    Book getBookById(String id);
 }
 

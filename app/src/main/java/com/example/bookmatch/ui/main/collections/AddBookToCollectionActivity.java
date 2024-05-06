@@ -15,6 +15,8 @@ import com.example.bookmatch.databinding.ActivityAddBookToCollectionBinding;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.example.bookmatch.ui.main.CollectionGroupViewModel;
+import com.example.bookmatch.ui.main.CollectionGroupViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
     private BookViewModel bookViewModel;
     private String collectionName;
     private List<Book> selectedBooks = new ArrayList<>();
+    private CollectionGroupViewModel collectionGroupViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,13 +37,18 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
 
         setupViewModel();
         retrieveInfos();
-        setupRecyclerView();
+        // Retrieve the list of saved books from the intent extras
+        List<Book> savedBooksInContainer = getIntent().getParcelableArrayListExtra("savedBooksInContainer");
+
+        setupRecyclerView(savedBooksInContainer);
         setupClickListeners();
     }
 
     private void setupViewModel() {
         BookViewModelFactory factory = new BookViewModelFactory(getApplication());
         bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
+        CollectionGroupViewModelFactory factoryCollectionGroup = new CollectionGroupViewModelFactory(getApplication());
+        collectionGroupViewModel = new ViewModelProvider(this, factoryCollectionGroup).get(CollectionGroupViewModel.class);
     }
 
     private void retrieveInfos() {
@@ -50,20 +58,23 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
         }
     }
 
-    private void setupRecyclerView() {
+    private void setupRecyclerView(List<Book> savedBooksInContainer) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.recyclerViewAddBookToCollection.setLayoutManager(linearLayoutManager);
 
-        observeSavedBooks();
+        observeSavedBooks(savedBooksInContainer);
     }
 
-    private void observeSavedBooks() {
+    private void observeSavedBooks(List<Book> savedBooksInContainer) {
         LiveData<List<Book>> savedBooksLiveData = bookViewModel.getSavedBooksLiveData();
         savedBooksLiveData.observe(this, savedBooks -> {
             savedBooksLiveData.removeObservers(this);
 
+            List<Book> filteredBooks = new ArrayList<>(savedBooks);
+            filteredBooks.removeAll(savedBooksInContainer);
+
             AddBookToCollectionRecyclerViewAdapter recyclerViewAdapter = new AddBookToCollectionRecyclerViewAdapter(
-                    collectionName, savedBooks, new AddBookToCollectionRecyclerViewAdapter.OnBookSelectedListener() {
+                    collectionName, filteredBooks, new AddBookToCollectionRecyclerViewAdapter.OnBookSelectedListener() {
                 @Override
                 public void onBookSelected(Book book) {
                     if (selectedBooks.contains(book)) {
@@ -82,16 +93,12 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
 
         binding.addBooks.setOnClickListener(v -> {
             List<Book> selectedBooks = ((AddBookToCollectionRecyclerViewAdapter) binding.recyclerViewAddBookToCollection.getAdapter()).getSelectedBooks();
-            Log.d("AddBookToCollectionActivity", "Selected Books:");
+
             for (Book book : selectedBooks) {
-                Log.d("AddBookToCollectionActivity", "- Title: " + book.getTitle());
-                Log.d("AddBookToCollectionActivity", "  Authors: " + book.getAuthors());
-                // Add more book properties as needed
+                collectionGroupViewModel.insertInCollection(collectionName, book);
             }
 
-            Intent resultIntent = new Intent();
-            resultIntent.putParcelableArrayListExtra("selectedBooks", new ArrayList<>(selectedBooks));
-            setResult(RESULT_OK, resultIntent);
+            setResult(RESULT_OK);
             finish();
         });
     }

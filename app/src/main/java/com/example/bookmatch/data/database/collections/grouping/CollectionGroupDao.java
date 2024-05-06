@@ -23,12 +23,10 @@ public interface CollectionGroupDao {
     void deleteGroup(CollectionGroup collectionGroup);
 
     // Query all books in a given container
-    @Transaction
-    @Query("SELECT * FROM Book WHERE id IN (SELECT bookId FROM collectionGroup WHERE collectionName = :collectionName)")
-    LiveData<List<Book>> getBooksInContainerLiveData(String collectionName);
+    @Query("SELECT bookId FROM collectionGroup WHERE collectionName = :collectionName")
+    LiveData<List<String>> getBookIdsInContainerLiveData(String collectionName);
 
     // Query number of books in a given container
-    @Transaction
-    @Query("SELECT COUNT(*) FROM Book WHERE id IN (SELECT bookId FROM collectionGroup WHERE collectionName = :collectionName)")
+    @Query("SELECT COUNT(*) FROM collectionGroup WHERE collectionName = :collectionName")
     LiveData<Integer> getBooksInContainerCountLiveData(String collectionName);
 }

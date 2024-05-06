@@ -42,8 +42,8 @@ public class CollectionGroupRepository implements ICollectionGroupRepository {
     }
 
     @Override
-    public LiveData<List<Book>> getBooksInContainerLiveData(String containerName) {
-        return collectionGroupDao.getBooksInContainerLiveData(containerName);
+    public LiveData<List<String>> getBookIdsInContainerLiveData(String containerName) {
+        return collectionGroupDao.getBookIdsInContainerLiveData(containerName);
     }
 
     @Override
