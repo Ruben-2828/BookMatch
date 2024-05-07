@@ -9,7 +9,12 @@ import java.util.List;
 public interface ICollectionContainerRepository {
     boolean insertCollectionContainer(CollectionContainer collection);
     void deleteCollectionContainer(CollectionContainer collection);
-    CollectionContainer getCollectionContainerByName(String name);
+    void updateCollectionContainer(String name, String description, byte[] image, String oldName);
+    void updateCollectionName(String name, String oldName);
+    void updateCollectionDescription(String name, String description);
+    void updateCollectionImage(String name, byte[] image);
+    LiveData<Boolean> collectionContainerExistsLiveData(String name);
+    LiveData<CollectionContainer> getCollectionContainerByNameLiveData(String name);
     LiveData<Integer> getCountCollectionContainersLiveData();
     LiveData<List<CollectionContainer>> getAllCollectionContainersLiveData();
 }

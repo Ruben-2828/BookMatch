@@ -165,6 +165,8 @@
     <string name="collection_image">Immagine della collezione</string>
     <string name="edit">Modifica</string>
     <string name="edit_collection">Modifica collezione</string>
+    <string name="error_no_changes">Errore: non ci sono stati cambiamenti</string>
+    <string name="error_collection_name_exists">Errore: collezione con lo stesso nome esiste già!</string>
     <!-- End CollectionsFragment -->
 
     <!-- Start BookPageFragment -->

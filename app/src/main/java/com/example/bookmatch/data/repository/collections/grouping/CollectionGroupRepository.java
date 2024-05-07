@@ -49,6 +49,13 @@ public class CollectionGroupRepository implements ICollectionGroupRepository {
     }
 
     @Override
+    public void updateContainerName(String oldName, String newName) {
+        CollectionGroupRoomDatabase.databaseWriteExecutor.execute(() -> {
+            collectionGroupDao.updateContainerName(oldName, newName);
+        });
+    }
+
+    @Override
     public LiveData<List<String>> getBookIdsInContainerLiveData(String containerName) {
         return collectionGroupDao.getBookIdsInContainerLiveData(containerName);
     }

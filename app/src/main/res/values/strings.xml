@@ -170,6 +170,8 @@
     <string name="collection_image">Collection image</string>
     <string name="edit">Edit</string>
     <string name="edit_collection">Edit collection</string>
+    <string name="error_no_changes">Error: no changes detected</string>
+    <string name="error_collection_name_exists">Error: collection with same name already exists</string>
     <!-- End CollectionsFragment -->
 
     <!-- Start BookPageFragment -->

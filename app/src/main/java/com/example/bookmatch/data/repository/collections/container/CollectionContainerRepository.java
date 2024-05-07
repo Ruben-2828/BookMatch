@@ -3,6 +3,7 @@ package com.example.bookmatch.data.repository.collections.container;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Query;
 
 import com.example.bookmatch.data.database.collections.container.CollectionContainerDao;
 import com.example.bookmatch.data.database.collections.container.CollectionContainerRoomDatabase;
@@ -39,8 +40,41 @@ public class CollectionContainerRepository implements ICollectionContainerReposi
     }
 
     @Override
-    public CollectionContainer getCollectionContainerByName(String name) {
-        return collectionDao.getCollectionContainerByName(name);
+    public void updateCollectionContainer(String name, String description, byte[] image, String oldName) {
+        CollectionContainerRoomDatabase.databaseWriteExecutor.execute(() -> {
+            collectionDao.updateCollectionContainer(name, description, image, oldName);
+        });
+    }
+
+    @Override
+    public void updateCollectionName(String name, String oldName) {
+        CollectionContainerRoomDatabase.databaseWriteExecutor.execute(() -> {
+            collectionDao.updateCollectionName(name, oldName);
+        });
+    }
+
+    @Override
+    public void updateCollectionDescription(String name, String description) {
+        CollectionContainerRoomDatabase.databaseWriteExecutor.execute(() -> {
+            collectionDao.updateCollectionDescription(name, description);
+        });
+    }
+
+    @Override
+    public void updateCollectionImage(String name, byte[] image) {
+        CollectionContainerRoomDatabase.databaseWriteExecutor.execute(() -> {
+            collectionDao.updateCollectionImage(name, image);
+        });
+    }
+
+    @Override
+    public LiveData<Boolean> collectionContainerExistsLiveData(String name) {
+        return collectionDao.collectionContainerExistsLiveData(name);
+    }
+
+    @Override
+    public LiveData<CollectionContainer> getCollectionContainerByNameLiveData(String name) {
+        return collectionDao.getCollectionContainerByNameLiveData(name);
     }
 
     @Override

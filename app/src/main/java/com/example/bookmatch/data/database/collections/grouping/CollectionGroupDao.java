@@ -37,4 +37,8 @@ public interface CollectionGroupDao {
     // Returns true if book is in container and false otherwise
     @Query("SELECT EXISTS (SELECT 1 FROM collectionGroup WHERE collectionName = :collectionName AND bookId = :bookId)")
     LiveData<Boolean> isBookInContainerLiveData(String collectionName, String bookId);
+
+    // Update all container names to new name
+    @Query("UPDATE collectionGroup SET collectionName = :newName WHERE collectionName = :oldName")
+    void updateContainerName(String oldName, String newName);
 }

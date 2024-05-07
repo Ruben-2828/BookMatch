@@ -39,6 +39,7 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
 
         setupViewModel();
         retrieveInfos();
+
         // Retrieve the list of saved books from the intent extras
         List<Book> savedBooksInContainer = getIntent().getParcelableArrayListExtra("savedBooksInContainer");
 

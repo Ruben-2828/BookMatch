@@ -48,6 +48,10 @@ public class CollectionGroupViewModel extends AndroidViewModel {
         collectionGroupRepository.deleteGroupsInContainer(collectionName);
     }
 
+    public void updateContainerName(String oldName, String newName) {
+        collectionGroupRepository.updateContainerName(oldName, newName);
+    }
+
     public LiveData<List<String>> getBooksInContainer(String containerName) {
         return collectionGroupRepository.getBookIdsInContainerLiveData(containerName);
     }
