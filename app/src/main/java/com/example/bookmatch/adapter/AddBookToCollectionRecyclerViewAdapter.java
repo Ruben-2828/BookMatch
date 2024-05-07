@@ -21,15 +21,13 @@ public class AddBookToCollectionRecyclerViewAdapter extends
 
     private final List<Book> bookList;
     public List<Book> selectedBooks = new ArrayList<>();
-    private String collectionName;
     private final OnBookSelectedListener onBookSelectedListener;
 
     public interface OnBookSelectedListener {
-        void onBookSelected(Book book);
+        void onBookSelected(Book book, String action);
     }
 
-    public AddBookToCollectionRecyclerViewAdapter(String collectionName, List<Book> bookList, OnBookSelectedListener listener) {
-        this.collectionName = collectionName;
+    public AddBookToCollectionRecyclerViewAdapter(List<Book> bookList, OnBookSelectedListener listener) {
         this.bookList = bookList;
         this.onBookSelectedListener = listener;
     }
@@ -68,7 +66,7 @@ public class AddBookToCollectionRecyclerViewAdapter extends
             title = itemView.findViewById(R.id.book_title);
             author = itemView.findViewById(R.id.book_author);
             ImageButton addImageButton = itemView.findViewById(R.id.add_book_to_collection);
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
             addImageButton.setOnClickListener(this);
         }
 
@@ -100,21 +98,15 @@ public class AddBookToCollectionRecyclerViewAdapter extends
             bookList.remove(position);
             notifyItemRemoved(position);
 
+            onBookSelectedListener.onBookSelected(removedBook, "add");
+
             Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " added to collection", Snackbar.LENGTH_SHORT);
             snackbar.setAction(R.string.undo, v -> {
                 bookList.add(position, removedBook);
                 notifyItemInserted(position);
                 selectedBooks.remove(removedBook);
-                onBookSelectedListener.onBookSelected(removedBook);
-            });
-            snackbar.addCallback(new Snackbar.Callback() {
-                @Override
-                public void onDismissed(Snackbar snackbar, int event) {
-                    if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                        selectedBooks.add(removedBook);
-                        onBookSelectedListener.onBookSelected(removedBook);
-                    }
-                }
+
+                onBookSelectedListener.onBookSelected(removedBook, "remove");
             });
             snackbar.show();
         }

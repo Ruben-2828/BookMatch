@@ -60,7 +60,7 @@ public class DisplayCollectionActivity extends AppCompatActivity {
         if (args != null) {
             collectionName = args.getString("collectionName");
 
-            binding.topAppBar.setTitle("Collection " + collectionName);
+            binding.topAppBar.setTitle(collectionName);
         }
     }
 
@@ -88,9 +88,12 @@ public class DisplayCollectionActivity extends AppCompatActivity {
             CollectionGroupsRecyclerViewAdapter recyclerViewAdapter = new CollectionGroupsRecyclerViewAdapter(
                     booksSavedInCollection, new CollectionGroupsRecyclerViewAdapter.OnBookSelectedListener() {
                 @Override
-                public void onBookSelected(List<Book> selectedBooks) {
-                    selectedBooks.clear();
-                    selectedBooks.addAll(selectedBooks);
+                public void onBookSelected(String bookId, String action) {
+                    if (action.equals("remove")) {
+                        collectionGroupViewModel.deleteCollectionGroup(collectionName, bookId);
+                    } else if (action.equals("add")) {
+                        collectionGroupViewModel.insertInCollection(collectionName, bookId);
+                    }
                 }
             });
             binding.recyclerViewDisplayCollectionBooks.setAdapter(recyclerViewAdapter);

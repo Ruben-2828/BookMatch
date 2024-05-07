@@ -74,12 +74,12 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
             filteredBooks.removeAll(savedBooksInContainer);
 
             AddBookToCollectionRecyclerViewAdapter recyclerViewAdapter = new AddBookToCollectionRecyclerViewAdapter(
-                    collectionName, filteredBooks, new AddBookToCollectionRecyclerViewAdapter.OnBookSelectedListener() {
+                    filteredBooks, new AddBookToCollectionRecyclerViewAdapter.OnBookSelectedListener() {
                 @Override
-                public void onBookSelected(Book book) {
-                    if (selectedBooks.contains(book)) {
+                public void onBookSelected(Book book, String action) {
+                    if (action.equals("remove")) {
                         selectedBooks.remove(book);
-                    } else {
+                    } else if (action.equals("add")) {
                         selectedBooks.add(book);
                     }
                 }
@@ -92,8 +92,6 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
         binding.goBackButton.setOnClickListener(v -> finish());
 
         binding.addBooks.setOnClickListener(v -> {
-            List<Book> selectedBooks = ((AddBookToCollectionRecyclerViewAdapter) binding.recyclerViewAddBookToCollection.getAdapter()).getSelectedBooks();
-
             for (Book book : selectedBooks) {
                 collectionGroupViewModel.insertInCollection(collectionName, book);
             }

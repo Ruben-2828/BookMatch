@@ -7,10 +7,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.ui.main.BookViewModel;
+import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.example.bookmatch.ui.main.CollectionGroupViewModel;
+import com.example.bookmatch.ui.main.CollectionGroupViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -20,12 +25,10 @@ public class CollectionGroupsRecyclerViewAdapter extends
         RecyclerView.Adapter<CollectionGroupsRecyclerViewAdapter.BookViewHolder> {
 
     private final List<Book> bookList;
-    public List<Book> selectedBooks = new ArrayList<>();
-
     private final OnBookSelectedListener onBookSelectedListener;
 
     public interface OnBookSelectedListener {
-        void onBookSelected(List<Book> selectedBooks);
+        void onBookSelected(String bookId, String action);
     }
 
     public CollectionGroupsRecyclerViewAdapter(List<Book> bookList, OnBookSelectedListener listener) {
@@ -62,7 +65,9 @@ public class CollectionGroupsRecyclerViewAdapter extends
             super(itemView);
             title = itemView.findViewById(R.id.book_title_collection);
             author = itemView.findViewById(R.id.book_author_collection);
-            //ImageButton addImageButton = itemView.findViewById(R.id.edit_review_btn);
+            ImageButton removeBookImageButton = itemView.findViewById(R.id.imageview_delete_collection_book);
+            removeBookImageButton.setOnClickListener(this);
+
             //itemView.setOnClickListener(this);
             //addImageButton.setOnClickListener(this);
         }
@@ -82,9 +87,8 @@ public class CollectionGroupsRecyclerViewAdapter extends
             int position = getAbsoluteAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Book book = bookList.get(position);
-                if (view.getId() == R.id.add_book_to_collection) {
+                if (view.getId() == R.id.imageview_delete_collection_book) {
                     removeItem(position);
-
                 } else {
                     Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
                 }
@@ -96,23 +100,16 @@ public class CollectionGroupsRecyclerViewAdapter extends
             bookList.remove(position);
             notifyItemRemoved(position);
 
-            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " added to collection", Snackbar.LENGTH_SHORT);
+            onBookSelectedListener.onBookSelected(removedBook.getId(), "remove");
+
+            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from collection", Snackbar.LENGTH_SHORT);
             snackbar.setAction(R.string.undo, v -> {
                 bookList.add(position, removedBook);
                 notifyItemInserted(position);
-            });
-            snackbar.addCallback(new Snackbar.Callback() {
-                @Override
-                public void onDismissed(Snackbar snackbar, int event) {
-                    if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                        selectedBooks.add(removedBook);
-                        onBookSelectedListener.onBookSelected(selectedBooks);
-                    }
-                }
+                onBookSelectedListener.onBookSelected(removedBook.getId(), "add");
             });
             snackbar.show();
         }
-
 
     }
 }
