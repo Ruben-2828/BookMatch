@@ -83,6 +83,19 @@ public class DisplayCollectionActivity extends AppCompatActivity {
         savedGroupOfBooksLiveData.observe(this, savedBookIds -> {
             savedGroupOfBooksLiveData.removeObservers(this);
 
+
+            Log.d("DisplayCollectionActivity", "BookIds " + savedBookIds);
+            for (String bookId : savedBookIds) {
+                LiveData<Boolean> isBookSavedLiveData = bookViewModel.isBookSavedLiveData(bookId);
+                isBookSavedLiveData.observe(this, isBookSaved -> {
+                    if (!isBookSaved) {
+                        collectionGroupViewModel.deleteCollectionGroup(collectionName, bookId);
+                        // log that the book is being eliminated
+                        Log.d("DisplayCollectionActivity", "Book " + bookId + " eliminated from " + collectionName);
+                    }
+                });
+            }
+
             List<Book> booksSavedInCollection = bookViewModel.getBooksByIds(savedBookIds);
 
             CollectionGroupsRecyclerViewAdapter recyclerViewAdapter = new CollectionGroupsRecyclerViewAdapter(

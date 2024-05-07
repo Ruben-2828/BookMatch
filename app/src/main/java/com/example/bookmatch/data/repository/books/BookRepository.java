@@ -140,4 +140,9 @@ public class BookRepository implements IBookRepository{
         return books;
     }
 
+    @Override
+    public LiveData<Boolean> isBookSavedLiveData(String id) {
+        return bookDao.isBookSavedLiveData(id);
+    }
+
 }

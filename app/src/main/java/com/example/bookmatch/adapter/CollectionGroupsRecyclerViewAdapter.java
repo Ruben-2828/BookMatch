@@ -47,7 +47,10 @@ public class CollectionGroupsRecyclerViewAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
-        holder.bind(bookList.get(position));
+        Book book = bookList.get(position);
+        if (book != null) {
+            holder.bind(book);
+        }
     }
 
     @Override

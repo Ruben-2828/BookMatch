@@ -43,5 +43,9 @@ public interface BookDao {
 
     @Query("SELECT * FROM Book WHERE id = :id")
     Book getBookById(String id);
+
+    //return boolean if book id is inside db
+    @Query("SELECT EXISTS(SELECT 1 FROM Book WHERE id = :id)")
+    LiveData<Boolean> isBookSavedLiveData(String id);
 }
 

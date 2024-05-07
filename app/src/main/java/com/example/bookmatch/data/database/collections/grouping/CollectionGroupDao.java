@@ -22,6 +22,10 @@ public interface CollectionGroupDao {
     @Delete
     void deleteGroup(CollectionGroup collectionGroup);
 
+    // Delete all collection groups in a given container
+    @Query("DELETE FROM collectionGroup WHERE collectionName = :collectionName")
+    void deleteGroupsInContainer(String collectionName);
+
     // Query all books in a given container
     @Query("SELECT bookId FROM collectionGroup WHERE collectionName = :collectionName")
     LiveData<List<String>> getBookIdsInContainerLiveData(String collectionName);
@@ -29,4 +33,8 @@ public interface CollectionGroupDao {
     // Query number of books in a given container
     @Query("SELECT COUNT(*) FROM collectionGroup WHERE collectionName = :collectionName")
     LiveData<Integer> getBooksInContainerCountLiveData(String collectionName);
+
+    // Returns true if book is in container and false otherwise
+    @Query("SELECT EXISTS (SELECT 1 FROM collectionGroup WHERE collectionName = :collectionName AND bookId = :bookId)")
+    LiveData<Boolean> isBookInContainerLiveData(String collectionName, String bookId);
 }

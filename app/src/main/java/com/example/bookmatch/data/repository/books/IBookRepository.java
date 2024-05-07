@@ -37,4 +37,6 @@ public interface IBookRepository {
     Book getBookById(String id);
 
     List<Book> getBooksByIds(List<String> id);
+
+    LiveData<Boolean> isBookSavedLiveData(String id);
 }

@@ -21,6 +21,8 @@ import com.example.bookmatch.databinding.FragmentCollectionsBinding;
 import com.example.bookmatch.model.CollectionContainer;
 import com.example.bookmatch.ui.main.CollectionContainerViewModel;
 import com.example.bookmatch.ui.main.CollectionContainerViewModelFactory;
+import com.example.bookmatch.ui.main.CollectionGroupViewModel;
+import com.example.bookmatch.ui.main.CollectionGroupViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -31,6 +33,7 @@ public class CollectionsFragment extends Fragment {
     private CollectionContainersRecyclerViewAdapter adapter;
 
     private CollectionContainerViewModel collectionViewModel;
+    private CollectionGroupViewModel collectionGroupViewModel;
 
     private final ActivityResultLauncher<Intent> createCollectionLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -66,6 +69,9 @@ public class CollectionsFragment extends Fragment {
         CollectionContainerViewModelFactory factoryCollection = new CollectionContainerViewModelFactory(requireActivity().getApplication());
         collectionViewModel = new ViewModelProvider(this, factoryCollection).get(CollectionContainerViewModel.class);
 
+        CollectionGroupViewModelFactory factory = new CollectionGroupViewModelFactory(requireActivity().getApplication());
+        collectionGroupViewModel = new ViewModelProvider(this, factory).get(CollectionGroupViewModel.class);
+
         collectionViewModel.getAllCollectionsLiveData().observe(getViewLifecycleOwner(), collections -> {
             adapter.setCollections(collections);
         });
@@ -89,6 +95,7 @@ public class CollectionsFragment extends Fragment {
                     @Override
                     public void onDeleteButtonClick(CollectionContainer collection) {
                         collectionViewModel.deleteCollection(collection);
+                        collectionGroupViewModel.deleteGroupsInContainer(collection.getName());
                     }
                 });
 

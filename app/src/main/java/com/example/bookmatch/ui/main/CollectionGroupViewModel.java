@@ -44,11 +44,19 @@ public class CollectionGroupViewModel extends AndroidViewModel {
         collectionGroupRepository.deleteCollectionGroup(collectionGroup);
     }
 
+    public void deleteGroupsInContainer(String collectionName) {
+        collectionGroupRepository.deleteGroupsInContainer(collectionName);
+    }
+
     public LiveData<List<String>> getBooksInContainer(String containerName) {
         return collectionGroupRepository.getBookIdsInContainerLiveData(containerName);
     }
 
     public LiveData<Integer> getNumberBooksInContainer(String containerName) {
         return collectionGroupRepository.getBooksInContainerCountLiveData(containerName);
+    }
+
+    public LiveData<Boolean> isBookInContainer(String containerName, String bookId) {
+        return collectionGroupRepository.isBookInContainerLiveData(containerName, bookId);
     }
 }

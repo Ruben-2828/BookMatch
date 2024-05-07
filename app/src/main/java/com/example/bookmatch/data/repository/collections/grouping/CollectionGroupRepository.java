@@ -42,6 +42,13 @@ public class CollectionGroupRepository implements ICollectionGroupRepository {
     }
 
     @Override
+    public void deleteGroupsInContainer(String collectionName) {
+        CollectionGroupRoomDatabase.databaseWriteExecutor.execute(() -> {
+            collectionGroupDao.deleteGroupsInContainer(collectionName);
+        });
+    }
+
+    @Override
     public LiveData<List<String>> getBookIdsInContainerLiveData(String containerName) {
         return collectionGroupDao.getBookIdsInContainerLiveData(containerName);
     }
@@ -49,5 +56,10 @@ public class CollectionGroupRepository implements ICollectionGroupRepository {
     @Override
     public LiveData<Integer> getBooksInContainerCountLiveData(String collectionName) {
         return collectionGroupDao.getBooksInContainerCountLiveData(collectionName);
+    }
+
+    @Override
+    public LiveData<Boolean> isBookInContainerLiveData(String collectionName, String bookId) {
+        return collectionGroupDao.isBookInContainerLiveData(collectionName, bookId);
     }
 }
