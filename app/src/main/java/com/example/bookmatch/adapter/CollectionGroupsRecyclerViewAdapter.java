@@ -67,9 +67,7 @@ public class CollectionGroupsRecyclerViewAdapter extends
             author = itemView.findViewById(R.id.book_author_collection);
             ImageButton removeBookImageButton = itemView.findViewById(R.id.imageview_delete_collection_book);
             removeBookImageButton.setOnClickListener(this);
-
-            //itemView.setOnClickListener(this);
-            //addImageButton.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Book book) {

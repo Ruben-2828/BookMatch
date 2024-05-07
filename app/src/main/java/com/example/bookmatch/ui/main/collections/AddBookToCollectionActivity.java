@@ -3,6 +3,7 @@ package com.example.bookmatch.ui.main.collections;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.AddBookToCollectionRecyclerViewAdapter;
 import com.example.bookmatch.databinding.ActivityAddBookToCollectionBinding;
 import com.example.bookmatch.model.Book;
@@ -83,7 +85,7 @@ public class AddBookToCollectionActivity extends AppCompatActivity {
                         selectedBooks.add(book);
                     }
                 }
-            });
+            }, findViewById(R.id.add_books));
             binding.recyclerViewAddBookToCollection.setAdapter(recyclerViewAdapter);
         });
     }

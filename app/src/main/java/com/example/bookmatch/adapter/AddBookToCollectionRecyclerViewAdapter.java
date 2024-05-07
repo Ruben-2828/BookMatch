@@ -3,6 +3,7 @@ package com.example.bookmatch.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -22,14 +24,16 @@ public class AddBookToCollectionRecyclerViewAdapter extends
     private final List<Book> bookList;
     public List<Book> selectedBooks = new ArrayList<>();
     private final OnBookSelectedListener onBookSelectedListener;
+    private final View anchorView;
 
     public interface OnBookSelectedListener {
         void onBookSelected(Book book, String action);
     }
 
-    public AddBookToCollectionRecyclerViewAdapter(List<Book> bookList, OnBookSelectedListener listener) {
+    public AddBookToCollectionRecyclerViewAdapter(List<Book> bookList, OnBookSelectedListener listener, View anchorView) {
         this.bookList = bookList;
         this.onBookSelectedListener = listener;
+        this.anchorView = anchorView;
     }
 
     @NonNull
@@ -66,7 +70,7 @@ public class AddBookToCollectionRecyclerViewAdapter extends
             title = itemView.findViewById(R.id.book_title);
             author = itemView.findViewById(R.id.book_author);
             ImageButton addImageButton = itemView.findViewById(R.id.add_book_to_collection);
-            //itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
             addImageButton.setOnClickListener(this);
         }
 
@@ -88,7 +92,9 @@ public class AddBookToCollectionRecyclerViewAdapter extends
                 if (view.getId() == R.id.add_book_to_collection) {
                     removeItem(position);
                 } else {
-                    Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(anchorView, book.getTitle(), Snackbar.LENGTH_SHORT);
+                    snackbar.setAnchorView(anchorView);
+                    snackbar.show();
                 }
             }
         }
@@ -108,6 +114,7 @@ public class AddBookToCollectionRecyclerViewAdapter extends
 
                 onBookSelectedListener.onBookSelected(removedBook, "remove");
             });
+            snackbar.setAnchorView(anchorView);
             snackbar.show();
         }
 
