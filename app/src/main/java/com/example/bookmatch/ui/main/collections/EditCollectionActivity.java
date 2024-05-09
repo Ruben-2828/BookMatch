@@ -83,19 +83,10 @@ public class EditCollectionActivity extends AppCompatActivity {
 
             if (validateInput(collectionName, collectionDescription)) {
                 boolean hasChanges = false;
-
-                if (!pastCollectionContainer.getDescription().equals(collectionDescription)) {
-                    collectionViewModel.updateCollectionDescription(pastCollectionContainer.getName(), collectionDescription);
-                    hasChanges = true;
-                }
-
-                if (!Arrays.equals(pastCollectionContainer.getImageData(), selectedImageData)) {
-                    collectionViewModel.updateCollectionImage(pastCollectionContainer.getName(), selectedImageData);
-                    hasChanges = true;
-                }
-
+                String updatedName = pastCollectionContainer.getName();
 
                 if (!pastCollectionContainer.getName().equals(collectionName)) {
+                    updatedName = collectionName;
                     ExecutorService executor = Executors.newSingleThreadExecutor();
                     Future<Boolean> future = executor.submit(new Callable<Boolean>() {
                         @Override
@@ -106,13 +97,16 @@ public class EditCollectionActivity extends AppCompatActivity {
 
                     try {
                         Boolean checkCollectionContainerExists = future.get();
-                        if (checkCollectionContainerExists) {
-                            Snackbar.make(view, getString(R.string.error_collection_name_exists), Snackbar.LENGTH_SHORT).show();
-                        } else {
+                        if (!checkCollectionContainerExists) {
                             collectionViewModel.updateCollectionName(collectionName, pastCollectionContainer.getName());
                             groupViewModel.updateContainerName(pastCollectionContainer.getName(), collectionName);
                             hasChanges = true;
                             resultIntent.putExtra("newCollectionName", collectionName);
+                        } else {
+                            resultIntent.putExtra("changes", true);
+                            resultIntent.putExtra("collectionNameExists", true);
+                            setResult(RESULT_OK, resultIntent);
+                            finish();
                         }
                     } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
@@ -121,8 +115,18 @@ public class EditCollectionActivity extends AppCompatActivity {
                     }
                 }
 
+                if (!pastCollectionContainer.getDescription().equals(collectionDescription)) {
+                    collectionViewModel.updateCollectionDescription(updatedName, collectionDescription);
+                    hasChanges = true;
+                }
+
+                if (!Arrays.equals(pastCollectionContainer.getImageData(), selectedImageData)) {
+                    collectionViewModel.updateCollectionImage(updatedName, selectedImageData);
+                    hasChanges = true;
+                }
+
                 if (hasChanges) {
-                    Snackbar.make(view, getString(R.string.error_no_changes), Snackbar.LENGTH_SHORT).show();
+                    resultIntent.putExtra("changes", true);
                 }
 
                 setResult(RESULT_OK, resultIntent);

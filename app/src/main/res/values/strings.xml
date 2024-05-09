@@ -172,6 +172,7 @@
     <string name="edit_collection">Edit collection</string>
     <string name="error_no_changes">Error: no changes detected</string>
     <string name="error_collection_name_exists">Error: collection with same name already exists</string>
+    <string name="collection_updated">Collection updated!</string>
     <!-- End CollectionsFragment -->
 
     <!-- Start BookPageFragment -->

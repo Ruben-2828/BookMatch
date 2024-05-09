@@ -23,6 +23,7 @@ import com.example.bookmatch.ui.main.CollectionContainerViewModel;
 import com.example.bookmatch.ui.main.CollectionContainerViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionGroupViewModel;
 import com.example.bookmatch.ui.main.CollectionGroupViewModelFactory;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,6 @@ public class DisplayCollectionActivity extends AppCompatActivity {
     private ActivityDisplayCollectionBinding binding;
 
     private CollectionGroupViewModel collectionGroupViewModel;
-    private CollectionContainerViewModel collectionContainerViewModel;
     private BookViewModel bookViewModel;
 
     String collectionName;
@@ -51,9 +51,20 @@ public class DisplayCollectionActivity extends AppCompatActivity {
                     Intent data = result.getData();
                     if (data != null) {
                         String newCollectionName = data.getStringExtra("newCollectionName");
-                        if (newCollectionName != null) {
-                            collectionName = newCollectionName;
-                            binding.topAppBar.setTitle(collectionName);
+                        Boolean collectionNameExists = data.getBooleanExtra("collectionNameExists", false);
+                        Boolean changes = data.getBooleanExtra("changes", false);
+
+                        if (changes) {
+                            if(collectionNameExists) {
+                                Snackbar.make(binding.getRoot(), getString(R.string.error_collection_name_exists), Snackbar.LENGTH_SHORT).show();
+                            } else {
+                                if(newCollectionName != null) {
+                                    collectionName = newCollectionName;
+                                    binding.topAppBar.setTitle(collectionName);
+                                }
+                            }
+                        } else {
+                            Snackbar.make(binding.getRoot(), getString(R.string.error_no_changes), Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -74,9 +85,6 @@ public class DisplayCollectionActivity extends AppCompatActivity {
     private void setupViewModel() {
         CollectionGroupViewModelFactory factory = new CollectionGroupViewModelFactory(getApplication());
         collectionGroupViewModel = new ViewModelProvider(this, factory).get(CollectionGroupViewModel.class);
-
-        CollectionContainerViewModelFactory factoryContainer = new CollectionContainerViewModelFactory(getApplication());
-        collectionContainerViewModel = new ViewModelProvider(this, factoryContainer).get(CollectionContainerViewModel.class);
 
         BookViewModelFactory factoryBook = new BookViewModelFactory(getApplication());
         bookViewModel = new ViewModelProvider(this, factoryBook).get(BookViewModel.class);
@@ -105,15 +113,11 @@ public class DisplayCollectionActivity extends AppCompatActivity {
         savedGroupOfBooksLiveData.observe(this, savedBookIds -> {
             savedGroupOfBooksLiveData.removeObservers(this);
 
-
-            Log.d("DisplayCollectionActivity", "BookIds " + savedBookIds);
             for (String bookId : savedBookIds) {
                 LiveData<Boolean> isBookSavedLiveData = bookViewModel.isBookSavedLiveData(bookId);
                 isBookSavedLiveData.observe(this, isBookSaved -> {
                     if (!isBookSaved) {
                         collectionGroupViewModel.deleteCollectionGroup(collectionName, bookId);
-                        // log that the book is being eliminated
-                        //Log.d("DisplayCollectionActivity", "Book " + bookId + " eliminated from " + collectionContainer.getName());
                     }
                 });
             }
