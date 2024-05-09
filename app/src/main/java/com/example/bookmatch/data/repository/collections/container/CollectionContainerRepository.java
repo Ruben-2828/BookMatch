@@ -68,8 +68,8 @@ public class CollectionContainerRepository implements ICollectionContainerReposi
     }
 
     @Override
-    public LiveData<Boolean> collectionContainerExistsLiveData(String name) {
-        return collectionDao.collectionContainerExistsLiveData(name);
+    public Boolean collectionContainerExists(String name) {
+        return collectionDao.collectionContainerExists(name);
     }
 
     @Override

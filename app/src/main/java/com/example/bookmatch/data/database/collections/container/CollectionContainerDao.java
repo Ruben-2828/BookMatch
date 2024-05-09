@@ -38,7 +38,7 @@ public interface CollectionContainerDao {
 
     // checks if collection container with same name exists returns a boolean
     @Query("SELECT EXISTS(SELECT 1 FROM CollectionContainer WHERE name = :name)")
-    LiveData<Boolean> collectionContainerExistsLiveData(String name);
+    Boolean collectionContainerExists(String name);
 
     @Query("SELECT * FROM CollectionContainer")
     LiveData<List<CollectionContainer>> getAllCollectionContainersLiveData();

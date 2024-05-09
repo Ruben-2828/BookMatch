@@ -25,7 +25,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class EditCollectionActivity extends AppCompatActivity {
 
@@ -75,43 +79,52 @@ public class EditCollectionActivity extends AppCompatActivity {
         binding.editCollectionButton.setOnClickListener(view -> {
             String collectionName = Objects.requireNonNull(binding.collectionEditNameInput.getText()).toString().trim();
             String collectionDescription = Objects.requireNonNull(binding.collectionEditDescriptionInput.getText()).toString().trim();
+            Intent resultIntent = new Intent();
 
             if (validateInput(collectionName, collectionDescription)) {
-                AtomicBoolean hasChanges = new AtomicBoolean(false);
+                boolean hasChanges = false;
 
                 if (!pastCollectionContainer.getDescription().equals(collectionDescription)) {
-                    collectionViewModel.updateCollectionDescription(collectionName, collectionDescription);
-                    hasChanges.set(true);
+                    collectionViewModel.updateCollectionDescription(pastCollectionContainer.getName(), collectionDescription);
+                    hasChanges = true;
                 }
 
                 if (!Arrays.equals(pastCollectionContainer.getImageData(), selectedImageData)) {
-                    collectionViewModel.updateCollectionImage(collectionName, selectedImageData);
-                    hasChanges.set(true);
+                    collectionViewModel.updateCollectionImage(pastCollectionContainer.getName(), selectedImageData);
+                    hasChanges = true;
                 }
 
 
-                //TODO: fix that title doesn't upload instantly when going back to collection.
                 if (!pastCollectionContainer.getName().equals(collectionName)) {
-                    LiveData<Boolean> checkCollectionContainerExistsLiveData = collectionViewModel.collectionContainerExistsLiveData(collectionName);
-                    checkCollectionContainerExistsLiveData.observe(this, exists -> {
-                        checkCollectionContainerExistsLiveData.removeObservers(this);
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    Future<Boolean> future = executor.submit(new Callable<Boolean>() {
+                        @Override
+                        public Boolean call() throws Exception {
+                            return collectionViewModel.collectionContainerExists(collectionName);
+                        }
+                    });
 
-                        if (exists) {
+                    try {
+                        Boolean checkCollectionContainerExists = future.get();
+                        if (checkCollectionContainerExists) {
                             Snackbar.make(view, getString(R.string.error_collection_name_exists), Snackbar.LENGTH_SHORT).show();
                         } else {
                             collectionViewModel.updateCollectionName(collectionName, pastCollectionContainer.getName());
                             groupViewModel.updateContainerName(pastCollectionContainer.getName(), collectionName);
-                            hasChanges.set(true);
+                            hasChanges = true;
+                            resultIntent.putExtra("newCollectionName", collectionName);
                         }
-                    });
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
+                    } finally {
+                        executor.shutdown();
+                    }
                 }
 
-                if (!hasChanges.get()) {
+                if (hasChanges) {
                     Snackbar.make(view, getString(R.string.error_no_changes), Snackbar.LENGTH_SHORT).show();
                 }
 
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("newCollectionName", collectionName);
                 setResult(RESULT_OK, resultIntent);
                 finish();
             }
@@ -164,4 +177,5 @@ public class EditCollectionActivity extends AppCompatActivity {
     private void changePic() {
         binding.editPicButton.setOnClickListener(v -> galleryLauncher.launch("image/*"));
     }
+
 }

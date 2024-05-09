@@ -43,8 +43,8 @@ public class CollectionContainerViewModel extends AndroidViewModel {
         collectionRepository.updateCollectionImage(name, image);
     }
 
-    public LiveData<Boolean> collectionContainerExistsLiveData(String name) {
-        return collectionRepository.collectionContainerExistsLiveData(name);
+    public Boolean collectionContainerExists(String name) {
+        return collectionRepository.collectionContainerExists(name);
     }
 
     public LiveData<List<CollectionContainer>> getAllCollectionsLiveData() {

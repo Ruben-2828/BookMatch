@@ -13,7 +13,7 @@ public interface ICollectionContainerRepository {
     void updateCollectionName(String name, String oldName);
     void updateCollectionDescription(String name, String description);
     void updateCollectionImage(String name, byte[] image);
-    LiveData<Boolean> collectionContainerExistsLiveData(String name);
+    Boolean collectionContainerExists(String name);
     LiveData<CollectionContainer> getCollectionContainerByNameLiveData(String name);
     LiveData<Integer> getCountCollectionContainersLiveData();
     LiveData<List<CollectionContainer>> getAllCollectionContainersLiveData();
