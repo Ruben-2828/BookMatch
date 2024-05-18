@@ -28,6 +28,7 @@ import com.example.bookmatch.ui.main.CollectionViewModelFactory;
 import com.example.bookmatch.ui.welcome.UserViewModel;
 import com.example.bookmatch.ui.welcome.UserViewModelFactory;
 import com.example.bookmatch.ui.welcome.WelcomeActivity;
+import com.example.bookmatch.utils.AccountManager;
 import com.example.bookmatch.utils.ServiceLocator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -121,6 +122,8 @@ public class AccountFragment extends Fragment {
         }
         if (id == R.id.logout_item) {
             userViewModel.logout().observe(getViewLifecycleOwner(), r -> {
+                AccountManager accountManager = new AccountManager();
+                accountManager.setRememberMe(false, getContext());
                 Intent intent = new Intent(requireContext(), WelcomeActivity.class);
                 startActivity(intent);
                 requireActivity().finish();

@@ -17,6 +17,8 @@ public class Constants {
 
     public static final String SHARED_PREF_NAME = "appSharedPreferences";
     public static final String USER_REMEMBER_ME_SP = "rememberMe";
+    public static final String USER_PREFERENCES_PASSWORD = "password";
+    public static final String USER_PREFERENCES_EMAIL = "email";
     public static final String KEY_ONBOARD_OPENED = "isOnboardOpened";
 
     public static final String USERS_COLLECTION_NAME = "users";

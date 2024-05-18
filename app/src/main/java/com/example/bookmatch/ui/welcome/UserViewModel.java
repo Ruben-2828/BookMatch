@@ -14,7 +14,6 @@ public class UserViewModel extends ViewModel {
 
     private boolean authenticationError;
 
-    //Mutable live data
 
     public UserViewModel(IUserRepository userRepository){
         this.userRepository = userRepository;
@@ -68,4 +67,5 @@ public class UserViewModel extends ViewModel {
         User user = new User(username, currentUser.getEmail(), getLoggedUser().getTokenId(), fullName);
         userRepository.setUserInfo(user);
     }
+
 }

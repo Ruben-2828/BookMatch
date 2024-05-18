@@ -2,6 +2,8 @@ package com.example.bookmatch.ui.main.account;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -19,8 +21,12 @@ import com.example.bookmatch.ui.welcome.UserViewModel;
 import com.example.bookmatch.ui.welcome.UserViewModelFactory;
 import com.example.bookmatch.utils.ServiceLocator;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
+import java.util.UUID;
 
 public class AccountEditActivity extends AppCompatActivity {
 
@@ -28,6 +34,8 @@ public class AccountEditActivity extends AppCompatActivity {
     private ActivityResultLauncher<String> galleryLauncher;
 
     private UserViewModel userViewModel;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +86,8 @@ public class AccountEditActivity extends AppCompatActivity {
             String nickname = Objects.requireNonNull(binding.tiNicknameInput.getText()).toString().trim();
             String fullName = Objects.requireNonNull(binding.tiFullNameInput.getText()).toString().trim();
 
+
+
             if (validateInput(nickname, fullName)) {
                 setResultAndFinish(nickname, fullName);
             }
@@ -107,9 +117,15 @@ public class AccountEditActivity extends AppCompatActivity {
         resultIntent.putExtra("userNickname", nickname);
         resultIntent.putExtra("userFullName", fullName);
 
-
-        //TODO: implementare salvataggio immagine profilo
-
+        //
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference ref = storage.getReference().child("images/" + UUID.randomUUID().toString());
+        Bitmap bitmap = ((BitmapDrawable) binding.profileImage.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageInByte = baos.toByteArray();
+        ref.putBytes(imageInByte);
+        Log.d("WELCOME", "inserito");
 
         userViewModel.setUserInfo(nickname, fullName);
         setResult(Activity.RESULT_OK, resultIntent);

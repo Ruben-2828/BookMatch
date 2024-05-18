@@ -1,12 +1,7 @@
 package com.example.bookmatch.ui.welcome;
 
-import static com.example.bookmatch.utils.Constants.SHARED_PREF_NAME;
-import static com.example.bookmatch.utils.Constants.USER_REMEMBER_ME_SP;
-
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +18,7 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentLoginBinding;
 import com.example.bookmatch.ui.main.MainActivity;
+import com.example.bookmatch.utils.AccountManager;
 import com.example.bookmatch.utils.ServiceLocator;
 import com.google.firebase.FirebaseApp;
 
@@ -34,6 +30,7 @@ public class LoginFragment extends Fragment {
 
     private FragmentLoginBinding binding;
     private UserViewModel userViewModel;
+    private AccountManager accountManager;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -45,6 +42,7 @@ public class LoginFragment extends Fragment {
 
         IUserRepository userRepository = ServiceLocator.getInstance().getUserRepository(requireActivity().getApplication());
         userViewModel = new ViewModelProvider(requireActivity(), new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        accountManager = new AccountManager();
 
         FirebaseApp.initializeApp(getActivity().getApplication());
     }
@@ -59,11 +57,30 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO: controllare se lo user è già loggato
+        boolean isUserLogged = accountManager.getRememberMe(getContext());
+
+        if(isUserLogged){
+            AccountManager.UserCredentials credentials = accountManager.getCredentials(getContext());
+            Log.d("WELCOME", credentials.getEmail());
+
+            userViewModel.getUserMutableLiveData(credentials.getEmail(), credentials.getPassword()).observe(
+                    getViewLifecycleOwner(), result -> {
+                        if(result.getTokenId() != null) {
+                            Log.d("WELCOME", result.getTokenId());
+                            userViewModel.setAuthenticationError(false);
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                        }else{
+                            Log.d("WELCOME", "login failed");
+                            userViewModel.setAuthenticationError(true);
+                        }
+                    }
+            );
+        }
 
         binding.buttonLogin.setOnClickListener(v -> {
 
-            setRememberMe(binding.checkboxRememberMe.isChecked());
+            accountManager.setRememberMe(binding.checkboxRememberMe.isChecked(), getContext());
 
             String email = Objects.requireNonNull(binding.textInputLayoutEmail.
                     getEditText()).getText().toString();
@@ -76,6 +93,8 @@ public class LoginFragment extends Fragment {
                             if(result.getTokenId() != null) {
                                 Log.d("WELCOME", result.getTokenId());
                                 userViewModel.setAuthenticationError(false);
+                                saveUserInfo(email, password);
+
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
                             }else{
@@ -93,6 +112,13 @@ public class LoginFragment extends Fragment {
         binding.buttonRegistration.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registrationFragment);
         });
+
+    }
+
+    private void saveUserInfo(String email, String password){
+        if(accountManager.getRememberMe(getContext())){
+            accountManager.saveUserInfo(email, password, getContext());
+        }
     }
 
     @Override
@@ -130,11 +156,4 @@ public class LoginFragment extends Fragment {
         dialog.show();
     }
 
-    private void setRememberMe(Boolean rememberMe) {
-        SharedPreferences sp = getContext().getSharedPreferences(
-                SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(USER_REMEMBER_ME_SP, rememberMe);
-        editor.apply();
-    }
 }

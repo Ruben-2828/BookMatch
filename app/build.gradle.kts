@@ -70,7 +70,10 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics") //analytics
     implementation("com.google.firebase:firebase-auth") //authentication
     implementation("com.google.firebase:firebase-firestore") //firestore
-    implementation("com.google.firebase:firebase-storage") //storage
+    implementation("com.google.firebase:firebase-storage")
+
+    //security
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
