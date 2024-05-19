@@ -122,8 +122,9 @@ public class AccountFragment extends Fragment {
         }
         if (id == R.id.logout_item) {
             userViewModel.logout().observe(getViewLifecycleOwner(), r -> {
-                AccountManager accountManager = new AccountManager();
-                accountManager.setRememberMe(false, getContext());
+                AccountManager accountManager = new AccountManager(getContext());
+                accountManager.setRememberMe(false);
+                accountManager.setIsGoogleAccount(false);
                 Intent intent = new Intent(requireContext(), WelcomeActivity.class);
                 startActivity(intent);
                 requireActivity().finish();

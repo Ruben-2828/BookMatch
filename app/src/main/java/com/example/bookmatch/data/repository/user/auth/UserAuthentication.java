@@ -7,9 +7,11 @@ import androidx.annotation.NonNull;
 import com.example.bookmatch.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class UserAuthentication extends IUserAuthentication {
     private FirebaseAuth mAuth;
@@ -73,5 +75,34 @@ public class UserAuthentication extends IUserAuthentication {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void signInWithGoogle(String idToken) {
+        if (idToken !=  null) {
+            // Got an ID token from Google. Use it to authenticate with Firebase.
+            AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
+            mAuth.signInWithCredential(firebaseCredential).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("WELCOME", "signInWithCredential:success");
+                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                    if (firebaseUser != null) {
+                        responseCallback.onSuccessFromAuthentication(
+                                new User(firebaseUser.getDisplayName(),
+                                        firebaseUser.getEmail(),
+                                        firebaseUser.getUid()
+                                )
+                        );
+                    } else {
+                        responseCallback.onFailureFromAuthentication();
+                    }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("WELCOME", "signInWithCredential:failure", task.getException());
+                    responseCallback.onFailureFromAuthentication();
+                }
+            });
+        }
     }
 }

@@ -71,6 +71,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth") //authentication
     implementation("com.google.firebase:firebase-firestore") //firestore
     implementation("com.google.firebase:firebase-storage")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 
     //security
     implementation("androidx.security:security-crypto:1.1.0-alpha06")

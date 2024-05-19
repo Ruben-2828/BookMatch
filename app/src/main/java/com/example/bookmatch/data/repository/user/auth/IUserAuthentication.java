@@ -14,5 +14,6 @@ public abstract class IUserAuthentication {
     public abstract void logout();
     public abstract void signUp(String email, String password, String username, String fullName);
     public abstract void signIn(String email, String password);
+    public abstract void signInWithGoogle(String idToken);
 
 }

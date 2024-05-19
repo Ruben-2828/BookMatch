@@ -21,6 +21,10 @@ public class Constants {
     public static final String USER_PREFERENCES_EMAIL = "email";
     public static final String KEY_ONBOARD_OPENED = "isOnboardOpened";
 
+    public static final String USER_PREFERENCES_GOOGLE_ID_TOKEN = "userIdTokenGoogle";
+
+    public static final String USER_PREFERENCES_GOOGLE_ACCESS_METHOD = "userGoogleAccessMethod";
+
     public static final String USERS_COLLECTION_NAME = "users";
 
 

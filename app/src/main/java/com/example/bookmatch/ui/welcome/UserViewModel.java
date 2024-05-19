@@ -68,4 +68,14 @@ public class UserViewModel extends ViewModel {
         userRepository.setUserInfo(user);
     }
 
+    public MutableLiveData<User> getGoogleUserMutableLiveData(String token) {
+        if (userMutableLiveData == null) {
+            getUserData(token);
+        }
+        return userMutableLiveData;
+    }
+
+    private void getUserData(String token) {
+        userMutableLiveData = userRepository.getGoogleUser(token);
+    }
 }

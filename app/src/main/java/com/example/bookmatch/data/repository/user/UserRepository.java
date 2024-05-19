@@ -59,9 +59,20 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     }
 
     @Override
+    public MutableLiveData<User> getGoogleUser(String idToken) {
+        signInWithGoogle(idToken);
+        return userMutableLiveData;
+    }
+
+    @Override
     public MutableLiveData<User> logout() {
         userAuthentication.logout();
         return userMutableLiveData;
+    }
+
+    @Override
+    public void signInWithGoogle(String token) {
+        userAuthentication.signInWithGoogle(token);
     }
 
     @Override
