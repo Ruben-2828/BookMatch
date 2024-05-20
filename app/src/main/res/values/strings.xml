@@ -116,12 +116,14 @@
     <string name="about_us">About us</string>
     <string name="logout">Logout</string>
     <string name="undo">Undo</string>
+    <string name="preferences_fetch_error">Error while fetching preferences</string>
     <!-- End AccountFragment -->
 
     <!-- Start AccountEditFragment -->
     <string name="please_add_some_books_to_your_saved_list">Please, add some books to your saved list</string>
     <string name="profile_information_saved">Profile information Saved!</string>
     <string name="preferences_saved">Preferences Saved!</string>
+    <string name="preferences_not_saved">Couldn\'t save preferences!</string>
     <string name="please_make_some_changes_to_save_preferences">Please, make some changes to save preferences</string>
     <string name="genre_cannot_be_empty">Genre cannot be empty</string>
     <string name="author_cannot_be_empty">Author cannot be empty</string>

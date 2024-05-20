@@ -86,8 +86,6 @@ public class AccountEditActivity extends AppCompatActivity {
             String nickname = Objects.requireNonNull(binding.tiNicknameInput.getText()).toString().trim();
             String fullName = Objects.requireNonNull(binding.tiFullNameInput.getText()).toString().trim();
 
-
-
             if (validateInput(nickname, fullName)) {
                 setResultAndFinish(nickname, fullName);
             }

@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.data.repository.books.IBookRepository;
 import com.example.bookmatch.model.Book;
-import com.example.bookmatch.utils.BookAPIResponseCallback;
+import com.example.bookmatch.utils.callbacks.BookAPIResponseCallback;
 
 import java.util.ArrayList;
 import java.util.List;

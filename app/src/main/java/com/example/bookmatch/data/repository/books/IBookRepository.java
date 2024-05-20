@@ -1,12 +1,9 @@
 package com.example.bookmatch.data.repository.books;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.bookmatch.model.Book;
-import com.example.bookmatch.utils.BookAPIResponseCallback;
+import com.example.bookmatch.utils.callbacks.BookAPIResponseCallback;
 
 import java.util.List;
 

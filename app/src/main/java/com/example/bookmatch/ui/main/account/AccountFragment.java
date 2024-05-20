@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
+import com.example.bookmatch.model.Result;
+import com.example.bookmatch.model.UserPreferences;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionContainerViewModel;
@@ -60,6 +62,7 @@ public class AccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initializeViewModel();
         updateUserData();
+        updateUserPreferences();
         setButtonClickListeners();
     }
 
@@ -72,9 +75,16 @@ public class AccountFragment extends Fragment {
 
     private void updateUserData() {
         userViewModel.getUserInfo(userViewModel.getLoggedUser().getTokenId()).observe(getViewLifecycleOwner(), user -> {
-            binding.userNickname.setText(user.getUsername());
-            binding.userEmail.setText(user.getEmail());
-            binding.userFullName.setText(user.getFullName());
+            if(user.getUsername() != null){
+                Log.d("WELCOME", user.getUsername());
+                binding.userNickname.setText(user.getUsername());
+            }
+            if(user.getEmail() != null) {
+                binding.userEmail.setText(user.getEmail());
+            }
+            if(user.getFullName() != null) {
+                binding.userFullName.setText(user.getFullName());
+            }
         });
 
         bookViewModel.getSavedBooksCountLiveData().observe(getViewLifecycleOwner(), count -> {
@@ -184,15 +194,20 @@ public class AccountFragment extends Fragment {
                         String author = data.getStringExtra("author");
                         String book = data.getStringExtra("book");
 
-                        binding.userFavoriteGenre.setText(genre);
-                        binding.userFavoriteAuthor.setText(author);
-                        binding.userFavoriteBook.setText(book);
+                        UserPreferences userPreferences = new UserPreferences(genre, author, book);
+
+                        setUserPreferences(userPreferences);
 
                         BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
                         Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.preferences_saved), Snackbar.LENGTH_SHORT);
                         snackbar.setAnchorView(bottomNavigationView);
                         snackbar.show();
                     }
+                }else{
+                    BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+                    Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.preferences_not_saved), Snackbar.LENGTH_SHORT);
+                    snackbar.setAnchorView(bottomNavigationView);
+                    snackbar.show();
                 }
             }
     );
@@ -203,6 +218,28 @@ public class AccountFragment extends Fragment {
         startActivity(browserIntent);
     }
 
+    private void updateUserPreferences() {
+        userViewModel.getPreferences().observe(
+                getViewLifecycleOwner(),
+                result -> {
+                    if(result.isSuccess()){
+                        UserPreferences preferences = ((Result.PreferencesResponseSuccess) result).getUserPreference();
+                        setUserPreferences(preferences);
+                    }else{
+                        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+                        Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.preferences_fetch_error), Snackbar.LENGTH_SHORT);
+                        snackbar.setAnchorView(bottomNavigationView);
+                        snackbar.show();
+                    }
+                }
+        );
+    }
+
+    private void setUserPreferences(UserPreferences preferences){
+        binding.userFavoriteGenre.setText(preferences.getGenre());
+        binding.userFavoriteAuthor.setText(preferences.getAuthor());
+        binding.userFavoriteBook.setText(preferences.getBook());
+    }
 
     @Override
     public void onDestroyView() {

@@ -91,11 +91,9 @@
 
     <!-- Start AccountFragment -->
     <string name="default_nickname">soprannome predefinito</string>
-    <string name="first_name">Nome:</string>
-    <string name="last_name">Cognome:</string>
+    <string name="full_name_account">Nome completo:</string>
     <string name="email_account">Email:</string>
-    <string name="default_first_name">Nome predefinito</string>
-    <string name="default_last_name">Cognome predefinito</string>
+    <string name="default_full_name">Nome completo predefinito</string>
     <string name="default_email">Email predefinita</string>
     <string name="statistics">Statistiche</string>
     <string name="saved_books">Libri salvati</string>
@@ -112,24 +110,24 @@
     <string name="about_us">Chi siamo</string>
     <string name="logout">Disconnettiti</string>
     <string name="undo">Annulla</string>
+    <string name="preferences_fetch_error">Errore durante il recupero dei preferiti</string>
     <!-- End AccountFragment -->
 
     <!-- Start AccountEditFragment -->
     <string name="please_add_some_books_to_your_saved_list">Per favore, aggiungi alcuni libri alla tua lista dei salvati</string>
     <string name="profile_information_saved">Informazioni del profilo salvate!</string>
     <string name="preferences_saved">Preferenze salvate!</string>
+    <string name="preferences_not_saved">Non è stato possibile salvare le preferenze!</string>
     <string name="please_make_some_changes_to_save_preferences">Per favore, apporta alcune modifiche per salvare le preferenze</string>
     <string name="genre_cannot_be_empty">Il genere non può essere vuoto</string>
     <string name="author_cannot_be_empty">L\'autore non può essere vuoto</string>
     <string name="book_cannot_be_empty">Il libro non può essere vuoto</string>
     <string name="hint_nickname">Soprannome</string>
-    <string name="first_name_hint">Nome</string>
-    <string name="last_name_hint">Cognome</string>
+    <string name="full_name_hint">Nome completo</string>
     <string name="edit_account">Modifica account</string>
     <string name="save_changes">Salva modifiche</string>
     <string name="error_nickname_required">Il soprannome è obbligatorio</string>
-    <string name="error_first_name_required">Il nome è obbligatorio</string>
-    <string name="error_last_name_required">Il cognome è obbligatorio</string>
+    <string name="error_full_name_required">Il nome completo è obbligatorio</string>
     <string name="save">Salva</string>
     <string name="description_edit_account">Modifica le informazioni del tuo account inserendo il tuo soprannome, nome, cognome e una foto del profilo!</string>
     <!-- End AccountEditFragment -->

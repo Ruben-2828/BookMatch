@@ -28,5 +28,8 @@ public class Constants {
 
     public static final String USERS_COLLECTION_NAME = "users";
 
+    public static final String USERS_PREFERENCES_NAME = "preferences";
+
+    public static final String ERROR_WRITING_FIRESTORE = "Error writing document";
 
 }

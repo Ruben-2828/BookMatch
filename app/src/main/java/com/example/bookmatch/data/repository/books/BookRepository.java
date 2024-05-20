@@ -3,18 +3,16 @@ package com.example.bookmatch.data.repository.books;
 import static com.example.bookmatch.utils.Constants.API_SEARCH_BOOK_MAX_RESULTS_VALUE;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.example.bookmatch.R;
 import com.example.bookmatch.data.database.books.BookDao;
 import com.example.bookmatch.data.database.books.BookRoomDatabase;
 import com.example.bookmatch.data.service.BookAPIService;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.BooksListApiResponse;
-import com.example.bookmatch.utils.BookAPIResponseCallback;
+import com.example.bookmatch.utils.callbacks.BookAPIResponseCallback;
 import com.example.bookmatch.utils.ServiceLocator;
 
 import java.util.ArrayList;

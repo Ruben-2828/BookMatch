@@ -1,16 +1,17 @@
 package com.example.bookmatch.ui.welcome;
 
-import android.util.Log;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.bookmatch.data.repository.user.IUserRepository;
+import com.example.bookmatch.model.Result;
 import com.example.bookmatch.model.User;
+import com.example.bookmatch.model.UserPreferences;
+
 public class UserViewModel extends ViewModel {
     private final IUserRepository userRepository;
     private MutableLiveData<User> userMutableLiveData;
+    private MutableLiveData<Result> preferencesMutableLiveData;
 
     private boolean authenticationError;
 
@@ -77,5 +78,29 @@ public class UserViewModel extends ViewModel {
 
     private void getUserData(String token) {
         userMutableLiveData = userRepository.getGoogleUser(token);
+    }
+
+    public MutableLiveData<Result> getPreferences() {
+        if (preferencesMutableLiveData == null) {
+            getPreferencesData();
+        }
+        return preferencesMutableLiveData;
+    }
+
+    public MutableLiveData<Result> setPreferences(UserPreferences preferences) {
+        if (preferencesMutableLiveData == null) {
+            setPreferencesData(preferences);
+        }
+        return preferencesMutableLiveData;
+    }
+
+    private void getPreferencesData() {
+        User currentUser = getLoggedUser();
+        preferencesMutableLiveData = userRepository.getPreferences(currentUser.getTokenId());
+    }
+
+    private void setPreferencesData(UserPreferences userPreferences) {
+        User currentUser = getLoggedUser();
+        preferencesMutableLiveData = userRepository.setPreferences(currentUser.getTokenId(), userPreferences);
     }
 }

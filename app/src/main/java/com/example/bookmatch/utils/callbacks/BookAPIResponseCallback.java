@@ -1,4 +1,4 @@
-package com.example.bookmatch.utils;
+package com.example.bookmatch.utils.callbacks;
 
 import com.example.bookmatch.model.Book;
 

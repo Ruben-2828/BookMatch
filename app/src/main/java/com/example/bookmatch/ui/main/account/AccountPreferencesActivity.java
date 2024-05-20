@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
@@ -12,10 +13,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.bookmatch.R;
+import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.ActivityPreferencesEditBinding;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.model.Result;
+import com.example.bookmatch.model.UserPreferences;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.example.bookmatch.ui.main.MainActivity;
+import com.example.bookmatch.ui.welcome.UserViewModel;
+import com.example.bookmatch.ui.welcome.UserViewModelFactory;
+import com.example.bookmatch.utils.ServiceLocator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -27,11 +35,16 @@ public class AccountPreferencesActivity extends AppCompatActivity {
 
     private ActivityPreferencesEditBinding binding;
 
+    private UserViewModel userViewModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPreferencesEditBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        IUserRepository userRepository = ServiceLocator.getInstance().getUserRepository(getApplication());
+        userViewModel = new ViewModelProvider(this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
 
         getDataFromSavedFragment();
         undoEditPreferences();
@@ -112,14 +125,26 @@ public class AccountPreferencesActivity extends AppCompatActivity {
         String author = binding.author.getText().toString();
         String book = binding.book.getText().toString();
 
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("genre", genre);
-        resultIntent.putExtra("author", author);
-        resultIntent.putExtra("book", book);
+        UserPreferences preferences = new UserPreferences(genre, author, book);
 
-        setResult(Activity.RESULT_OK, resultIntent);
+        userViewModel.setPreferences(preferences).observe(
+                this,
+                result -> {
+                    if(result.isSuccess()){
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("genre", genre);
+                        resultIntent.putExtra("author", author);
+                        resultIntent.putExtra("book", book);
 
-        finish();
+                        setResult(Activity.RESULT_OK, resultIntent);
+                    }else{
+                        Intent resultIntent = new Intent();
+                        setResult(Activity.RESULT_CANCELED, resultIntent);
+                    }
+
+                    finish();
+                }
+        );
     }
 
     private void setErrorAndShowMessage(boolean changesDetected, boolean fieldsNotEmpty) {

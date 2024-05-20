@@ -1,6 +1,7 @@
 package com.example.bookmatch.data.repository.user.firebase;
 
-import com.example.bookmatch.data.repository.user.UserResponseCallback;
+import com.example.bookmatch.model.UserPreferences;
+import com.example.bookmatch.utils.callbacks.UserResponseCallback;
 import com.example.bookmatch.model.User;
 
 public abstract class IUserFireStore {
@@ -12,4 +13,7 @@ public abstract class IUserFireStore {
 
     public abstract void saveUserData(User user, Boolean override);
     public abstract void getUserData(String userId);
+
+    public abstract void saveUserPreferences(String tokenId, UserPreferences userPreferences);
+    public abstract void getUserPreferences(String tokenId);
 }

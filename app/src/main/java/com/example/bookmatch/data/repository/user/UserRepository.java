@@ -8,16 +8,21 @@ import com.example.bookmatch.data.repository.user.auth.IUserAuthentication;
 import com.example.bookmatch.data.repository.user.auth.UserAuthentication;
 import com.example.bookmatch.data.repository.user.firebase.IUserFireStore;
 import com.example.bookmatch.data.repository.user.firebase.UserFireStore;
+import com.example.bookmatch.model.Result;
 import com.example.bookmatch.model.User;
+import com.example.bookmatch.model.UserPreferences;
+import com.example.bookmatch.utils.callbacks.UserResponseCallback;
 
 
-public class UserRepository implements IUserRepository, UserResponseCallback{
+public class UserRepository implements IUserRepository, UserResponseCallback {
     private final MutableLiveData<User> userMutableLiveData;
+    private final MutableLiveData<Result> userPreferencesMutableLiveData;
     private final IUserAuthentication userAuthentication;
     private final IUserFireStore userFireStore;
 
     public UserRepository(){
         this.userMutableLiveData = new MutableLiveData<>();
+        this.userPreferencesMutableLiveData = new MutableLiveData<>();
         this.userAuthentication = new UserAuthentication();
         this.userFireStore = new UserFireStore();;
         this.userAuthentication.setUserResponseCallback(this);
@@ -71,6 +76,18 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     }
 
     @Override
+    public MutableLiveData<Result> getPreferences(String idToken) {
+        userFireStore.getUserPreferences(idToken);
+        return userPreferencesMutableLiveData;
+    }
+
+    @Override
+    public MutableLiveData<Result> setPreferences(String tokenId, UserPreferences userPreferences) {
+        userFireStore.saveUserPreferences(tokenId, userPreferences);
+        return userPreferencesMutableLiveData;
+    }
+
+    @Override
     public void signInWithGoogle(String token) {
         userAuthentication.signInWithGoogle(token);
     }
@@ -91,9 +108,22 @@ public class UserRepository implements IUserRepository, UserResponseCallback{
     }
 
     @Override
+    public void onSuccessFromFirestore(UserPreferences preferences) {
+        Result.PreferencesResponseSuccess result = new Result.PreferencesResponseSuccess(preferences);
+        userPreferencesMutableLiveData.postValue(result);
+    }
+
+    @Override
     public void onFailureFromAuthentication() {
         User user = new User(null, null, null);
         userMutableLiveData.postValue(user);
+    }
+
+    @Override
+    public void onFailureFromFireStore(String error) {
+        Result.Error result = new Result.Error(error);
+        //TODO: da sostituire con usermutablelivedata
+        userPreferencesMutableLiveData.postValue(result);
     }
 
     @Override

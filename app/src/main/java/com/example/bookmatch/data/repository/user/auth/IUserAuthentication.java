@@ -1,6 +1,6 @@
 package com.example.bookmatch.data.repository.user.auth;
 
-import com.example.bookmatch.data.repository.user.UserResponseCallback;
+import com.example.bookmatch.utils.callbacks.UserResponseCallback;
 import com.example.bookmatch.model.User;
 
 public abstract class IUserAuthentication {
