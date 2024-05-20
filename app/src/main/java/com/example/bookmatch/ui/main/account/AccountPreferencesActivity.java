@@ -112,14 +112,13 @@ public class AccountPreferencesActivity extends AppCompatActivity {
         String author = binding.author.getText().toString();
         String book = binding.book.getText().toString();
 
-        Snackbar.make(binding.getRoot(), getString(R.string.preferences_saved), Snackbar.LENGTH_SHORT).show();
-
         Intent resultIntent = new Intent();
         resultIntent.putExtra("genre", genre);
         resultIntent.putExtra("author", author);
         resultIntent.putExtra("book", book);
 
         setResult(Activity.RESULT_OK, resultIntent);
+
         finish();
     }
 

@@ -36,15 +36,26 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         this.startIndex = startIndex;
     }
 
-    public void fetchBooks(String genre) {
+    public void fetchBooks(String selectedGenre) {
+        String englishGenre = GenreMapping.getEnglishGenre(selectedGenre);
 
-        if (!genre.equals(prevGenre)) {
-            prevGenre = genre;
-            startIndex = 0;
+        if (englishGenre != null) {
+            if (!englishGenre.equals(prevGenre)) {
+                prevGenre = englishGenre;
+                startIndex = 0;
+            }
+
+            bookRepository.setCallback(this);
+            bookRepository.fetchBooks(englishGenre, startIndex * API_SEARCH_BOOK_MAX_RESULTS_VALUE);
+        } else {
+            if (!selectedGenre.equals(prevGenre)) {
+                prevGenre = selectedGenre;
+                startIndex = 0;
+            }
+
+            bookRepository.setCallback(this);
+            bookRepository.fetchBooks("", startIndex * API_SEARCH_BOOK_MAX_RESULTS_VALUE);
         }
-
-        bookRepository.setCallback(this);
-        bookRepository.fetchBooks(genre, startIndex * API_SEARCH_BOOK_MAX_RESULTS_VALUE);
         startIndex++;
     }
 
@@ -77,6 +88,21 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         return new MutableLiveData<>(bookRepository.getReviewedBooksCount());
     }
 
+    public Book getBookById(String id) {
+        return bookRepository.getBookById(id);
+    }
+
+    public List<Book> getBooksByIds(List<String> ids) {
+        List<Book> books = new ArrayList<>();
+        for (String id : ids) {
+            Book book = getBookById(id);
+            if (book != null) {
+                books.add(book);
+            }
+        }
+        return books;
+    }
+
     @Override
     public void onSuccess(ArrayList<Book> books) {
 
@@ -97,5 +123,7 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         bookRepository.updateBook(book);
     }
 
-
+    public LiveData<Boolean> isBookSavedLiveData(String bookId) {
+        return bookRepository.isBookSavedLiveData(bookId);
+    }
 }

@@ -1,36 +1,39 @@
 package com.example.bookmatch.adapter;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
-import com.example.bookmatch.model.Collection;
+import com.example.bookmatch.model.CollectionContainer;
+import com.example.bookmatch.utils.Converters;
 
 import java.util.List;
 
-public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<CollectionsRecyclerViewAdapter.CollectionViewHolder> {
+public class CollectionContainersRecyclerViewAdapter extends RecyclerView.Adapter<CollectionContainersRecyclerViewAdapter.CollectionViewHolder> {
 
-    private List<Collection> collections;
+    private List<CollectionContainer> collections;
     private final OnCollectionClickListener onCollectionClickListener;
 
-    public void setCollections(List<Collection> collections) {
+    public void setCollections(List<CollectionContainer> collections) {
         this.collections = collections;
         notifyDataSetChanged();
     }
 
     public interface OnCollectionClickListener {
-        void onItemClick(Collection collection);
-        void onDeleteButtonClick(Collection collection);
+        void onItemClick(CollectionContainer collection);
+        void onDeleteButtonClick(CollectionContainer collection);
     }
 
-    public CollectionsRecyclerViewAdapter(List<Collection> collections,
-                                          OnCollectionClickListener onCollectionClickListener) {
+    public CollectionContainersRecyclerViewAdapter(List<CollectionContainer> collections,
+                                                   OnCollectionClickListener onCollectionClickListener) {
         this.collections = collections;
         this.onCollectionClickListener = onCollectionClickListener;
     }
@@ -44,7 +47,7 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
 
     @Override
     public void onBindViewHolder(@NonNull CollectionViewHolder holder, int position) {
-        Collection item = collections.get(position);
+        CollectionContainer item = collections.get(position);
         holder.bind(item);
     }
 
@@ -54,29 +57,32 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
     }
 
     public class CollectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private final ImageView imageView;
         private final TextView textViewName;
         private final TextView textViewDescription;
-        private final RecyclerView booksCarousel;
         private final ImageButton deleteButton;
 
 
         public CollectionViewHolder(View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.collection_item_image);
             textViewName = itemView.findViewById(R.id.collection_item_name);
             textViewDescription = itemView.findViewById(R.id.collection_item_description);
-            booksCarousel = itemView.findViewById(R.id.books_carousel);
             deleteButton = itemView.findViewById(R.id.delete_collection_button);
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Collection collection) {
+        public void bind(CollectionContainer collection) {
+            byte[] imageData = collection.getImageData();
+            if (imageData != null) {
+                Bitmap bitmap = Converters.toBitmap(imageData);
+                imageView.setImageBitmap(bitmap);
+            } else {
+                imageView.setImageResource(R.drawable.library); // Default image if no image stored
+            }
             textViewName.setText(collection.getName());
             textViewDescription.setText(collection.getDescription());
             deleteButton.setOnClickListener(this);
-
-            //BooksCarouselAdapter booksAdapter = new BooksCarouselAdapter(itemView.getContext(), selectedBooks);
-            //booksCarousel.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-            //booksCarousel.setAdapter(booksAdapter);
         }
 
         @Override

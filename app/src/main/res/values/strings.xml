@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BookMatch</string>
 
+
     <!-- Start MainActivity -->
     <string name="notifications">Notifications</string>
     <string name="search">Search</string>
@@ -9,8 +10,8 @@
     <string name="reviews">Reviews</string>
     <string name="collections">Collections</string>
     <string name="account">Account</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home" translatable="false">Home</string>
+    <string name="title_dashboard" translatable="false">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="default_content_description">Default content description</string>
     <string name="book_thumbnail">Book Thumbnail</string>
@@ -18,21 +19,21 @@
     <string name="default_book_plot">Default Book Plot</string>
     <string name="default_book_author">Default Book Author</string>
     <string name="genre_book_default">Genre Book Default</string>
-    <string name="pubblication_year_default">Pubblication Year Default</string>
+    <string name="publication_year_default">Publication Year Default</string>
     <string name="clicked_on">"Clicked on: "</string>
     <string name="added">Added</string>
     <string name="no_book_selected">No book selected</string>
     <!-- End MainActivity -->
 
     <!-- Start WelcomeActivity -->
-    <string name="email_welcome">Email</string>
-    <string name="password">Password</string>
+    <string name="email_welcome" translatable="false">Email</string>
+    <string name="password" translatable="false">Password</string>
     <string name="remember_me">Remember me</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="login">Login</string>
     <string name="or">OR</string>
     <string name="login_with_google">Login with Google</string>
-    <string name="new_to_bookmatch">New to BookMatch?</string>
+    <string name="new_to_bookmatch">Are you new to BookMatch?</string>
     <string name="register">Register</string>
     <string name="logo_application">Logo Application</string>
     <string name="repeat_password">Repeat Password</string>
@@ -119,6 +120,7 @@
 
     <!-- Start AccountEditFragment -->
     <string name="please_add_some_books_to_your_saved_list">Please, add some books to your saved list</string>
+    <string name="profile_information_saved">Profile information Saved!</string>
     <string name="preferences_saved">Preferences Saved!</string>
     <string name="please_make_some_changes_to_save_preferences">Please, make some changes to save preferences</string>
     <string name="genre_cannot_be_empty">Genre cannot be empty</string>
@@ -150,7 +152,7 @@
     <!-- Start CollectionsFragment -->
     <string name="create_button">Create</string>
     <string name="create_a_new_collection">Create a New Collection</string>
-    <string name="description_create_collection">Enter the name of your collection and provide a short description!</string>
+    <string name="description_create_collection">Enter an image, name and a short description for your collection!</string>
     <string name="collection_name">Name</string>
     <string name="collection_description">Description</string>
     <string name="collection_created_toast">Collection Created</string>
@@ -161,6 +163,13 @@
     <string name="empty_collection">This collection is empty! To add book, tap here!</string>
     <string name="add_book_to_collection">Add Book to Collection</string>
     <string name="add_books_button">Add Books</string>
+    <string name="delete_collection">Delete collection</string>
+    <string name="collection_image">Collection image</string>
+    <string name="edit">Edit</string>
+    <string name="edit_collection">Edit collection</string>
+    <string name="error_no_changes">Error: no changes detected</string>
+    <string name="error_collection_name_exists">Error: collection with same name already exists</string>
+    <string name="collection_updated">Collection updated!</string>
     <!-- End CollectionsFragment -->
 
     <!-- Start BookPageFragment -->
@@ -205,10 +214,10 @@
     <!-- Start ReviewFragment -->
     <string name="default_review">This book does not have a review. Try adding one!</string>
     <string name="insert_a_review">Insert a review</string>
-    <string name="default_rating">0.0</string>
+    <string name="default_rating" translatable="false">0.0</string>
     <string name="favorite">Favorite</string>
     <string name="removed_from_reviews">" removed from reviews!"</string>
-
+    <string name="review_saved">The review has been saved!</string>
     <!-- End ReviewFragment -->
 
 </resources>

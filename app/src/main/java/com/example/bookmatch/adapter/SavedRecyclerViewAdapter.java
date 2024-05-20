@@ -1,9 +1,6 @@
 package com.example.bookmatch.adapter;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.app.Application;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +8,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
-import com.example.bookmatch.model.Collection;
-import com.example.bookmatch.ui.main.BookViewModel;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,51 +3,54 @@ package com.example.bookmatch.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.bookmatch.ui.main.BookViewModel;
+import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.example.bookmatch.ui.main.CollectionGroupViewModel;
+import com.example.bookmatch.ui.main.CollectionGroupViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddBookToCollectionRecyclerViewAdapter extends
-        RecyclerView.Adapter<AddBookToCollectionRecyclerViewAdapter.BookViewHolder> {
+public class CollectionGroupsRecyclerViewAdapter extends
+        RecyclerView.Adapter<CollectionGroupsRecyclerViewAdapter.BookViewHolder> {
 
     private final List<Book> bookList;
-    public List<Book> selectedBooks = new ArrayList<>();
     private final OnBookSelectedListener onBookSelectedListener;
-    private final View anchorView;
 
     public interface OnBookSelectedListener {
-        void onBookSelected(Book book, String action);
+        void onBookSelected(String bookId, String action);
     }
 
-    public AddBookToCollectionRecyclerViewAdapter(List<Book> bookList, OnBookSelectedListener listener, View anchorView) {
+    public CollectionGroupsRecyclerViewAdapter(List<Book> bookList, OnBookSelectedListener listener) {
         this.bookList = bookList;
         this.onBookSelectedListener = listener;
-        this.anchorView = anchorView;
     }
 
     @NonNull
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.add_book_to_collection_list_item, parent, false);
+                R.layout.collection_book_list_item, parent, false);
 
         return new BookViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
-        holder.bind(bookList.get(position));
+        Book book = bookList.get(position);
+        if (book != null) {
+            holder.bind(book);
+        }
     }
 
     @Override
@@ -57,21 +60,17 @@ public class AddBookToCollectionRecyclerViewAdapter extends
         return 0;
     }
 
-    public List<Book> getSelectedBooks() {
-        return selectedBooks;
-    }
-
     public class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView title;
         private final TextView author;
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.book_title);
-            author = itemView.findViewById(R.id.book_author);
-            ImageButton addImageButton = itemView.findViewById(R.id.add_book_to_collection);
+            title = itemView.findViewById(R.id.book_title_collection);
+            author = itemView.findViewById(R.id.book_author_collection);
+            ImageButton removeBookImageButton = itemView.findViewById(R.id.imageview_delete_collection_book);
+            removeBookImageButton.setOnClickListener(this);
             itemView.setOnClickListener(this);
-            addImageButton.setOnClickListener(this);
         }
 
         public void bind(Book book) {
@@ -89,12 +88,10 @@ public class AddBookToCollectionRecyclerViewAdapter extends
             int position = getAbsoluteAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Book book = bookList.get(position);
-                if (view.getId() == R.id.add_book_to_collection) {
+                if (view.getId() == R.id.imageview_delete_collection_book) {
                     removeItem(position);
                 } else {
-                    Snackbar snackbar = Snackbar.make(anchorView, book.getTitle(), Snackbar.LENGTH_SHORT);
-                    snackbar.setAnchorView(anchorView);
-                    snackbar.show();
+                    Snackbar.make(view, book.getTitle(), Snackbar.LENGTH_SHORT).show();
                 }
             }
         }
@@ -104,20 +101,16 @@ public class AddBookToCollectionRecyclerViewAdapter extends
             bookList.remove(position);
             notifyItemRemoved(position);
 
-            onBookSelectedListener.onBookSelected(removedBook, "add");
+            onBookSelectedListener.onBookSelected(removedBook.getId(), "remove");
 
-            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " added to collection", Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(itemView, removedBook.getTitle() + " removed from collection", Snackbar.LENGTH_SHORT);
             snackbar.setAction(R.string.undo, v -> {
                 bookList.add(position, removedBook);
                 notifyItemInserted(position);
-                selectedBooks.remove(removedBook);
-
-                onBookSelectedListener.onBookSelected(removedBook, "remove");
+                onBookSelectedListener.onBookSelected(removedBook.getId(), "add");
             });
-            snackbar.setAnchorView(anchorView);
             snackbar.show();
         }
-
 
     }
 }

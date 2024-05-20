@@ -34,7 +34,6 @@ public class Book implements Parcelable {
     @ColumnInfo(name = "is_saved")
     private boolean isSaved;
 
-
     @ColumnInfo(name = "is_reviewed")
     private boolean isReviewed;
 
@@ -195,7 +194,7 @@ public class Book implements Parcelable {
         this.rating = (Float) source.readValue(Float.class.getClassLoader());
     }
 
-    protected Book(Parcel in) {
+    public Book(Parcel in) {
         this.id = Objects.requireNonNull(in.readString());
         this.title = in.readString();
         this.authors = in.createStringArrayList();

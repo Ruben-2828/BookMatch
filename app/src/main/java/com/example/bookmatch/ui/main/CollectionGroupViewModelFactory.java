@@ -6,18 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-public class CollectionViewModelFactory implements ViewModelProvider.Factory {
+public class CollectionGroupViewModelFactory implements ViewModelProvider.Factory {
     private Application mApplication;
 
-    public CollectionViewModelFactory(Application application) {
+    public CollectionGroupViewModelFactory(Application application) {
         mApplication = application;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(CollectionViewModel.class)) {
-            return (T) new CollectionViewModel(mApplication);
+        if (modelClass.isAssignableFrom(CollectionGroupViewModel.class)) {
+            return (T) new CollectionGroupViewModel(mApplication);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

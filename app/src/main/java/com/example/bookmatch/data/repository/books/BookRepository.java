@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.example.bookmatch.R;
 import com.example.bookmatch.data.database.books.BookDao;
 import com.example.bookmatch.data.database.books.BookRoomDatabase;
 import com.example.bookmatch.data.service.BookAPIService;
@@ -125,5 +126,23 @@ public class BookRepository implements IBookRepository{
         return bookDao.getReviewedBooksLiveData();
     }
 
+    @Override
+    public Book getBookById(String id) {
+        return bookDao.getBookById(id);
+    }
+
+    @Override
+    public List<Book> getBooksByIds(List<String> ids) {
+        List<Book> books = new ArrayList<>();
+        for (String id : ids) {
+            books.add(bookDao.getBookById(id));
+        }
+        return books;
+    }
+
+    @Override
+    public LiveData<Boolean> isBookSavedLiveData(String id) {
+        return bookDao.isBookSavedLiveData(id);
+    }
 
 }

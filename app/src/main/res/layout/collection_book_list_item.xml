@@ -20,43 +20,44 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/book_title"
+            android:id="@+id/book_title_collection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:layout_marginEnd="12sp"
             android:text="@string/default_title"
-            app:layout_constraintEnd_toStartOf="@id/add_book_to_collection"
+            app:layout_constraintEnd_toStartOf="@id/imageview_delete_collection_book"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textStyle="bold"/>
 
 
         <TextView
-            android:id="@+id/book_author"
+            android:id="@+id/book_author_collection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="12sp"
             android:text="@string/default_author"
             android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@id/add_book_to_collection"
+            app:layout_constraintEnd_toStartOf="@id/imageview_delete_collection_book"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/book_title" />
+            app:layout_constraintTop_toBottomOf="@+id/book_title_collection" />
 
         <ImageButton
-            android:id="@+id/add_book_to_collection"
+            android:id="@+id/imageview_delete_collection_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:focusable="true"
             android:padding="12dp"
-            android:src="@drawable/baseline_add_24"
+            android:src="@drawable/baseline_delete_24"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="?attr/colorPrimary"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

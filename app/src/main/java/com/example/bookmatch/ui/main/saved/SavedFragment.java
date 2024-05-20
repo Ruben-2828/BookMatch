@@ -91,23 +91,23 @@ public class SavedFragment extends Fragment {
             public void onDeleteButtonClick(int position) {
                 final Book removedBook = recyclerViewAdapter.removeBook(position);
                 recyclerViewAdapter.notifyItemRemoved(position);
-                Snackbar snackbar = Snackbar.make(view, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_SHORT).setAnchorView(bottomNavigationView);
-                snackbar.setAnchorView(bottomNavigationView);
-                snackbar.setAction(R.string.undo, v -> {
-                    recyclerViewAdapter.addBook(position, removedBook);
-                    recyclerViewAdapter.notifyItemInserted(position);
-                });
-                snackbar.addCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar transientBottomBar, int event) {
-                        super.onDismissed(transientBottomBar, event);
-                        if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                            BookViewModel bookViewModel = new BookViewModel(requireActivity().getApplication());
-                            bookViewModel.deleteBook(removedBook);
-                        }
+
+                BookViewModel bookViewModel = new BookViewModel(requireActivity().getApplication());
+                bookViewModel.deleteBook(removedBook);
+
+                if (isAdded()) {
+                    View view = getView();
+                    if (view != null) {
+                        Snackbar snackbar = Snackbar.make(view, removedBook.getTitle() + " removed from saved!", Snackbar.LENGTH_SHORT);
+                        snackbar.setAnchorView(bottomNavigationView);
+                        snackbar.setAction(R.string.undo, v -> {
+                            bookViewModel.saveBook(removedBook, true);
+                            recyclerViewAdapter.addBook(position, removedBook);
+                            recyclerViewAdapter.notifyItemInserted(position);
+                        });
+                        snackbar.show();
                     }
-                });
-                snackbar.show();
+                }
             }
 
             @Override
