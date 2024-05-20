@@ -23,13 +23,14 @@ import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
-import com.example.bookmatch.ui.main.CollectionViewModel;
-import com.example.bookmatch.ui.main.CollectionViewModelFactory;
+import com.example.bookmatch.ui.main.CollectionContainerViewModel;
+import com.example.bookmatch.ui.main.CollectionContainerViewModelFactory;
 import com.example.bookmatch.ui.welcome.UserViewModel;
 import com.example.bookmatch.ui.welcome.UserViewModelFactory;
 import com.example.bookmatch.ui.welcome.WelcomeActivity;
 import com.example.bookmatch.utils.AccountManager;
 import com.example.bookmatch.utils.ServiceLocator;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -37,7 +38,7 @@ public class AccountFragment extends Fragment {
 
     private FragmentAccountBinding binding;
     private BookViewModel bookViewModel;
-    private CollectionViewModel collectionViewModel;
+    private CollectionContainerViewModel collectionViewModel;
     private UserViewModel userViewModel;
 
     @Override
@@ -65,8 +66,8 @@ public class AccountFragment extends Fragment {
     private void initializeViewModel() {
         BookViewModelFactory factoryBook = new BookViewModelFactory(requireActivity().getApplication());
         bookViewModel = new ViewModelProvider(this, factoryBook).get(BookViewModel.class);
-        CollectionViewModelFactory factoryCollection = new CollectionViewModelFactory(requireActivity().getApplication());
-        collectionViewModel = new ViewModelProvider(this, factoryCollection).get(CollectionViewModel.class);
+        CollectionContainerViewModelFactory factoryCollection = new CollectionContainerViewModelFactory(requireActivity().getApplication());
+        collectionViewModel = new ViewModelProvider(this, factoryCollection).get(CollectionContainerViewModel.class);
     }
 
     private void updateUserData() {
@@ -186,6 +187,11 @@ public class AccountFragment extends Fragment {
                         binding.userFavoriteGenre.setText(genre);
                         binding.userFavoriteAuthor.setText(author);
                         binding.userFavoriteBook.setText(book);
+
+                        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+                        Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.preferences_saved), Snackbar.LENGTH_SHORT);
+                        snackbar.setAnchorView(bottomNavigationView);
+                        snackbar.show();
                     }
                 }
             }
