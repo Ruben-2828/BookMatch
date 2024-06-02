@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.data.repository.books.IBookRepository;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.model.Result;
 import com.example.bookmatch.utils.callbacks.BookAPIResponseCallback;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.List;
 public class BookViewModel extends ViewModel implements BookAPIResponseCallback {
     private static final String TAG = BookViewModel.class.getSimpleName();
     private final IBookRepository bookRepository;
-    private final MutableLiveData<ArrayList<Book>> extractedBooks;
+    private final MutableLiveData<Result> extractedBooks;
     private String prevGenre;
     private int startIndex;
 
@@ -69,7 +70,7 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
         bookRepository.deleteBook(book);
     }
 
-    public MutableLiveData<ArrayList<Book>> getExtractedBooksLiveData() {
+    public MutableLiveData<Result> getExtractedBooksLiveData() {
         return extractedBooks;
     }
 
@@ -110,13 +111,16 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
             if(books.size() < API_SEARCH_BOOK_MIN_RESULTS_VALUE)
                 fetchBooks(prevGenre);
 
-            this.extractedBooks.postValue(books);
+            Result.BooksResponseSuccess result = new Result.BooksResponseSuccess(books);
+            this.extractedBooks.postValue(result);
         }
     }
 
     @Override
     public void onFailure(String message) {
         Log.e(TAG, message);
+        Result.Error result = new Result.Error(message);
+        this.extractedBooks.postValue(result);
     }
 
     public void updateBook(Book book) {

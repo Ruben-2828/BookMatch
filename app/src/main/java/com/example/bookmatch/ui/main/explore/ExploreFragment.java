@@ -21,8 +21,10 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.CardStackAdapter;
 import com.example.bookmatch.databinding.FragmentExploreBinding;
 import com.example.bookmatch.model.Book;
+import com.example.bookmatch.model.Result;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
@@ -31,6 +33,8 @@ import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.Duration;
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
+
+import java.util.ArrayList;
 
 public class ExploreFragment extends Fragment implements CardStackListener {
 
@@ -108,9 +112,18 @@ public class ExploreFragment extends Fragment implements CardStackListener {
             }
         });
 
-        bookViewModel.getExtractedBooksLiveData().observe(getViewLifecycleOwner(), books -> {
-            if (books != null) {
-                cardStackAdapter.addBooks(books);
+        bookViewModel.getExtractedBooksLiveData().observe(getViewLifecycleOwner(), result -> {
+            if(result.isSuccess()){
+                ArrayList<Book> books = ((Result.BooksResponseSuccess)result).getBooks();
+                if (books != null) {
+                    cardStackAdapter.addBooks(books);
+                }
+            }else{
+                String message = ((Result.Error)result).getMessage();
+                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+                Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT);
+                snackbar.setAnchorView(bottomNavigationView);
+                snackbar.show();
             }
         });
 

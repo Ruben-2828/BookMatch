@@ -1,9 +1,14 @@
 package com.example.bookmatch.model;
 
+import com.example.bookmatch.data.repository.books.BookRepository;
+
+import java.util.ArrayList;
+
 public abstract class Result {
 
     public boolean isSuccess(){
-        if(this instanceof PreferencesResponseSuccess || this instanceof UserResponseSuccess){
+        if(this instanceof PreferencesResponseSuccess || this instanceof UserResponseSuccess
+        || this instanceof BooksResponseSuccess){
             return true;
         } else {
             return false;
@@ -16,6 +21,17 @@ public abstract class Result {
         }
         public User getData() {
             return user;
+        }
+    }
+
+    public static final class BooksResponseSuccess extends Result{
+        private final ArrayList<Book> books;
+        public BooksResponseSuccess(ArrayList<Book> books){
+            this.books = books;
+        }
+
+        public ArrayList<Book> getBooks(){
+            return books;
         }
     }
 
