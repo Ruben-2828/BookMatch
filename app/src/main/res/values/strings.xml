@@ -220,6 +220,8 @@
     <string name="favorite">Favorite</string>
     <string name="removed_from_reviews">" removed from reviews!"</string>
     <string name="review_saved">The review has been saved!</string>
+    <string name="error_not_saved">"couldn't save changes "</string>
+    <string name="no_google_account_found">No google account found</string>
     <!-- End ReviewFragment -->
 
 </resources>

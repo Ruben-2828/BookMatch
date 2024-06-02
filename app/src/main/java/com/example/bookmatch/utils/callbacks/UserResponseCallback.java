@@ -7,7 +7,7 @@ public interface UserResponseCallback {
     void onSuccessFromAuthentication(User user);
     void onSuccessFromFirestore(User user);
     void onSuccessFromFirestore(UserPreferences preferences);
-    void onFailureFromAuthentication();
+    void onFailureFromAuthentication(String erroMessage);
     void onFailureFromFireStore(String error);
     void onSuccessLogout();
 }

@@ -22,6 +22,7 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
 import com.example.bookmatch.model.Result;
+import com.example.bookmatch.model.User;
 import com.example.bookmatch.model.UserPreferences;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
@@ -74,17 +75,24 @@ public class AccountFragment extends Fragment {
     }
 
     private void updateUserData() {
-        userViewModel.getUserInfo(userViewModel.getLoggedUser().getTokenId()).observe(getViewLifecycleOwner(), user -> {
-            if(user.getUsername() != null){
-                Log.d("WELCOME", user.getUsername());
-                binding.userNickname.setText(user.getUsername());
+        userViewModel.getUserInfo(userViewModel.getLoggedUser().getTokenId()).observe(getViewLifecycleOwner(), result -> {
+            if(result.isSuccess()){
+                User user = ((Result.UserResponseSuccess)result).getData();
+                if(!user.getUsername().equals("null")){
+                    Log.d("WELCOME", user.getUsername());
+                    binding.userNickname.setText(user.getUsername());
+                }
+                if(!user.getEmail().equals("null")) {
+                    binding.userEmail.setText(user.getEmail());
+                }
+                if(!user.getFullName().equals("null")) {
+                    binding.userFullName.setText(user.getFullName());
+                }
+            }else{
+                String error = ((Result.Error)result).getMessage();
+                Log.d("WELCOME", error);
             }
-            if(user.getEmail() != null) {
-                binding.userEmail.setText(user.getEmail());
-            }
-            if(user.getFullName() != null) {
-                binding.userFullName.setText(user.getFullName());
-            }
+
         });
 
         bookViewModel.getSavedBooksCountLiveData().observe(getViewLifecycleOwner(), count -> {
@@ -147,8 +155,14 @@ public class AccountFragment extends Fragment {
 
     private void launchEditProfileActivity() {
         Bundle args = new Bundle();
-        args.putString("userNickname", binding.userNickname.getText().toString());
-        args.putString("userFullName", binding.userFullName.getText().toString());
+        String userNickname = binding.userNickname.getText().toString().equals(getString(R.string.default_nickname))
+                ? "" : binding.userNickname.getText().toString();
+
+        String userFullname = binding.userFullName.getText().toString().equals(getString(R.string.default_full_name))
+                ? "" : binding.userFullName.getText().toString();
+
+        args.putString("userNickname", userNickname);
+        args.putString("userFullName", userFullname);
         args.putString("userEmail", binding.userEmail.getText().toString());
         args.putString("userPic", "https://i.pinimg.com/736x/c6/25/90/c62590c1756680060e7c38011cd704b5.jpg");
 
@@ -169,6 +183,8 @@ public class AccountFragment extends Fragment {
                         binding.userNickname.setText(userNickname);
                         binding.userFullName.setText(userFullName);
                     }
+                } else {
+                    showSnackBar(getString(R.string.error_not_saved));
                 }
             }
     );
@@ -198,16 +214,10 @@ public class AccountFragment extends Fragment {
 
                         setUserPreferences(userPreferences);
 
-                        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
-                        Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.preferences_saved), Snackbar.LENGTH_SHORT);
-                        snackbar.setAnchorView(bottomNavigationView);
-                        snackbar.show();
+                        showSnackBar(getString(R.string.preferences_saved));
                     }
                 }else{
-                    BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
-                    Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.preferences_not_saved), Snackbar.LENGTH_SHORT);
-                    snackbar.setAnchorView(bottomNavigationView);
-                    snackbar.show();
+                    showSnackBar(getString(R.string.preferences_not_saved));
                 }
             }
     );
@@ -225,11 +235,6 @@ public class AccountFragment extends Fragment {
                     if(result.isSuccess()){
                         UserPreferences preferences = ((Result.PreferencesResponseSuccess) result).getUserPreference();
                         setUserPreferences(preferences);
-                    }else{
-                        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
-                        Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.preferences_fetch_error), Snackbar.LENGTH_SHORT);
-                        snackbar.setAnchorView(bottomNavigationView);
-                        snackbar.show();
                     }
                 }
         );
@@ -245,5 +250,12 @@ public class AccountFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void showSnackBar(String message){
+        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+        Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT);
+        snackbar.setAnchorView(bottomNavigationView);
+        snackbar.show();
     }
 }

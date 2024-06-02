@@ -11,6 +11,7 @@ import com.example.bookmatch.model.UserPreferences;
 public class UserViewModel extends ViewModel {
     private final IUserRepository userRepository;
     private MutableLiveData<User> userMutableLiveData;
+    private MutableLiveData<Result> userMutableLiveData1;
     private MutableLiveData<Result> preferencesMutableLiveData;
 
     private boolean authenticationError;
@@ -21,63 +22,68 @@ public class UserViewModel extends ViewModel {
         this.authenticationError = false;
     }
 
-    public MutableLiveData<User> getUserMutableLiveData(String email, String password) {
-        if(authenticationError == true || userMutableLiveData == null){
+    public MutableLiveData<Result> getUserMutableLiveData(String email, String password) {
+        if(authenticationError == true || userMutableLiveData1 == null){
             getUserData(email, password);
         }
-        return userMutableLiveData;
+        return userMutableLiveData1;
     }
 
-    public MutableLiveData<User> getUserMutableLiveData(String email, String password, String username, String fullName) {
-        if(authenticationError == true || userMutableLiveData == null){
+    public MutableLiveData<Result> getUserMutableLiveData(String email, String password, String username, String fullName) {
+        if(authenticationError == true || userMutableLiveData1 == null){
             getUserData(email, password, username, fullName);
         }
-        return userMutableLiveData;
+        return userMutableLiveData1;
     }
 
-    public MutableLiveData<User> getUserInfo(String tokenId){
-        if(userMutableLiveData == null)
+    public MutableLiveData<Result> getUserInfo(String tokenId){
+        if(userMutableLiveData1 == null)
             return userRepository.getUserInfo(tokenId);
 
-        return userMutableLiveData;
+        return userMutableLiveData1;
     }
 
     private void getUserData(String email, String password) {
-        userMutableLiveData = userRepository.getUser(email, password);
+        userMutableLiveData1 = userRepository.getUser(email, password);
     }
 
     private void getUserData(String email, String password, String username, String fullName){
-        userMutableLiveData = userRepository.getUser(email, password, username, fullName);
+        userMutableLiveData1 = userRepository.getUser(email, password, username, fullName);
     }
 
     public void setAuthenticationError(boolean authenticationError){
         this.authenticationError = authenticationError;
     }
 
-    public MutableLiveData<User> logout(){
-        userMutableLiveData = userRepository.logout();
-        return userMutableLiveData;
+    public MutableLiveData<Result> logout(){
+        userMutableLiveData1 = userRepository.logout();
+        return userMutableLiveData1;
     }
 
     public User getLoggedUser(){
         return userRepository.getLoggedUser();
     }
 
-    public void setUserInfo(String username, String fullName){
-        User currentUser = getLoggedUser();
-        User user = new User(username, currentUser.getEmail(), getLoggedUser().getTokenId(), fullName);
-        userRepository.setUserInfo(user);
+    public MutableLiveData<Result> setUserInfo(String username, String fullName){
+        if(userMutableLiveData1 == null){
+            User currentUser = getLoggedUser();
+            User user = new User(username, currentUser.getEmail(), getLoggedUser().getTokenId(), fullName);
+            return userRepository.setUserInfo(user);
+        }
+
+        return userMutableLiveData1;
+
     }
 
-    public MutableLiveData<User> getGoogleUserMutableLiveData(String token) {
-        if (userMutableLiveData == null) {
+    public MutableLiveData<Result> getGoogleUserMutableLiveData(String token) {
+        if (userMutableLiveData1 == null) {
             getUserData(token);
         }
-        return userMutableLiveData;
+        return userMutableLiveData1;
     }
 
     private void getUserData(String token) {
-        userMutableLiveData = userRepository.getGoogleUser(token);
+        userMutableLiveData1 = userRepository.getGoogleUser(token);
     }
 
     public MutableLiveData<Result> getPreferences() {

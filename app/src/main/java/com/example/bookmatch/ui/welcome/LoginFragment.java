@@ -21,6 +21,8 @@ import androidx.navigation.Navigation;
 import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentLoginBinding;
+import com.example.bookmatch.model.Result;
+import com.example.bookmatch.model.User;
 import com.example.bookmatch.ui.main.MainActivity;
 import com.example.bookmatch.utils.AccountManager;
 import com.example.bookmatch.utils.ServiceLocator;
@@ -33,6 +35,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 
@@ -133,23 +136,8 @@ public class LoginFragment extends Fragment {
             String password = Objects.requireNonNull(binding.textInputLayoutPassword.
                     getEditText()).getText().toString();
 
-            if(isEmailOk(email) && isPasswordOk(password)){
-                userViewModel.getUserMutableLiveData(email, password).observe(
-                        getViewLifecycleOwner(), result -> {
-                            if(result.getTokenId() != null) {
-                                userViewModel.setAuthenticationError(false);
-                                saveUserInfo(email, password);
-
-                                Intent intent = new Intent(getActivity(), MainActivity.class);
-                                startActivity(intent);
-                            }else{
-                                Log.d("WELCOME", "login failed");
-                                userViewModel.setAuthenticationError(true);
-                            }
-                        }
-                );
-            }else {
-
+            if(isEmailOk(email) & isPasswordOk(password)){
+                loginWithEmail(email, password);
             }
         });
 
@@ -173,26 +161,30 @@ public class LoginFragment extends Fragment {
                         // do nothing and continue presenting the signed-out UI.
                         Log.d("WELCOME", e.getLocalizedMessage());
 
-                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                "no google account found",
-                                Snackbar.LENGTH_SHORT).show();
+                        showSnackbar(getString(R.string.no_google_account_found));
                     }
                 }));
 
     }
 
+    private void showSnackbar(String message) {
+        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+        Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT);
+        snackbar.setAnchorView(bottomNavigationView);
+        snackbar.show();
+    }
+
     private void loginWithGoogle(String googleAccessToken) {
-        userViewModel.getGoogleUserMutableLiveData(googleAccessToken).observe(getViewLifecycleOwner(), user -> {
-            if (user.getTokenId()!=null) {
+        userViewModel.getGoogleUserMutableLiveData(googleAccessToken).observe(getViewLifecycleOwner(), result -> {
+            if(result.isSuccess()){
                 userViewModel.setAuthenticationError(false);
                 saveGoogleUserInfo(googleAccessToken);
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
-            } else {
+            }else{
+                String errorMessage = ((Result.Error)result).getMessage();
                 userViewModel.setAuthenticationError(true);
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        "error",
-                        Snackbar.LENGTH_SHORT).show();
+                showSnackbar(errorMessage);
             }
         });
     }
@@ -200,7 +192,7 @@ public class LoginFragment extends Fragment {
     private void loginWithEmail(String email, String password){
         userViewModel.getUserMutableLiveData(email, password).observe(
                 getViewLifecycleOwner(), result -> {
-                    if(result.getTokenId() != null) {
+                    if(result.isSuccess()) {
                         userViewModel.setAuthenticationError(false);
                         saveUserInfo(email, password);
 
@@ -208,6 +200,8 @@ public class LoginFragment extends Fragment {
                         startActivity(intent);
                     }else{
                         Log.d("WELCOME", "login failed");
+                        String errorMessage = ((Result.Error) result).getMessage();
+                        showSnackbar(errorMessage);
                         userViewModel.setAuthenticationError(true);
                     }
                 }

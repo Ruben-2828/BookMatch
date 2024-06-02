@@ -32,4 +32,17 @@ public class Constants {
 
     public static final String ERROR_WRITING_FIRESTORE = "Error writing document";
 
+    public static final String UNEXPECTED_ERROR = "Unexpected error";
+
+    public static final String INVALID_USER_ERROR = "Invalid user";
+
+    public static final String INVALID_CREDENTIALS_ERROR = "Invalid credentials";
+
+    public static final String USER_COLLISION_ERROR = "Email already taken";
+
+    public static final String WEAK_PASSWORD_ERROR = "password is weak";
+
+    public static final String NO_SUCH_DOCUMENT_ERROR = "Document not found";
+
+    public static final String NO_CONNECTION = "No connection";
 }

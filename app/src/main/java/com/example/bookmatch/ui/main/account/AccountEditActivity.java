@@ -115,7 +115,6 @@ public class AccountEditActivity extends AppCompatActivity {
         resultIntent.putExtra("userNickname", nickname);
         resultIntent.putExtra("userFullName", fullName);
 
-        //
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference ref = storage.getReference().child("images/" + UUID.randomUUID().toString());
         Bitmap bitmap = ((BitmapDrawable) binding.profileImage.getDrawable()).getBitmap();
@@ -125,9 +124,17 @@ public class AccountEditActivity extends AppCompatActivity {
         ref.putBytes(imageInByte);
         Log.d("WELCOME", "inserito");
 
-        userViewModel.setUserInfo(nickname, fullName);
-        setResult(Activity.RESULT_OK, resultIntent);
-        finish();
+        userViewModel.setUserInfo(nickname, fullName).observe(this,
+            result -> {
+                if(result.isSuccess()){
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    finish();
+                }else {
+                    setResult(Activity.RESULT_CANCELED, resultIntent);
+                    finish();
+                }
+            });
+
     }
 
     private void undoEditProfile() {

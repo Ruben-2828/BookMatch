@@ -15,8 +15,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentRegistrationBinding;
+import com.example.bookmatch.model.Result;
 import com.example.bookmatch.ui.main.MainActivity;
 import com.example.bookmatch.utils.ServiceLocator;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -60,19 +63,17 @@ public class RegistrationFragment extends Fragment {
                     getEditText()).getText().toString();
             String password = binding.textInputLayoutPassword.
                     getEditText().getText().toString();
-            String repeatPassword = Objects.requireNonNull(binding.textInputLayoutCheckPassword.
-                    getEditText()).getText().toString();
 
-            if(isPasswordOk(password) && isValidEmail(email)){
+            if(!isEmpty() & isValidEmail(email) & isPasswordOk(password)){
                 userViewModel.getUserMutableLiveData(email, password, username, fullName).observe(
                         getViewLifecycleOwner(), result -> {
-                            if(result.getTokenId() != null) {
-                                Log.d("WELCOME", result.getTokenId());
+                            if(result.isSuccess()) {
                                 userViewModel.setAuthenticationError(false);
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
                             }else{
-                                Log.d("WELCOME", "login failed");
+                                String errorMessage = ((Result.Error) result).getMessage();
+                                showSnackbar(errorMessage);
                                 userViewModel.setAuthenticationError(true);
                             }
                         }
@@ -165,5 +166,12 @@ public class RegistrationFragment extends Fragment {
         binding.textInputLayoutEmail.setError(null);
         binding.textInputLayoutName.setError(null);
         binding.textInputLayoutUsername.setError(null);
+    }
+
+    private void showSnackbar(String message) {
+        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+        Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT);
+        snackbar.setAnchorView(bottomNavigationView);
+        snackbar.show();
     }
 }

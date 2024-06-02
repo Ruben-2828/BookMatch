@@ -15,7 +15,7 @@ import com.example.bookmatch.utils.callbacks.UserResponseCallback;
 
 
 public class UserRepository implements IUserRepository, UserResponseCallback {
-    private final MutableLiveData<User> userMutableLiveData;
+    private final MutableLiveData<Result> userMutableLiveData;
     private final MutableLiveData<Result> userPreferencesMutableLiveData;
     private final IUserAuthentication userAuthentication;
     private final IUserFireStore userFireStore;
@@ -44,33 +44,33 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     @Override
-    public MutableLiveData<User> getUser(String email, String password) {
+    public MutableLiveData<Result> getUser(String email, String password) {
         signIn(email, password);
 
         return userMutableLiveData;
     }
 
     @Override
-    public MutableLiveData<User> getUser(String email, String password, String username, String fullName) {
+    public MutableLiveData<Result> getUser(String email, String password, String username, String fullName) {
         signUp(email, password, username, fullName);
         return userMutableLiveData;
     }
 
     @Override
-    public MutableLiveData<User> getUserInfo(String tokenId) {
+    public MutableLiveData<Result> getUserInfo(String tokenId) {
         userFireStore.getUserData(tokenId);
 
         return userMutableLiveData;
     }
 
     @Override
-    public MutableLiveData<User> getGoogleUser(String idToken) {
+    public MutableLiveData<Result> getGoogleUser(String idToken) {
         signInWithGoogle(idToken);
         return userMutableLiveData;
     }
 
     @Override
-    public MutableLiveData<User> logout() {
+    public MutableLiveData<Result> logout() {
         userAuthentication.logout();
         return userMutableLiveData;
     }
@@ -93,8 +93,9 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     @Override
-    public void setUserInfo(User user) {
+    public MutableLiveData<Result> setUserInfo(User user) {
         userFireStore.saveUserData(user, true);
+        return userMutableLiveData;
     }
 
     @Override
@@ -104,7 +105,8 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
     @Override
     public void onSuccessFromFirestore(User user) {
-        userMutableLiveData.postValue(user);
+        Result.UserResponseSuccess result = new Result.UserResponseSuccess(user);
+        userMutableLiveData.postValue(result);
     }
 
     @Override
@@ -114,21 +116,21 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     @Override
-    public void onFailureFromAuthentication() {
-        User user = new User(null, null, null);
-        userMutableLiveData.postValue(user);
+    public void onFailureFromAuthentication(String errorMessage) {
+        Result.Error result = new Result.Error(errorMessage);
+        userMutableLiveData.postValue(result);
     }
 
     @Override
     public void onFailureFromFireStore(String error) {
         Result.Error result = new Result.Error(error);
-        //TODO: da sostituire con usermutablelivedata
         userPreferencesMutableLiveData.postValue(result);
     }
 
     @Override
     public void onSuccessLogout() {
         User user = new User(null, null, null);
-        userMutableLiveData.postValue(user);
+        Result.UserResponseSuccess postUser = new Result.UserResponseSuccess(user);
+        userMutableLiveData.postValue(postUser);
     }
 }

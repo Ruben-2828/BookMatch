@@ -1,6 +1,7 @@
 package com.example.bookmatch.data.repository.user.firebase;
 
 import static com.example.bookmatch.utils.Constants.ERROR_WRITING_FIRESTORE;
+import static com.example.bookmatch.utils.Constants.NO_SUCH_DOCUMENT_ERROR;
 import static com.example.bookmatch.utils.Constants.USERS_COLLECTION_NAME;
 import static com.example.bookmatch.utils.Constants.USERS_PREFERENCES_NAME;
 
@@ -36,6 +37,7 @@ public class UserFireStore extends IUserFireStore{
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (!override && document.exists()) {
@@ -49,6 +51,10 @@ public class UserFireStore extends IUserFireStore{
                             Log.d(TAG, "Failed with: ", task.getException());
                         }
                     }
+                })
+                .addOnFailureListener(e -> {
+                    Log.d("WELCOME", e.getMessage());
+                    responseCallback.onFailureFromFireStore(e.getMessage());
                 });
     }
 
@@ -64,9 +70,10 @@ public class UserFireStore extends IUserFireStore{
                         User user = buildUserFromDocument(document, userId);
                         responseCallback.onSuccessFromFirestore(user);
                     } else {
-                        Log.d(TAG, "No such document");
+                        responseCallback.onFailureFromFireStore(NO_SUCH_DOCUMENT_ERROR);
                     }
                 } else {
+                    responseCallback.onFailureFromFireStore(task.getException().toString());
                     Log.d(TAG, "get failed with ", task.getException());
                 }
             }
@@ -103,10 +110,10 @@ public class UserFireStore extends IUserFireStore{
                         UserPreferences userPreferences = buildPreferencesFromDocument(document);
                         responseCallback.onSuccessFromFirestore(userPreferences);
                     } else {
-                        Log.d(TAG, "No such document");
+                        responseCallback.onFailureFromFireStore(NO_SUCH_DOCUMENT_ERROR);
                     }
                 } else {
-                    responseCallback.onFailureFromFireStore("get failed with " + task.getException().toString());
+                    responseCallback.onFailureFromFireStore(task.getException().toString());
                     Log.d(TAG, "get failed with ", task.getException());
                 }
             }
@@ -126,7 +133,7 @@ public class UserFireStore extends IUserFireStore{
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error writing document", e);
-                        responseCallback.onFailureFromAuthentication();
+                        responseCallback.onFailureFromFireStore(e.toString());
                     }
                 });
     }
