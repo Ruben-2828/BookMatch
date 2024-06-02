@@ -22,6 +22,7 @@ public class Constants {
     public static final String USER_PREFERENCES_EMAIL = "email";
     public static final String KEY_ONBOARD_OPENED = "isOnboardOpened";
 
+    public static final String LAST_UPDATE_PREF = "lastUpdatePref";
     public static final String USER_PREFERENCES_GOOGLE_ID_TOKEN = "userIdTokenGoogle";
 
     public static final String USER_PREFERENCES_GOOGLE_ACCESS_METHOD = "userGoogleAccessMethod";
@@ -45,4 +46,8 @@ public class Constants {
     public static final String NO_SUCH_DOCUMENT_ERROR = "Document not found";
 
     public static final String NO_CONNECTION = "No connection";
+
+    public static final String BOOKS_JSON_DIRECTORY = "books.json";
+
+    public static final int SAVE_INTERVAL = 1000 * 60 * 5; //5 minutes in milliseconds
 }

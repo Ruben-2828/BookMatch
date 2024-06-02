@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.bookmatch.data.repository.books.BookSavedLiveData;
 import com.example.bookmatch.data.repository.books.BookRepository;
 import com.example.bookmatch.data.repository.books.IBookRepository;
 import com.example.bookmatch.model.Book;
@@ -23,12 +24,14 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
     private static final String TAG = BookViewModel.class.getSimpleName();
     private final IBookRepository bookRepository;
     private final MutableLiveData<Result> extractedBooks;
+    private final BookSavedLiveData booksMockData;
     private String prevGenre;
     private int startIndex;
 
     public BookViewModel(Application application) {
         this.bookRepository = new BookRepository(application);
         this.extractedBooks = new MutableLiveData<>();
+        this.booksMockData = new BookSavedLiveData(application);
         prevGenre = null;
         startIndex = 0;
     }
@@ -129,5 +132,13 @@ public class BookViewModel extends ViewModel implements BookAPIResponseCallback 
 
     public LiveData<Boolean> isBookSavedLiveData(String bookId) {
         return bookRepository.isBookSavedLiveData(bookId);
+    }
+
+    public ArrayList<Book> getMockBooks(){
+        return booksMockData.getSavedBooks();
+    }
+
+    public boolean saveMockBooks(ArrayList<Book> books){
+        return booksMockData.saveBooks(books);
     }
 }

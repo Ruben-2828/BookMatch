@@ -1,8 +1,16 @@
 package com.example.bookmatch.ui.main.explore;
 
+import static com.example.bookmatch.utils.Constants.LAST_UPDATE_PREF;
+import static com.example.bookmatch.utils.Constants.SAVE_INTERVAL;
+import static com.example.bookmatch.utils.Constants.SHARED_PREF_NAME;
+import static com.example.bookmatch.utils.Constants.USER_REMEMBER_ME_SP;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +53,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     private CardStackLayoutManager cardStackManager;
     private CardStackAdapter cardStackAdapter;
     private BookViewModel bookViewModel;
+    private long lastUpdate;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +62,10 @@ public class ExploreFragment extends Fragment implements CardStackListener {
         BookViewModelFactory factory = new BookViewModelFactory(requireActivity().getApplication());
         bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
         bookViewModel.setStartIndex(0);
+
+        SharedPreferences sp = getContext().getSharedPreferences(
+                SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        lastUpdate = sp.getLong(LAST_UPDATE_PREF, 0);
 
         return binding.getRoot();
     }
@@ -117,13 +130,27 @@ public class ExploreFragment extends Fragment implements CardStackListener {
                 ArrayList<Book> books = ((Result.BooksResponseSuccess)result).getBooks();
                 if (books != null) {
                     cardStackAdapter.addBooks(books);
+
+                    long currentTime = System.currentTimeMillis();
+                    if(currentTime - lastUpdate > SAVE_INTERVAL){
+                        Log.d("WELCOME", "save");
+                        bookViewModel.saveMockBooks(books);
+
+                        lastUpdate = System.currentTimeMillis();
+
+                        //Saving last update in preferences
+                        SharedPreferences sp = getContext().getSharedPreferences(
+                                SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putLong(LAST_UPDATE_PREF, lastUpdate);
+                        editor.apply();
+                    }
                 }
             }else{
                 String message = ((Result.Error)result).getMessage();
-                BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
-                Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT);
-                snackbar.setAnchorView(bottomNavigationView);
-                snackbar.show();
+                ArrayList<Book> books = bookViewModel.getMockBooks();
+                cardStackAdapter.addBooks(books);
+                showSnackBar(message);
             }
         });
 
@@ -246,5 +273,12 @@ public class ExploreFragment extends Fragment implements CardStackListener {
                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.search_genre));
         binding.genre.setAdapter(genreAdapter);
+    }
+
+    private void showSnackBar(String message){
+        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+        Snackbar snackbar = Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT);
+        snackbar.setAnchorView(bottomNavigationView);
+        snackbar.show();
     }
 }
