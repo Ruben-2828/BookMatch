@@ -77,6 +77,7 @@ public class User {
         user.put("username", username);
         user.put("fullName", fullName);
         user.put("email", email);
+        user.put("profileImage", profileImage);
 
         return user;
     }

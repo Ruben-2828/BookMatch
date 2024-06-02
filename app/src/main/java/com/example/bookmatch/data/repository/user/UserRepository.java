@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.bookmatch.data.repository.user.auth.IUserAuthentication;
 import com.example.bookmatch.data.repository.user.auth.UserAuthentication;
 import com.example.bookmatch.data.repository.user.firebase.IUserFireStore;
+import com.example.bookmatch.data.repository.user.firebase.IUserStorage;
 import com.example.bookmatch.data.repository.user.firebase.UserFireStore;
+import com.example.bookmatch.data.repository.user.firebase.UserStorage;
 import com.example.bookmatch.model.Result;
 import com.example.bookmatch.model.User;
 import com.example.bookmatch.model.UserPreferences;
@@ -17,16 +19,21 @@ import com.example.bookmatch.utils.callbacks.UserResponseCallback;
 public class UserRepository implements IUserRepository, UserResponseCallback {
     private final MutableLiveData<Result> userMutableLiveData;
     private final MutableLiveData<Result> userPreferencesMutableLiveData;
+    private final MutableLiveData<Result> userStorageMutableLiveData;
     private final IUserAuthentication userAuthentication;
     private final IUserFireStore userFireStore;
+    private final IUserStorage userStorage;
 
     public UserRepository(){
         this.userMutableLiveData = new MutableLiveData<>();
         this.userPreferencesMutableLiveData = new MutableLiveData<>();
+        this.userStorageMutableLiveData = new MutableLiveData<>();
         this.userAuthentication = new UserAuthentication();
         this.userFireStore = new UserFireStore();;
+        this.userStorage = new UserStorage();
         this.userAuthentication.setUserResponseCallback(this);
         this.userFireStore.setUserResponseCallback(this);
+        this.userStorage.setUserResponseCallback(this);
     }
     @Override
     public void signUp(String email, String password, String username, String fullName) {
@@ -99,6 +106,12 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     @Override
+    public MutableLiveData<Result> uploadImage(byte[] byteArray) {
+        userStorage.saveImageInStorage(byteArray);
+        return userStorageMutableLiveData;
+    }
+
+    @Override
     public void onSuccessFromAuthentication(User user) {
         Log.d("WELCOME", "login callback authentication");
         userFireStore.saveUserData(user, false);
@@ -116,6 +129,12 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     @Override
+    public void onSuccessFromStorage(String url) {
+        Result.StorageResponseSuccess result = new Result.StorageResponseSuccess(url);
+        userStorageMutableLiveData.postValue(result);
+    }
+
+    @Override
     public void onFailureFromAuthentication(String errorMessage) {
         Result.Error result = new Result.Error(errorMessage);
         userMutableLiveData.postValue(result);
@@ -125,6 +144,12 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     public void onFailureFromFireStore(String error) {
         Result.Error result = new Result.Error(error);
         userPreferencesMutableLiveData.postValue(result);
+    }
+
+    @Override
+    public void onFailureFromStorage(String error) {
+        Result.Error result = new Result.Error(error);
+        userMutableLiveData.postValue(result);
     }
 
     @Override

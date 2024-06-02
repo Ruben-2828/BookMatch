@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,12 +19,22 @@ import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.ActivityAccountEditBinding;
+import com.example.bookmatch.model.Result;
+import com.example.bookmatch.model.User;
 import com.example.bookmatch.ui.welcome.UserViewModel;
 import com.example.bookmatch.ui.welcome.UserViewModelFactory;
 import com.example.bookmatch.utils.ServiceLocator;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
@@ -112,28 +124,40 @@ public class AccountEditActivity extends AppCompatActivity {
 
     private void setResultAndFinish(String nickname, String fullName) {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("userNickname", nickname);
-        resultIntent.putExtra("userFullName", fullName);
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference ref = storage.getReference().child("images/" + UUID.randomUUID().toString());
+        binding.profileImage.setDrawingCacheEnabled(true);
+        binding.profileImage.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) binding.profileImage.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageInByte = baos.toByteArray();
-        ref.putBytes(imageInByte);
-        Log.d("WELCOME", "inserito");
+        byte[] data = baos.toByteArray();
 
-        userViewModel.setUserInfo(nickname, fullName).observe(this,
-            result -> {
-                if(result.isSuccess()){
-                    setResult(Activity.RESULT_OK, resultIntent);
-                    finish();
-                }else {
-                    setResult(Activity.RESULT_CANCELED, resultIntent);
-                    finish();
-                }
-            });
+        userViewModel.uploadImage(baos.toByteArray()).observe(this, result -> {
+            if(result.isSuccess()){
+                String url = ((Result.StorageResponseSuccess)result).getUrl();
+                User user = new User(nickname,null, null, fullName, url);
+                userViewModel.setUserInfo(user).observe(this,
+                        res -> {
+                            if(res.isSuccess()){
+                                Log.d("WELCOME", "issuccess");
+                                resultIntent.putExtra("userNickname", nickname);
+                                resultIntent.putExtra("userFullName", fullName);
+                                resultIntent.putExtra("profileImage", url);
+                                setResult(Activity.RESULT_OK, resultIntent);
+                                finish();
+                            }else {
+                                setResult(Activity.RESULT_CANCELED, resultIntent);
+                                finish();
+                            }
+                        });
+            }else{
+                String message = ((Result.Error)result).getMessage();
+                resultIntent.putExtra("error", message);
+                setResult(Activity.RESULT_CANCELED, resultIntent);
+                finish();
+            }
+        });
+
 
     }
 

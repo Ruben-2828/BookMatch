@@ -8,7 +8,7 @@ public abstract class Result {
 
     public boolean isSuccess(){
         if(this instanceof PreferencesResponseSuccess || this instanceof UserResponseSuccess
-        || this instanceof BooksResponseSuccess){
+        || this instanceof BooksResponseSuccess || this instanceof StorageResponseSuccess){
             return true;
         } else {
             return false;
@@ -46,6 +46,15 @@ public abstract class Result {
         }
     }
 
+    public static final class StorageResponseSuccess extends Result{
+        private final String url;
+        public StorageResponseSuccess(String url){
+            this.url = url;
+        }
+        public String getUrl(){
+            return this.url;
+        }
+    }
     public static final class Error extends Result{
         private final String message;
         public Error(String message) {

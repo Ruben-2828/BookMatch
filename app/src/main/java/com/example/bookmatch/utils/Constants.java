@@ -50,4 +50,7 @@ public class Constants {
     public static final String BOOKS_JSON_DIRECTORY = "books.json";
 
     public static final int SAVE_INTERVAL = 1000 * 60 * 5; //5 minutes in milliseconds
+
+    public static final String BASE_URL_IMAGES_STORAGE = "images/";
+    public static final String ERROR_WHILE_UPLOADING_IMAGE = "Error while uploading image";
 }

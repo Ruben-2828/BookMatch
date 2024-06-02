@@ -31,7 +31,6 @@ public class UserFireStore extends IUserFireStore{
 
     @Override
     public void saveUserData(User user, Boolean override) {
-        Map<String, Object> userToSave = user.toHashMap();
         dbIstance.collection(USERS_COLLECTION_NAME).document(user.getTokenId())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -45,6 +44,7 @@ public class UserFireStore extends IUserFireStore{
                                 responseCallback.onSuccessFromFirestore(user);
                             } else {
                                 //document does not exist
+                                Map<String, Object> userToSave = user.toHashMap();
                                 writeUserData(user, userToSave);
                             }
                         } else {
@@ -161,7 +161,8 @@ public class UserFireStore extends IUserFireStore{
                 "" + document.get("username"),
                 "" + document.get("email"),
                 tokenId,
-                "" +document.get("fullName")
+                "" +document.get("fullName"),
+                "" + document.get("profileImage")
                 );
     }
 

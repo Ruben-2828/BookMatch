@@ -9,5 +9,5 @@ public abstract class IUserStorage {
         this.responseCallback = responseCallback;
     }
 
-    public abstract void saveImageInStorage();
+    public abstract void saveImageInStorage(byte[] array);
 }

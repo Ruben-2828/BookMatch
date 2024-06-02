@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentAccountBinding;
@@ -43,6 +44,7 @@ public class AccountFragment extends Fragment {
     private BookViewModel bookViewModel;
     private CollectionContainerViewModel collectionViewModel;
     private UserViewModel userViewModel;
+    private String profileImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -55,6 +57,7 @@ public class AccountFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 
@@ -79,7 +82,6 @@ public class AccountFragment extends Fragment {
             if(result.isSuccess()){
                 User user = ((Result.UserResponseSuccess)result).getData();
                 if(!user.getUsername().equals("null")){
-                    Log.d("WELCOME", user.getUsername());
                     binding.userNickname.setText(user.getUsername());
                 }
                 if(!user.getEmail().equals("null")) {
@@ -87,6 +89,10 @@ public class AccountFragment extends Fragment {
                 }
                 if(!user.getFullName().equals("null")) {
                     binding.userFullName.setText(user.getFullName());
+                }
+                if(!user.getProfileImage().equals("null")) {
+                    profileImage = user.getProfileImage();
+                    Glide.with(this).load(user.getProfileImage()).into(binding.profileImage);
                 }
             }else{
                 String error = ((Result.Error)result).getMessage();
@@ -140,6 +146,7 @@ public class AccountFragment extends Fragment {
             return true;
         }
         if (id == R.id.logout_item) {
+            //TODO: risolvere bug logout
             userViewModel.logout().observe(getViewLifecycleOwner(), r -> {
                 AccountManager accountManager = new AccountManager(getContext());
                 accountManager.setRememberMe(false);
@@ -164,7 +171,7 @@ public class AccountFragment extends Fragment {
         args.putString("userNickname", userNickname);
         args.putString("userFullName", userFullname);
         args.putString("userEmail", binding.userEmail.getText().toString());
-        args.putString("userPic", "https://i.pinimg.com/736x/c6/25/90/c62590c1756680060e7c38011cd704b5.jpg");
+        args.putString("userPic", profileImage);
 
         Intent intent = new Intent(getContext(), AccountEditActivity.class);
         intent.putExtras(args);
@@ -179,9 +186,11 @@ public class AccountFragment extends Fragment {
                     if (data != null) {
                         String userNickname = data.getStringExtra("userNickname");
                         String userFullName = data.getStringExtra("userFullName");
+                        String imageProfile = data.getStringExtra("profileImage");
 
                         binding.userNickname.setText(userNickname);
                         binding.userFullName.setText(userFullName);
+                        Glide.with(this).load(imageProfile).into(binding.profileImage);
                     }
                 } else {
                     showSnackBar(getString(R.string.error_not_saved));

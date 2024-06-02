@@ -20,4 +20,5 @@ public interface IUserRepository {
     MutableLiveData<Result> setPreferences(String tokenId, UserPreferences userPreferences);
     void signInWithGoogle(String token);
     MutableLiveData<Result> setUserInfo(User user);
+    MutableLiveData<Result> uploadImage(byte[] byteArray);
 }
