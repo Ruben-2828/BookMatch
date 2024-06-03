@@ -139,7 +139,6 @@ public class AccountEditActivity extends AppCompatActivity {
                 userViewModel.setUserInfo(user).observe(this,
                         res -> {
                             if(res.isSuccess()){
-                                Log.d("WELCOME", "issuccess");
                                 resultIntent.putExtra("userNickname", nickname);
                                 resultIntent.putExtra("userFullName", fullName);
                                 resultIntent.putExtra("profileImage", url);

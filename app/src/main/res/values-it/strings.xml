@@ -215,5 +215,7 @@
     <string name="review_saved">La recensione è stata salvata!</string>
     <string name="error_not_saved">"Non è stato possibile salvare le modifiche"</string>
     <string name="no_google_account_found">Nessun account google trovato</string>
+    <string name="requestPermissionNotification">Mostrare notifiche?</string>
+    <string name="no_notification_displayed">Le notifiche non saranno mostrate</string>
     <!-- End ReviewFragment -->
 </resources>

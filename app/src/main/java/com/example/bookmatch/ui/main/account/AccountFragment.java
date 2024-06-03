@@ -1,5 +1,6 @@
 package com.example.bookmatch.ui.main.account;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -29,6 +30,7 @@ import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionContainerViewModel;
 import com.example.bookmatch.ui.main.CollectionContainerViewModelFactory;
+import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.example.bookmatch.ui.welcome.UserViewModel;
 import com.example.bookmatch.ui.welcome.UserViewModelFactory;
 import com.example.bookmatch.ui.welcome.WelcomeActivity;
@@ -45,6 +47,7 @@ public class AccountFragment extends Fragment {
     private CollectionContainerViewModel collectionViewModel;
     private UserViewModel userViewModel;
     private String profileImage;
+    private static final String TAG = AccountFragment.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -99,7 +102,7 @@ public class AccountFragment extends Fragment {
                 }
             }else{
                 String error = ((Result.Error)result).getMessage();
-                Log.d("WELCOME", error);
+                Log.d(TAG, error);
             }
 
         });
@@ -149,7 +152,6 @@ public class AccountFragment extends Fragment {
             return true;
         }
         if (id == R.id.logout_item) {
-            //TODO: risolvere bug logout
             userViewModel.logout().observe(getViewLifecycleOwner(), r -> {
                 if(r.isSuccess() && r instanceof Result.LogoutResponseSuccess){
                     AccountManager accountManager = new AccountManager(getContext());

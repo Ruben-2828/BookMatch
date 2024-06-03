@@ -3,6 +3,8 @@ package com.example.bookmatch.ui.welcome;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -24,6 +27,7 @@ import com.example.bookmatch.databinding.FragmentLoginBinding;
 import com.example.bookmatch.model.Result;
 import com.example.bookmatch.model.User;
 import com.example.bookmatch.ui.main.MainActivity;
+import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.example.bookmatch.utils.AccountManager;
 import com.example.bookmatch.utils.ServiceLocator;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
@@ -42,6 +46,7 @@ import com.google.firebase.FirebaseApp;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.Objects;
+import android.Manifest;
 
 public class LoginFragment extends Fragment {
 
@@ -52,7 +57,7 @@ public class LoginFragment extends Fragment {
     private ActivityResultContracts.StartIntentSenderForResult startIntentSenderForResult;
     private SignInClient oneTapClient;
     private BeginSignInRequest signInRequest;
-
+    private static final String TAG = LoginFragment.class.getSimpleName();
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -87,11 +92,11 @@ public class LoginFragment extends Fragment {
 
         activityResultLauncher = registerForActivityResult(startIntentSenderForResult, activityResult -> {
             if (activityResult.getResultCode() == Activity.RESULT_OK) {
-                Log.d("WELCOME", "result.getResultCode() == Activity.RESULT_OK");
+                Log.d(TAG, "result.getResultCode() == Activity.RESULT_OK");
                 try {
                     SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(activityResult.getData());
                     String idToken = credential.getGoogleIdToken();
-                    Log.d("WELCOME", idToken);
+                    Log.d(TAG, idToken);
                     if (idToken !=  null) {
                         // Got an ID token from Google. Use it to authenticate with Firebase.
                         loginWithGoogle(idToken);
@@ -199,7 +204,7 @@ public class LoginFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
                     }else{
-                        Log.d("WELCOME", "login failed");
+                        Log.d(TAG, "login failed");
                         String errorMessage = ((Result.Error) result).getMessage();
                         showSnackbar(errorMessage);
                         userViewModel.setAuthenticationError(true);
@@ -245,16 +250,6 @@ public class LoginFragment extends Fragment {
             binding.textInputLayoutPassword.setError(null);
             return true;
         }
-    }
-
-    private void showExitConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle(getString(R.string.quit_title));
-        builder.setMessage(getString(R.string.quit));
-        builder.setPositiveButton(getString(R.string.yes), (dialog, which) -> requireActivity().finish());
-        builder.setNegativeButton(getString(R.string.no), (dialog, which) -> dialog.dismiss());
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
 }

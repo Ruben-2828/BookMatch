@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.example.bookmatch.model.Result;
 import com.example.bookmatch.model.User;
+import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class UserAuthentication extends IUserAuthentication {
     private FirebaseAuth mAuth;
+    private static final String TAG = UserAuthentication.class.getSimpleName();
 
     public UserAuthentication(){
         this.mAuth = FirebaseAuth.getInstance();
@@ -56,7 +58,7 @@ public class UserAuthentication extends IUserAuthentication {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("WELCOME", "createUserWithEmail:success");
+                            Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser createdUser = mAuth.getCurrentUser();
                             if(createdUser != null){
                                 User user = new User(username, createdUser.getEmail(), createdUser.getUid(), fullName);
@@ -66,7 +68,7 @@ public class UserAuthentication extends IUserAuthentication {
                             }
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w("WELCOME", "createUserWithEmail:failure", task.getException());
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             responseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                         }
                     }
@@ -88,7 +90,7 @@ public class UserAuthentication extends IUserAuthentication {
                                 responseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                             }
                         } else {
-                            Log.w("WELCOME", "signInWithEmail:failure", task.getException());
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
                             responseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                         }
                     }
@@ -102,7 +104,7 @@ public class UserAuthentication extends IUserAuthentication {
             mAuth.signInWithCredential(firebaseCredential).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("WELCOME", "signInWithCredential:success");
+                    Log.d(TAG, "signInWithCredential:success");
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
                     if (firebaseUser != null) {
                         User user =  new User(firebaseUser.getDisplayName(),
@@ -116,7 +118,7 @@ public class UserAuthentication extends IUserAuthentication {
                     }
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w("WELCOME", "signInWithCredential:failure", task.getException());
+                    Log.w(TAG, "signInWithCredential:failure", task.getException());
                     responseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
             });

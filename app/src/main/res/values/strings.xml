@@ -222,6 +222,8 @@
     <string name="review_saved">The review has been saved!</string>
     <string name="error_not_saved">"couldn't save changes "</string>
     <string name="no_google_account_found">No google account found</string>
+    <string name="requestPermissionNotification">Enable notifications?</string>
+    <string name="no_notification_displayed">notifications will not be shown</string>
     <!-- End ReviewFragment -->
 
 </resources>

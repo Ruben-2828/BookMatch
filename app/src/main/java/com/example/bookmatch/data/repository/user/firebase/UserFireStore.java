@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.example.bookmatch.model.User;
 import com.example.bookmatch.model.UserPreferences;
+import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,7 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Map;
 
 public class UserFireStore extends IUserFireStore{
-    private static final String TAG = "WELCOME";
+    private static final String TAG = UserFireStore.class.getSimpleName();
     private FirebaseFirestore dbIstance;
 
     public UserFireStore(){
@@ -53,7 +54,7 @@ public class UserFireStore extends IUserFireStore{
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.d("WELCOME", e.getMessage());
+                    Log.d(TAG, e.getMessage());
                     responseCallback.onFailureFromFireStore(e.getMessage());
                 });
     }

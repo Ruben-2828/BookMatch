@@ -3,7 +3,6 @@ package com.example.bookmatch.ui.main.explore;
 import static com.example.bookmatch.utils.Constants.LAST_UPDATE_PREF;
 import static com.example.bookmatch.utils.Constants.SAVE_INTERVAL;
 import static com.example.bookmatch.utils.Constants.SHARED_PREF_NAME;
-import static com.example.bookmatch.utils.Constants.USER_REMEMBER_ME_SP;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -133,7 +132,6 @@ public class ExploreFragment extends Fragment implements CardStackListener {
 
                     long currentTime = System.currentTimeMillis();
                     if(currentTime - lastUpdate > SAVE_INTERVAL){
-                        Log.d("WELCOME", "save");
                         bookViewModel.saveMockBooks(books);
 
                         lastUpdate = System.currentTimeMillis();

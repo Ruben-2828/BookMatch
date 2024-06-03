@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 public class UserStorage extends IUserStorage{
     private FirebaseStorage storage;
+    private static final String TAG = UserStorage.class.getSimpleName();
 
     public UserStorage(){
         this.storage = FirebaseStorage.getInstance();
@@ -42,7 +44,7 @@ public class UserStorage extends IUserStorage{
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    Log.d("WELCOME", task.getResult().toString());
+                    Log.d(TAG, task.getResult().toString());
                     responseCallback.onSuccessFromStorage(task.getResult().toString());
                 } else {
                     responseCallback.onFailureFromStorage(ERROR_WHILE_UPLOADING_IMAGE);

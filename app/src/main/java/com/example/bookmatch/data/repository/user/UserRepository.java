@@ -113,7 +113,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
 
     @Override
     public void onSuccessFromAuthentication(User user) {
-        Log.d("WELCOME", "login callback authentication");
         userFireStore.saveUserData(user, false);
     }
     @Override
