@@ -80,6 +80,9 @@ public class AccountFragment extends Fragment {
     private void updateUserData() {
         userViewModel.getUserInfo(userViewModel.getLoggedUser().getTokenId()).observe(getViewLifecycleOwner(), result -> {
             if(result.isSuccess()){
+                if(!(result instanceof Result.UserResponseSuccess))
+                    return;
+
                 User user = ((Result.UserResponseSuccess)result).getData();
                 if(!user.getUsername().equals("null")){
                     binding.userNickname.setText(user.getUsername());
@@ -148,12 +151,14 @@ public class AccountFragment extends Fragment {
         if (id == R.id.logout_item) {
             //TODO: risolvere bug logout
             userViewModel.logout().observe(getViewLifecycleOwner(), r -> {
-                AccountManager accountManager = new AccountManager(getContext());
-                accountManager.setRememberMe(false);
-                accountManager.setIsGoogleAccount(false);
-                Intent intent = new Intent(requireContext(), WelcomeActivity.class);
-                startActivity(intent);
-                requireActivity().finish();
+                if(r.isSuccess() && r instanceof Result.LogoutResponseSuccess){
+                    AccountManager accountManager = new AccountManager(getContext());
+                    accountManager.setRememberMe(false);
+                    accountManager.setIsGoogleAccount(false);
+                    Intent intent = new Intent(requireContext(), WelcomeActivity.class);
+                    startActivity(intent);
+                    requireActivity().finish();
+                }
             });
             return true;
         }

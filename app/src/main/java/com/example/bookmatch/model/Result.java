@@ -8,7 +8,8 @@ public abstract class Result {
 
     public boolean isSuccess(){
         if(this instanceof PreferencesResponseSuccess || this instanceof UserResponseSuccess
-        || this instanceof BooksResponseSuccess || this instanceof StorageResponseSuccess){
+        || this instanceof BooksResponseSuccess || this instanceof StorageResponseSuccess
+        || this instanceof LogoutResponseSuccess){
             return true;
         } else {
             return false;
@@ -54,6 +55,10 @@ public abstract class Result {
         public String getUrl(){
             return this.url;
         }
+    }
+
+    public static final class LogoutResponseSuccess extends Result{
+        public LogoutResponseSuccess(){}
     }
     public static final class Error extends Result{
         private final String message;

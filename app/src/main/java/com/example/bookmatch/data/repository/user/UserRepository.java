@@ -154,8 +154,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
 
     @Override
     public void onSuccessLogout() {
-        User user = new User(null, null, null);
-        Result.UserResponseSuccess postUser = new Result.UserResponseSuccess(user);
-        userMutableLiveData.postValue(postUser);
+        Result.LogoutResponseSuccess result = new Result.LogoutResponseSuccess();
+        userMutableLiveData.postValue(result);
     }
 }
