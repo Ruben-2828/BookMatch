@@ -7,18 +7,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookmatch.R;
 import com.example.bookmatch.model.Book;
-import com.example.bookmatch.ui.main.BookViewModel;
-import com.example.bookmatch.ui.main.BookViewModelFactory;
-import com.example.bookmatch.ui.main.CollectionGroupViewModel;
-import com.example.bookmatch.ui.main.CollectionGroupViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionGroupsRecyclerViewAdapter extends

@@ -1,4 +1,4 @@
-package com.example.bookmatch.data.repository.user.auth;
+package com.example.bookmatch.data.source.auth;
 
 import com.example.bookmatch.utils.callbacks.UserResponseCallback;
 import com.example.bookmatch.model.User;

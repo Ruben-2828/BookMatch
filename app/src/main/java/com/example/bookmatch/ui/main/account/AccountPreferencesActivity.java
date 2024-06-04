@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,15 +14,12 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.ActivityPreferencesEditBinding;
 import com.example.bookmatch.model.Book;
-import com.example.bookmatch.model.Result;
 import com.example.bookmatch.model.UserPreferences;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
-import com.example.bookmatch.ui.main.MainActivity;
 import com.example.bookmatch.ui.welcome.UserViewModel;
 import com.example.bookmatch.ui.welcome.UserViewModelFactory;
 import com.example.bookmatch.utils.ServiceLocator;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,7 +167,4 @@ public class AccountPreferencesActivity extends AppCompatActivity {
         binding.menuAuthor.setError(null);
         binding.menuBook.setError(null);
     }
-
-
-
 }

@@ -2,7 +2,6 @@ package com.example.bookmatch.ui.main.collections;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -16,11 +15,8 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.adapter.CollectionGroupsRecyclerViewAdapter;
 import com.example.bookmatch.databinding.ActivityDisplayCollectionBinding;
 import com.example.bookmatch.model.Book;
-import com.example.bookmatch.model.CollectionContainer;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
-import com.example.bookmatch.ui.main.CollectionContainerViewModel;
-import com.example.bookmatch.ui.main.CollectionContainerViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionGroupViewModel;
 import com.example.bookmatch.ui.main.CollectionGroupViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;

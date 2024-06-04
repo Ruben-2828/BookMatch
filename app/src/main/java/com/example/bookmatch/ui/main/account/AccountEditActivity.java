@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,21 +22,8 @@ import com.example.bookmatch.model.User;
 import com.example.bookmatch.ui.welcome.UserViewModel;
 import com.example.bookmatch.ui.welcome.UserViewModelFactory;
 import com.example.bookmatch.utils.ServiceLocator;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
 import java.io.ByteArrayOutputStream;
 import java.util.Objects;
-import java.util.UUID;
 
 public class AccountEditActivity extends AppCompatActivity {
 
@@ -46,9 +31,7 @@ public class AccountEditActivity extends AppCompatActivity {
     private ActivityResultLauncher<String> galleryLauncher;
 
     private UserViewModel userViewModel;
-
-
-
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +68,10 @@ public class AccountEditActivity extends AppCompatActivity {
 
             binding.tiNicknameInput.setText(userNickname);
             binding.tiFullNameInput.setText(userFullName);
-            loadImageIntoProfile(userPic);
+
+            if(userPic != null){
+                loadImageIntoProfile(userPic);
+            }
         }
     }
 
@@ -127,37 +113,51 @@ public class AccountEditActivity extends AppCompatActivity {
 
         binding.profileImage.setDrawingCacheEnabled(true);
         binding.profileImage.buildDrawingCache();
-        Bitmap bitmap = ((BitmapDrawable) binding.profileImage.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
 
-        userViewModel.uploadImage(baos.toByteArray()).observe(this, result -> {
-            if(result.isSuccess()){
-                String url = ((Result.StorageResponseSuccess)result).getUrl();
-                User user = new User(nickname,null, null, fullName, url);
-                userViewModel.setUserInfo(user).observe(this,
-                        res -> {
-                            if(res.isSuccess()){
-                                resultIntent.putExtra("userNickname", nickname);
-                                resultIntent.putExtra("userFullName", fullName);
-                                resultIntent.putExtra("profileImage", url);
-                                setResult(Activity.RESULT_OK, resultIntent);
-                                finish();
-                            }else {
-                                setResult(Activity.RESULT_CANCELED, resultIntent);
-                                finish();
-                            }
-                        });
-            }else{
-                String message = ((Result.Error)result).getMessage();
-                resultIntent.putExtra("error", message);
-                setResult(Activity.RESULT_CANCELED, resultIntent);
-                finish();
-            }
-        });
+        if(binding.profileImage.getDrawable() instanceof VectorDrawable){
+            User user = new User(nickname,null, null, fullName, null);
+            userViewModel.setUserInfo(user).observe(this,
+                    res -> {
+                        if(res.isSuccess()){
+                            resultIntent.putExtra("userNickname", nickname);
+                            resultIntent.putExtra("userFullName", fullName);
+                            setResult(Activity.RESULT_OK, resultIntent);
+                            finish();
+                        }else {
+                            setResult(Activity.RESULT_CANCELED, resultIntent);
+                            finish();
+                        }
+                    });
+        }else{
+            Bitmap bitmap = ((BitmapDrawable) binding.profileImage.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 
-
+            userViewModel.uploadImage(baos.toByteArray()).observe(this, result -> {
+                if(result.isSuccess()){
+                    String url = ((Result.StorageResponseSuccess)result).getUrl();
+                    User user = new User(nickname,null, null, fullName, url);
+                    userViewModel.setUserInfo(user).observe(this,
+                            res -> {
+                                if(res.isSuccess()){
+                                    resultIntent.putExtra("userNickname", nickname);
+                                    resultIntent.putExtra("userFullName", fullName);
+                                    resultIntent.putExtra("profileImage", url);
+                                    setResult(Activity.RESULT_OK, resultIntent);
+                                    finish();
+                                }else {
+                                    setResult(Activity.RESULT_CANCELED, resultIntent);
+                                    finish();
+                                }
+                            });
+                }else{
+                    String message = ((Result.Error)result).getMessage();
+                    resultIntent.putExtra("error", message);
+                    setResult(Activity.RESULT_CANCELED, resultIntent);
+                    finish();
+                }
+            });
+        }
     }
 
     private void undoEditProfile() {

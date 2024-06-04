@@ -1,7 +1,5 @@
 package com.example.bookmatch.model;
 
-import com.example.bookmatch.data.repository.books.BookRepository;
-
 import java.util.ArrayList;
 
 public abstract class Result {

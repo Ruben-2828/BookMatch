@@ -34,7 +34,6 @@ public class WelcomeActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null) {
-            Log.d("CIAO", "utente loggato");
             currentUser.reload();
 
             Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
@@ -42,8 +41,6 @@ public class WelcomeActivity extends AppCompatActivity {
             finish();
         } else {
             setContentView(R.layout.activity_welcome);
-            // NavHostFragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-            // NavController navController = navHostFragment.getNavController();
         }
 
     }

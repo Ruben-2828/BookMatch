@@ -3,7 +3,6 @@ package com.example.bookmatch.data.repository.collections.container;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Query;
 
 import com.example.bookmatch.data.database.collections.container.CollectionContainerDao;
 import com.example.bookmatch.data.database.collections.container.CollectionContainerRoomDatabase;

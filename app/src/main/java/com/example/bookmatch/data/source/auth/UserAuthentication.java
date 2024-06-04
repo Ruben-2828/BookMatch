@@ -1,4 +1,4 @@
-package com.example.bookmatch.data.repository.user.auth;
+package com.example.bookmatch.data.source.auth;
 
 import static com.example.bookmatch.utils.Constants.INVALID_CREDENTIALS_ERROR;
 import static com.example.bookmatch.utils.Constants.INVALID_USER_ERROR;
@@ -11,9 +11,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.bookmatch.model.Result;
 import com.example.bookmatch.model.User;
-import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;

@@ -1,15 +1,13 @@
 package com.example.bookmatch.data.repository.user;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.bookmatch.data.repository.user.auth.IUserAuthentication;
-import com.example.bookmatch.data.repository.user.auth.UserAuthentication;
-import com.example.bookmatch.data.repository.user.firebase.IUserFireStore;
-import com.example.bookmatch.data.repository.user.firebase.IUserStorage;
-import com.example.bookmatch.data.repository.user.firebase.UserFireStore;
-import com.example.bookmatch.data.repository.user.firebase.UserStorage;
+import com.example.bookmatch.data.source.auth.IUserAuthentication;
+import com.example.bookmatch.data.source.auth.UserAuthentication;
+import com.example.bookmatch.data.source.firebase.IUserFireStore;
+import com.example.bookmatch.data.source.firebase.IUserStorage;
+import com.example.bookmatch.data.source.firebase.UserFireStore;
+import com.example.bookmatch.data.source.firebase.UserStorage;
 import com.example.bookmatch.model.Result;
 import com.example.bookmatch.model.User;
 import com.example.bookmatch.model.UserPreferences;

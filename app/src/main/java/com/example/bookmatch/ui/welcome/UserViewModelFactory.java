@@ -1,7 +1,5 @@
 package com.example.bookmatch.ui.welcome;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;

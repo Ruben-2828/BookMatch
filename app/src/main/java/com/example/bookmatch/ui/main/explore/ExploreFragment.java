@@ -4,12 +4,9 @@ import static com.example.bookmatch.utils.Constants.LAST_UPDATE_PREF;
 import static com.example.bookmatch.utils.Constants.SAVE_INTERVAL;
 import static com.example.bookmatch.utils.Constants.SHARED_PREF_NAME;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +28,7 @@ import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.Result;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
+import com.example.bookmatch.utils.SharedPreferencesUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -52,6 +50,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
     private CardStackLayoutManager cardStackManager;
     private CardStackAdapter cardStackAdapter;
     private BookViewModel bookViewModel;
+    SharedPreferencesUtil sharedPreferencesUtil;
     private long lastUpdate;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,9 +61,8 @@ public class ExploreFragment extends Fragment implements CardStackListener {
         bookViewModel = new ViewModelProvider(this, factory).get(BookViewModel.class);
         bookViewModel.setStartIndex(0);
 
-        SharedPreferences sp = getContext().getSharedPreferences(
-                SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        lastUpdate = sp.getLong(LAST_UPDATE_PREF, 0);
+        sharedPreferencesUtil = new SharedPreferencesUtil(getContext());
+        lastUpdate = sharedPreferencesUtil.readLongDataSharedPreferences(SHARED_PREF_NAME, LAST_UPDATE_PREF);
 
         return binding.getRoot();
     }
@@ -137,11 +135,7 @@ public class ExploreFragment extends Fragment implements CardStackListener {
                         lastUpdate = System.currentTimeMillis();
 
                         //Saving last update in preferences
-                        SharedPreferences sp = getContext().getSharedPreferences(
-                                SHARED_PREF_NAME, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sp.edit();
-                        editor.putLong(LAST_UPDATE_PREF, lastUpdate);
-                        editor.apply();
+                        sharedPreferencesUtil.writeLongDataSharedPreferences(SHARED_PREF_NAME, LAST_UPDATE_PREF, lastUpdate);
                     }
                 }
             }else{

@@ -1,9 +1,6 @@
 package com.example.bookmatch.data.repository.collections.grouping;
 
 import androidx.lifecycle.LiveData;
-
-import com.example.bookmatch.model.Book;
-import com.example.bookmatch.model.CollectionContainer;
 import com.example.bookmatch.model.CollectionGroup;
 
 import java.util.List;

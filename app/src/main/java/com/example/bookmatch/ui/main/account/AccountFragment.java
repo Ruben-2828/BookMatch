@@ -30,7 +30,6 @@ import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.CollectionContainerViewModel;
 import com.example.bookmatch.ui.main.CollectionContainerViewModelFactory;
-import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.example.bookmatch.ui.welcome.UserViewModel;
 import com.example.bookmatch.ui.welcome.UserViewModelFactory;
 import com.example.bookmatch.ui.welcome.WelcomeActivity;
@@ -38,7 +37,6 @@ import com.example.bookmatch.utils.AccountManager;
 import com.example.bookmatch.utils.ServiceLocator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountFragment extends Fragment {
 
@@ -197,7 +195,9 @@ public class AccountFragment extends Fragment {
 
                         binding.userNickname.setText(userNickname);
                         binding.userFullName.setText(userFullName);
-                        Glide.with(this).load(imageProfile).into(binding.profileImage);
+                        if(imageProfile != null){
+                            Glide.with(this).load(imageProfile).into(binding.profileImage);
+                        }
                     }
                 } else {
                     showSnackBar(getString(R.string.error_not_saved));

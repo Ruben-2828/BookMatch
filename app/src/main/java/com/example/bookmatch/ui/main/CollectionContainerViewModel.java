@@ -4,7 +4,6 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.bookmatch.data.database.collections.container.CollectionContainerRoomDatabase;
 import com.example.bookmatch.data.repository.collections.container.CollectionContainerRepository;
 import com.example.bookmatch.data.repository.collections.container.ICollectionContainerRepository;
 import com.example.bookmatch.model.CollectionContainer;

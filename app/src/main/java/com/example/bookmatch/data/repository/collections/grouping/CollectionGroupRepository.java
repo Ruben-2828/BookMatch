@@ -4,12 +4,8 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.bookmatch.data.database.collections.container.CollectionContainerDao;
-import com.example.bookmatch.data.database.collections.container.CollectionContainerRoomDatabase;
 import com.example.bookmatch.data.database.collections.grouping.CollectionGroupDao;
 import com.example.bookmatch.data.database.collections.grouping.CollectionGroupRoomDatabase;
-import com.example.bookmatch.model.Book;
-import com.example.bookmatch.model.CollectionContainer;
 import com.example.bookmatch.model.CollectionGroup;
 
 import java.util.List;

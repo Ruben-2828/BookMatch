@@ -1,10 +1,7 @@
 package com.example.bookmatch.ui.welcome;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +13,6 @@ import androidx.activity.result.IntentSenderRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -25,9 +21,7 @@ import com.example.bookmatch.R;
 import com.example.bookmatch.data.repository.user.IUserRepository;
 import com.example.bookmatch.databinding.FragmentLoginBinding;
 import com.example.bookmatch.model.Result;
-import com.example.bookmatch.model.User;
 import com.example.bookmatch.ui.main.MainActivity;
-import com.example.bookmatch.ui.main.reviews.AddReviewActivity;
 import com.example.bookmatch.utils.AccountManager;
 import com.example.bookmatch.utils.ServiceLocator;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
@@ -35,7 +29,6 @@ import com.google.android.gms.auth.api.identity.BeginSignInResult;
 import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +39,6 @@ import com.google.firebase.FirebaseApp;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.Objects;
-import android.Manifest;
 
 public class LoginFragment extends Fragment {
 

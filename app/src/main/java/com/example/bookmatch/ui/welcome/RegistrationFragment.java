@@ -2,7 +2,6 @@ package com.example.bookmatch.ui.welcome;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.example.bookmatch.ui.main.MainActivity;
 import com.example.bookmatch.utils.ServiceLocator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.FirebaseApp;
 
 import org.apache.commons.validator.routines.EmailValidator;
 

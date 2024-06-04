@@ -1,18 +1,9 @@
 package com.example.bookmatch.utils;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.example.bookmatch.R;
-
 import java.io.File;
-import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.io.FileOutputStream;
 
 public class JSONParser {

@@ -10,8 +10,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.bookmatch.data.database.books.BookDao;
-import com.example.bookmatch.data.database.collections.container.CollectionContainerDao;
 import com.example.bookmatch.model.Book;
 import com.example.bookmatch.model.CollectionContainer;
 import com.example.bookmatch.model.CollectionGroup;

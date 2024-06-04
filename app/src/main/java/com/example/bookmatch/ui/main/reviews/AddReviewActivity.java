@@ -17,7 +17,6 @@ import com.example.bookmatch.model.Book;
 import com.example.bookmatch.ui.main.BookViewModel;
 import com.example.bookmatch.ui.main.BookViewModelFactory;
 import com.example.bookmatch.ui.main.book_page.FullscreenImageActivity;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 

@@ -5,9 +5,6 @@ import android.graphics.BitmapFactory;
 
 import androidx.room.TypeConverter;
 
-import com.example.bookmatch.model.Book;
-import com.example.bookmatch.model.CollectionContainer;
-
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
